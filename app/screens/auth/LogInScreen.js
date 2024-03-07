@@ -26,7 +26,6 @@ function LogInScreen({navigation}) {
     const [active,setActive]=useState(false);
 
     const handleSubmit = async ({email,password}) =>{
-        console.log(email,password)
         setActive(true)
       const result = await loginApi.request(email,password);
       if(!result.ok){

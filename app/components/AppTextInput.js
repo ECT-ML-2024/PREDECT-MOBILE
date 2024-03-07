@@ -8,14 +8,14 @@ function AppTextInput({placeholder,padding='3%',borderRadius=10,textContentType,
     const {width} = useAuth();
 return (
     <>
-        <View style={[styles.container,{padding:padding,borderRadius:borderRadius,backgroundColor:colors.textInputBG,...others}]}>
+        <View style={[styles.container,{borderRadius:borderRadius,backgroundColor:colors.textInputBG,...others}]}>
             <TextInput          
                 placeholder={placeholder}
                 textContentType={textContentType}
                 onChangeText={onChangeText}
                 onBlur={onBlur}
                 value={value}
-                style={[styles.textInputBox,{fontSize:width*0.04,color:colors.dark}]}
+                style={[styles.textInputBox,{fontSize:width*0.04,color:colors.dark,padding:padding}]}
                 secureTextEntry={secureTextEntry}
                 keyboardType={keyboardType}
                 multiline={multiline}

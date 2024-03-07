@@ -13,7 +13,7 @@ import NewWorkersNavigator from './newWorkersNavigation';
 const Drawer = createDrawerNavigator();
 
 function CustomDrawerContent(props) {
-  const {width}=useAuth();
+  const {width,logOut}=useAuth();
   return (
     <DrawerContentScrollView {...props}>
       {/* Render user's name */}
@@ -24,7 +24,9 @@ function CustomDrawerContent(props) {
         <AppText color={colors.secondary} fontFamily='PoppinsSemiBold'>Prince Jaymills</AppText>
         </View>
       </View>
-        <AppButton text={'Logout'} width='90%' alignSelf='center' marginBottom='10%'/>
+        <AppButton text={'Logout'} width='90%' alignSelf='center' marginBottom='10%'
+        onPress={()=>logOut()}
+        />
       {/* Default drawer content */}
       <DrawerItemList {...props} />
     </DrawerContentScrollView>

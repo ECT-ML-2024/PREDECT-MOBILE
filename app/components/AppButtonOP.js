@@ -4,17 +4,17 @@ import AppText from './Text';
 import colors from '../config/colors';
 import useAuth from '../auth/useAuth';
 
-function AppButton({text,textColor,onPress,active,...others}) {
+function AppButtonOP({text,textColor,onPress,active,...others}) {
     const {width}=useAuth();
 return (
-<Pressable style={[styles.container,{...others}]} onPress={onPress}>
+<TouchableOpacity style={[styles.container,{...others}]} onPress={onPress}>
     {!active&&<AppText fontFamily='PoppinsSemiBold' fontSize={width*0.05} color={textColor??colors.primary}>{text}</AppText>}
     {active&&<ActivityIndicator size={width*0.08} color={colors.primary}/>}
-</Pressable>
+</TouchableOpacity>
 );
 }
 
-export default AppButton;
+export default AppButtonOP;
 const styles = StyleSheet.create({
 container:{
 justifyContent:'center',

@@ -5,6 +5,7 @@ import LogInScreen from "../screens/auth/LogInScreen"
 import NewPasswordScreen from "../screens/auth/NewPasswordScreen"
 import OTPScreen from "../screens/auth/OTPScreen"
 import SignUpScreen from "../screens/auth/SignUpScreen"
+import AddPatientScreen from "../screens/history/AddPatientScreen"
 import GraphScreen from "../screens/history/GraphScreen"
 import PatientScreen from "../screens/history/PatientScreen"
 import PatientsScreen from "../screens/history/PatientsScreen"
@@ -33,6 +34,7 @@ const DoneStackScreen = ({ navigation,route })=> <DoneScreen navigation={navigat
 const PatientsStackScreen = ({ navigation,route })=> <PatientsScreen navigation={navigation} route={route}/>
 const PatientStackScreen = ({ navigation,route })=> <PatientScreen navigation={navigation} route={route}/>
 const GraphStackScreen = ({ navigation,route })=> <GraphScreen navigation={navigation} route={route}/>
+const AddPatientStackScreen = ({ navigation,route })=> <AddPatientScreen navigation={navigation} route={route}/>
 
 // New Doctors
 const NewDoctorsStackScreen = ({ navigation,route })=> <NewDoctorsScreen navigation={navigation} route={route}/>
@@ -51,6 +53,7 @@ export default{
   PatientsStackScreen,
   PatientStackScreen,
   GraphStackScreen,
-  NewDoctorsStackScreen
+  NewDoctorsStackScreen,
+  AddPatientStackScreen
 
   }

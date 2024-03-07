@@ -2,7 +2,7 @@ import 'react-native-gesture-handler';
 import { useState,useEffect,useCallback } from 'react';
 import { Dimensions } from 'react-native';
 import { useFonts } from 'expo-font';
-import jwtDecode from 'jwt-decode';
+import {jwtDecode} from 'jwt-decode';
 import * as SplashScreen from 'expo-splash-screen';
 import {useNetInfo} from '@react-native-community/netinfo';
 import {NavigationContainer} from '@react-navigation/native';
@@ -35,7 +35,8 @@ export default function App() {
   const restoreToken = async ()=>{
    const token = await authStorage.getToken();
     if(!token) return;
-    setUser(jwtDecode(token).found);
+    console.log(jwtDecode(token))
+    setUser(jwtDecode(token).doctor);
   }
   useEffect(() => {
     async function prepare() {
@@ -68,7 +69,7 @@ if (!fontsLoaded) return null;
      <NavigationContainer onReady={onNavigationContainerReady}>
       {/* <AppStatusBar/> */}
       {/* <MyDrawer/> */}
-      {!user ? <MyDrawer width={width}/>: <AuthNavigator/>}
+      {user ? <MyDrawer width={width}/>: <AuthNavigator/>}
      </NavigationContainer>
 
      <OfflineNotice/>

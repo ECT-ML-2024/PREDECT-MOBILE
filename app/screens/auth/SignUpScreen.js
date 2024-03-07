@@ -1,7 +1,9 @@
-import React, { useState } from 'react';
+import React, { useMemo, useState } from 'react';
 import { View, StyleSheet, Image } from 'react-native';
 import { Formik } from 'formik';
-import * as yup from 'yup'
+import * as yup from 'yup';
+import RadioGroup from 'react-native-radio-buttons-group';
+
 
 import AppText from '../../components/Text';
 import useAuth from '../../auth/useAuth';
@@ -10,6 +12,7 @@ import AppTextInput from '../../components/AppTextInput';
 import AppButton from '../../components/AppButton';
 import useApi from '../../hooks/useApi';
 import register from '../../api/register';
+import routes from '../../navigations/routes';
 
 
 const ReviewSchema = yup.object({
@@ -18,25 +21,39 @@ const ReviewSchema = yup.object({
     password: yup.string().min(6).required()
   })
 
+  const setData =[
+    {
+        id: '1', // acts as primary key, should be unique and non-empty string
+        label: 'Male',
+        value: 'male'
+    },
+    {
+        id: '2',
+        label: 'Female',
+        value: 'female'
+    }
+]
 function SignUpScreen({navigation}) {
     const {width,logIn} =useAuth();
     const registerApi =useApi(register.register)
     const [active,setActive]=useState(false);
+    const [sex, setSex] = useState();
+    const radioButtons = useMemo(() => (setData), []);
 
-    const handleSubmit = async ({email,password}) =>{
-        // setActive(true)
+    const handleSubmit = async ({email,password,username}) =>{
+        setActive(true)
 
-        const result = await registerApi.request({email,password});
+        const result = await registerApi.request({email:email.trim(),password:password.trim(),sex:setData[sex-1].value,username:username.trim()});
         if(!result.ok){
-        //   setActive(false);
+          setActive(false);
         console.log(result.data)
-          return 
-        //   setLoginFailed(true)
-        } 
-        // setLoginFailed(false);
-        logIn(result.data);
-        // setActive(false);
-        console.log(result.data)
+          return;
+        };
+        // logIn(result.data);
+        setActive(false);
+        // console.log(result.data);
+        alert("Registration was successful. Now you can Login!");
+        navigation.navigate(routes.LOGIN);
       }
 
 return (
@@ -50,7 +67,7 @@ return (
     </View>
 
     <Formik
-          initialValues={{email:"", password:""}}
+          initialValues={{email:"", password:"",username:""}}
           validationSchema={ReviewSchema}
           onSubmit={handleSubmit}
           >
@@ -76,6 +93,12 @@ return (
                     value={props.values.password}
                     touched={props.touched.password}
                     errors={props.errors.password}/>
+                    <RadioGroup 
+                        radioButtons={radioButtons} 
+                        onPress={setSex}
+                        selectedId={sex}
+                        layout='row'
+                    />
                 </View>
 
                 <AppButton text={'Sign Up'} width={width*0.9} marginTop={'7%'}

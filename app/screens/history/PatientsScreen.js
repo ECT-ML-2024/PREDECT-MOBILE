@@ -1,22 +1,34 @@
-import React from 'react';
-import { View, StyleSheet, KeyboardAvoidingView, ScrollView, TextInput, Platform } from 'react-native';
+import React, { useEffect, useState } from 'react';
+import { View, StyleSheet, KeyboardAvoidingView, ScrollView, TextInput, Platform, TouchableOpacity } from 'react-native';
 import AppText from '../../components/Text';
-import { Ionicons } from '@expo/vector-icons';
+import { Ionicons,Entypo } from '@expo/vector-icons';
 import useAuth from '../../auth/useAuth';
 import colors from '../../config/colors';
 import Card from '../../components/Card';
 import routes from '../../navigations/routes';
+import patient from '../../api/patient';
+import useApi from '../../hooks/useApi';
+import useActiveScreenFunc from '../../hooks/useActiveScreenFunc';
 
 
-const data=[
-    {id:1,sex:'Male'},
-    {id:1,sex:'Female'},
-    {id:1,sex:'Male'},
-    {id:1,sex:'Male'},
-    {id:1,sex:'Female'},
-]
 function PatientsScreen({navigation}) {
     const {width}=useAuth();
+    const getpatientsApi=useApi(patient.patients);
+    const [patients,setPatients]=useState([]);
+
+    useActiveScreenFunc().FocusedAndBlur(()=>{
+        loadPatients();
+    },()=>{})
+
+    async function loadPatients(){
+        const response =await getpatientsApi.request();
+        if(!response.ok){
+            alert(response.data);
+            return
+        }
+        console.log(response.data)
+        setPatients(response.data);
+    }
 return (
     <KeyboardAvoidingView
         behavior={Platform.OS === "ios" ? "padding" : null}
@@ -30,12 +42,20 @@ return (
             </View>
             </View>
     <ScrollView contentContainerStyle={styles.container}>
-        {data.map((item,index)=>(
+        {patients.map((item,index)=>{
+            return(
             <Card item={item} key={index} onPress={()=>navigation.navigate(routes.HISTORY_TAB,{
-                screen:routes.PATIENT
+                screen:routes.PATIENT,
+                params:{patient:item}
             })}/>
-        ))}
+        )})}
     </ScrollView>
+    <TouchableOpacity style={[styles.button,{width:width*0.2,height:width*0.2,borderRadius:width/2,}]}
+    onPress={()=>navigation.navigate(routes.HISTORY_TAB,{
+        screen:routes.ADD_PATIENT
+    })}>
+        <Entypo name="plus" size={width*0.1} color={colors.primary} />
+    </TouchableOpacity>
 </KeyboardAvoidingView>
 );
 }
@@ -52,4 +72,19 @@ keyboardAvoidingView: {
     flex: 1,
     // backgroundColor:colors.primary
   },
+  button:{
+    backgroundColor: 'red', // Set the background color of the container
+    shadowColor: '#000',     // Shadow color for iOS
+    shadowOffset: { width: 0, height: 0 }, // Shadow offset (x, y) for iOS
+    shadowOpacity: 0.1,      // Shadow opacity for iOS
+    shadowRadius: 2,         // Shadow radius for iOS
+    elevation:5,            // Elevation for Android (controls shadow)
+    padding:'2%',flexDirection:'row',alignItems:'center',
+    backgroundColor:colors.secondary,
+    justifyContent:'center',
+    alignItems:'center',
+    position:'absolute',
+    top:'85%',
+    right:'5%'
+}
 });

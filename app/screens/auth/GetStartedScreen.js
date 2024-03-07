@@ -5,6 +5,7 @@ import useAuth from '../../auth/useAuth';
 import colors from '../../config/colors';
 import AppButton from '../../components/AppButton';
 import routes from '../../navigations/routes';
+import AppButtonOP from '../../components/AppButtonOP';
 
 function GetStartedScreen({navigation}) {
     const {width,height}=useAuth();
@@ -19,7 +20,7 @@ return (
 
 
     <View style={{width:'100%',marginTop:'5%',}}>
-        <AppButton text={'Get Started'} onPress={()=>navigation.navigate(routes.LOGIN)}/>
+        <AppButtonOP text={'Get Started'} onPress={()=>navigation.navigate(routes.LOGIN)}/>
     </View>
     </View>
 </View>

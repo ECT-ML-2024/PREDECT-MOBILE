@@ -1,4 +1,4 @@
-import React from 'react';
+import React, { useEffect, useState } from 'react';
 import { View, StyleSheet, KeyboardAvoidingView, ScrollView, TextInput, Platform } from 'react-native';
 import AppText from '../../components/Text';
 import { Ionicons } from '@expo/vector-icons';
@@ -7,17 +7,38 @@ import colors from '../../config/colors';
 import Card from '../../components/Card';
 import routes from '../../navigations/routes';
 import DoctorsCard from '../../components/DoctorCard';
+import useApi from '../../hooks/useApi';
+import doctor from '../../api/doctor';
 
 
-const data=[
-    {id:1,name:'Christian',sex:'Male'},
-    {id:1,name:'Serwaa',sex:'Female'},
-    {id:1,name:'Prince',sex:'Male'},
-    {id:1,name:'Richard',sex:'Male'},
-    {id:1,name:'Gifty',sex:'Female'},
-]
+
 function NewDoctorsScreen({navigation}) {
     const {width}=useAuth();
+    const getDoctorsApi= useApi(doctor.doctors);
+    const doctorAPi= useApi(doctor.doctor);
+    const [ doctors,setDoctors]=useState([]);
+   useEffect(()=>{
+        handleSubmit();
+   },[]);
+
+    async function handleSubmit(){
+        const response = await getDoctorsApi.request();
+        if(response.ok){
+            setDoctors(response.data);
+        }
+    }
+
+    
+
+
+    async function handleAccept(id,status){
+        let data ={
+            status:status,
+            doctorId:id
+        }
+        await doctorAPi.request(data);
+        handleSubmit();
+    }
 return (
     <KeyboardAvoidingView
         behavior={Platform.OS === "ios" ? "padding" : null}
@@ -31,11 +52,15 @@ return (
             </View>
             </View>
     <ScrollView contentContainerStyle={styles.container}>
-        {data.map((item,index)=>(
+        {doctors.map((item,index)=>{
+            return(
             <DoctorsCard item={item} key={index} onPress={()=>navigation.navigate(routes.HISTORY_TAB,{
                 screen:routes.PATIENT
-            })}/>
-        ))}
+            })}
+            accept={()=>handleAccept(item._id,true)}
+            reject={()=>handleAccept(item._id,false)}
+            />
+        )})}
     </ScrollView>
 </KeyboardAvoidingView>
 );

@@ -9,14 +9,14 @@ export const useInitialStates = () => {
     const [selectedPositionRight,onSelectedPositionRight]=useState(pickersData.POSITION[0]);
     const [selectedPositionLeft,onSelectedPositionLeft]=useState(pickersData.POSITION[0]);
     const [selectedHandedness,onSelectedHandedness]=useState(pickersData.HANDEDNESS[0]);
-    const [selectedVisualImpairment,onSelectedVisualImpairment]=useState(pickersData.TRUEOFFALSE[0]);
-    const [selectedOsteoporosis,onSelectedOsteoporosis]=useState(pickersData.TRUEOFFALSE[0]);
-    const [selectedDislocation,onSelectedDislocation]=useState(pickersData.TRUEOFFALSE[0]);
-    const [selectedMentalRetardation,onSelectedMentalRetardation]=useState(pickersData.TRUEOFFALSE[0]);
-    const [selectedPedalOedema,onSelectedPedalOedema]=useState(pickersData.TRUEOFFALSE[0]);
-    const [selectedRespiratoryInfections,onSelectedRespiratoryInfections]=useState(pickersData.TRUEOFFALSE[0]);
-    const [selectedStroke,onSelectedStroke]=useState(pickersData.TRUEOFFALSE[0]);
-    const [selectedCognitiveImpairment,onSelectedCognitiveImpairment]=useState(pickersData.TRUEOFFALSE[0]);
+    const [selectedVisualImpairment,onSelectedVisualImpairment]=useState(2);
+    const [selectedOsteoporosis,onSelectedOsteoporosis]=useState(2);
+    const [selectedDislocation,onSelectedDislocation]=useState(2);
+    const [selectedMentalRetardation,onSelectedMentalRetardation]=useState(2);
+    const [selectedPedalOedema,onSelectedPedalOedema]=useState(2);
+    const [selectedRespiratoryInfections,onSelectedRespiratoryInfections]=useState(2);
+    const [selectedStroke,onSelectedStroke]=useState(2);
+    const [selectedCognitiveImpairment,onSelectedCognitiveImpairment]=useState(2);
     const [selectedDrugTreatment,onSelectedDrugTreatment]=useState(pickersData.CURRENT_DRUG_TREATMENT[0]);
     const [selectedObservations,onSelectedObservations]=useState(pickersData.OBSERVATIONS[0]);
     const [selectedMemory,onSelectedMemory]=useState(pickersData.MEMORY[0]);
@@ -36,20 +36,24 @@ export const useInitialStates = () => {
     const [selectedPostpartumDepression,onSelectedPostpartumDepression]=useState(pickersData.CURRENT_DIAGNOSES[0]);
     const [selectedNeurocognitive,onSelectedNeurocognitive]=useState(pickersData.CURRENT_DIAGNOSES[0]);
     const [GENDER,setGENDER]=useState('MALE');
-
+    const [AGE,setAGE]=useState('');
+    const [selectedDIGIT_SPAN_Forward_2_1_8_5_4,onSelectedDIGIT_SPAN_Forward_2_1_8_5_4]=useState(1);
+    const [selectedDIGIT_SPAN_backward_7_4_2,onSelectedDIGIT_SPAN_backward_7_4_2]=useState(1);
+    const [selectedDELAYED_RECALL_FACE,onSelectedDELAYED_RECALL_FACE]=useState(1);
+    const [selectedDELAYED_RECALL_VELVET,onSelectedDELAYED_RECALL_VELVET]=useState(1);
+    const [selectedDELAYED_RECALL_CHURCH,onSelectedDELAYED_RECALL_CHURCH]=useState(1);
+    const [selectedDELAYED_RECALL_DAISY,onSelectedDELAYED_RECALL_DAISY]=useState(1);
+    const [selectedDELAYED_RECALL_RED,onSelectedDELAYED_RECALL_RED]=useState(1);
+    const [selectedFLUENCY,onSelectedFLUENCY]=useState(1);
 
 
     return {
-        GENDER,
-        setGENDER,
-        selectedTypeOfSimulation,
-        onSelectedTypeOfSimulation,
-        selectedOutcome,
-        onSelectedOutcome,
-        selectedAnaesthesia,
-        onSelectedAnaesthesia,
-        selectedPolarity,
-        onSelectedPolarity,
+        AGE,setAGE,
+        GENDER,setGENDER,
+        selectedTypeOfSimulation,onSelectedTypeOfSimulation,
+        selectedOutcome,onSelectedOutcome,
+        selectedAnaesthesia,onSelectedAnaesthesia,
+        selectedPolarity,onSelectedPolarity,
         selectedPositionRight,
         onSelectedPositionRight,
         selectedPositionLeft,
@@ -94,20 +98,21 @@ export const useInitialStates = () => {
         onSelectedSchizoaffective,
         selectedAcuteAndTransientPsychotic,
         onSelectedAcuteAndTransientPsychotic,
-        selectedMania,
-        onSelectedMania,
-        selectedDelusional,
-        onSelectedDelusional,
-        selectedSeizures,
-        onSelectedSeizures,
-        selectedPsychosisNOS,
-        onSelectedPsychosisNOS,
-        selectedDepressionNOS,
-        onSelectedDepressionNOS,
-        selectedPostpartumDepression,
-        onSelectedPostpartumDepression,
-        selectedNeurocognitive,
-        onSelectedNeurocognitive
+        selectedMania,onSelectedMania,
+        selectedDelusional,onSelectedDelusional,
+        selectedSeizures,onSelectedSeizures,
+        selectedPsychosisNOS,onSelectedPsychosisNOS,
+        selectedDepressionNOS,onSelectedDepressionNOS,
+        selectedPostpartumDepression,onSelectedPostpartumDepression,
+        selectedNeurocognitive,onSelectedNeurocognitive,
+        selectedDIGIT_SPAN_Forward_2_1_8_5_4,onSelectedDIGIT_SPAN_Forward_2_1_8_5_4,
+        selectedDIGIT_SPAN_backward_7_4_2,onSelectedDIGIT_SPAN_backward_7_4_2,
+        selectedDELAYED_RECALL_FACE,onSelectedDELAYED_RECALL_FACE,
+        selectedDELAYED_RECALL_VELVET,onSelectedDELAYED_RECALL_VELVET,
+        selectedDELAYED_RECALL_CHURCH,onSelectedDELAYED_RECALL_CHURCH,
+        selectedDELAYED_RECALL_DAISY,onSelectedDELAYED_RECALL_DAISY,
+        selectedDELAYED_RECALL_RED,onSelectedDELAYED_RECALL_RED,
+        selectedFLUENCY,onSelectedFLUENCY
     };
     
 };
