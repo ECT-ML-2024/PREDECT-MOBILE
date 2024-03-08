@@ -49,7 +49,6 @@ function AddPatientScreen({navigation}) {
         const result = await addPatientApi.request({NAME:NAME.trim(),AGE,GENDER:setData[sex-1].value,doctorId:user._id});
         if(!result.ok){
           setActive(false);
-            console.log(result.data);
           return;
         };
         setActive(false);

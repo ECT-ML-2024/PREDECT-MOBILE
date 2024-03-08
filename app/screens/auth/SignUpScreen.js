@@ -42,19 +42,15 @@ function SignUpScreen({navigation}) {
 
     const handleSubmit = async ({email,password,username}) =>{
         setActive(true)
-
         const result = await registerApi.request({email:email.trim(),password:password.trim(),sex:setData[sex-1].value,username:username.trim()});
         if(!result.ok){
           setActive(false);
-        console.log(result.data)
           return;
         };
-        // logIn(result.data);
         setActive(false);
-        // console.log(result.data);
         alert("Registration was successful. Now you can Login!");
         navigation.navigate(routes.LOGIN);
-      }
+    }
 
 return (
 <View style={styles.container}>

@@ -26,7 +26,6 @@ function PatientsScreen({navigation}) {
             alert(response.data);
             return
         }
-        console.log(response.data)
         setPatients(response.data);
     }
 return (

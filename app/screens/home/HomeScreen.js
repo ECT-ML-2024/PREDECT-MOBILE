@@ -1,4 +1,4 @@
-import React, { useEffect, useMemo, useState } from 'react';
+import React, { memo, useMemo, useState,useRef } from 'react';
 import { View, StyleSheet, KeyboardAvoidingView, ScrollView, Platform, TouchableOpacity } from 'react-native';
 import { Fontisto } from '@expo/vector-icons';
 import { Formik } from 'formik';
@@ -34,6 +34,7 @@ import predict from '../../api/predict';
 import patient from '../../api/patient';
 import AppPatientsPicker from '../../components/AppPatientsPicker';
 import useActiveScreenFunc from '../../hooks/useActiveScreenFunc';
+import ScrollUpButton from '../../components/ScrollUpButton';
 
 const setData =[
     {
@@ -62,15 +63,20 @@ const zeroAndOneData =[
 ]
 
 function HomeScreen({navigation}) {
-    const {width}=useAuth();
+    const {width,height}=useAuth();
     const predictApi=useApi(predict.predict);
     const getpatientsApi=useApi(patient.patients);
+    const scrollViewRef = useRef();
+    const previousScrollY = useRef(0);
+    const radioButtons = useMemo(() => (setData), []);
+    const radioButtons_DigitSpan = useMemo(() => (zeroAndOneData), []);
+
     const [active,setActive]=useState(false);
     const [loading,setLoading]=useState(false);
     const [patients,setPatients]=useState();
     const [selectPatient,setSelectPatient]=useState();
-    const radioButtons = useMemo(() => (setData), []);
-    const radioButtons_DigitSpan = useMemo(() => (zeroAndOneData), []);
+    const [show,setShow] = useState(false);
+
 
     const {
         selectedTypeOfSimulation,onSelectedTypeOfSimulation,
@@ -106,8 +112,7 @@ function HomeScreen({navigation}) {
         selectedDepressionNOS,onSelectedDepressionNOS,
         selectedPostpartumDepression,onSelectedPostpartumDepression,
         selectedNeurocognitive,onSelectedNeurocognitive,
-        GENDER,setGENDER,
-        AGE,setAGE,
+        GENDER,setGENDER,AGE,setAGE,
         selectedDIGIT_SPAN_Forward_2_1_8_5_4,onSelectedDIGIT_SPAN_Forward_2_1_8_5_4,
         selectedDIGIT_SPAN_backward_7_4_2,onSelectedDIGIT_SPAN_backward_7_4_2,
         selectedDELAYED_RECALL_FACE,onSelectedDELAYED_RECALL_FACE,
@@ -119,7 +124,6 @@ function HomeScreen({navigation}) {
     } = useInitialStates();
 
     useActiveScreenFunc().FocusedAndBlur(()=>{
-        console.log("Loading")
         setLoading(true)
         loadPatients();
         setLoading(false)
@@ -136,8 +140,7 @@ function HomeScreen({navigation}) {
         setPatients(response.data);
     }
     
-    
-    
+     
     const handleSubmit =async (values)=>{
         setActive(true)
         let finalData = {
@@ -192,8 +195,8 @@ function HomeScreen({navigation}) {
         const res = await predictApi.request(finalData);
         if(res.ok){
             navigation.navigate(routes.HOME_TAB,{
-                    screen:routes.DONE,
-                    params:{results:res.data}
+                screen:routes.DONE,
+                params:{results:res.data}
             });
         }
         setActive(false);
@@ -203,11 +206,36 @@ function HomeScreen({navigation}) {
         setAGE(item.AGE.toString());
         setGENDER(item.GENDER);
     }
+
+
+    const scrollToTop = () => {
+        // Use the `scrollTo` method to scroll to the top
+        scrollViewRef.current.scrollTo({ y: 0, animated: true });
+        setTimeout(() => setShow(false), 500);
+    };
+    
+    const handleScroll = (event) => {
+        const currentScrollY = event.nativeEvent.contentOffset.y;
+        const isScrollingUp = currentScrollY < previousScrollY.current && currentScrollY< height;
+        const isScrollingDown = currentScrollY > previousScrollY.current && currentScrollY> height*0.8;
+
+        isScrollingUp ?setShow(false): null;
+        isScrollingDown ? setShow(true): null;
+
+        // Update the previous scroll position
+        previousScrollY.current = currentScrollY;
+    };
+    
 return (
     <KeyboardAvoidingView
         behavior={Platform.OS === "ios" ? "padding" : null}
-        style={styles.keyboardAvoidingView}>
-    <ScrollView contentContainerStyle={styles.container}>
+        style={styles.keyboardAvoidingView}><>
+
+    <ScrollView contentContainerStyle={styles.container}
+     ref={scrollViewRef}
+     onScroll={handleScroll}
+     scrollEventThrottle={500}
+    >
         <AppText fontFamily='PoppinsSemiBold' fontSize={width*0.05}>ECT Parameters Prediction System</AppText>
         <AppText>Lorem ipsum dolor sit amet, consectetur 
         adipiscing elit. Maecenas at hendrerit lectus, 
@@ -698,11 +726,13 @@ return (
         </>)}
         </Formik>
     </ScrollView>
+    <ScrollUpButton show={show} scrollToTop={scrollToTop}/>
+        </>
 </KeyboardAvoidingView>
 );
 }
 
-export default HomeScreen;
+export default memo(HomeScreen);
 const styles = StyleSheet.create({
     container:{
         backgroundColor:colors.primary,
