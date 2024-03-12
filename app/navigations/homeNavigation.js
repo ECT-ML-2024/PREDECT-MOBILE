@@ -20,6 +20,7 @@ const HomeNavigator = ({navigation,route}) =>{
       <Stack.Screen name={routes.HOME} component={controler.HomeStackScreen} options={{headerShown:false}}/>
       <Stack.Screen name={routes.DONE} component={controler.DoneStackScreen} options={{headerShown:false}}/>
       <Stack.Screen name={routes.RESULTS} component={controler.ResultsStackScreen} options={{headerShown:false}}/>
+      <Stack.Screen name={routes.EDIT_PROFILE} component={controler.EditProfileScreenStackScreen} options={{headerShown:false}}/>
     </Stack.Navigator>
   )
 }

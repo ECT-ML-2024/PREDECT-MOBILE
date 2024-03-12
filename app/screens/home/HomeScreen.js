@@ -742,11 +742,11 @@ const styles = StyleSheet.create({
     keyboardAvoidingView: {
         flex: 1,
       },
-      arrow:{
-        padding:'3%',
-        backgroundColor:colors.textInputBG,
-        borderRadius:10,
-        marginHorizontal:'3%',justifyContent:'center',alignItems:'center'
-      },
-      box:{flexDirection:'row',justifyContent:'space-between',alignItems:'center'}
+    arrow:{
+    padding:'3%',
+    backgroundColor:colors.textInputBG,
+    borderRadius:10,
+    marginHorizontal:'3%',justifyContent:'center',alignItems:'center'
+    },
+    box:{flexDirection:'row',justifyContent:'space-between',alignItems:'center'}
 });

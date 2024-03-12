@@ -11,7 +11,6 @@ import AppTextInput from '../../components/AppTextInput';
 import AppButton from '../../components/AppButton';
 import routes from '../../navigations/routes';
 import useApi from '../../hooks/useApi';
-import register from '../../api/register';
 import auth from '../../api/auth';
 
 
@@ -26,15 +25,13 @@ function LogInScreen({navigation}) {
     const [active,setActive]=useState(false);
 
     const handleSubmit = async ({email,password}) =>{
-        setActive(true)
+      setActive(true)
       const result = await loginApi.request(email,password);
       if(!result.ok){
         setActive(false);
-        return 
-        // setLoginFailed(true)
-      } 
-    //   setLoginFailed(false);
-      logIn(result.data);
+        return;
+      }
+      logIn(result.data,navigation);
       setActive(false);
       }
 return (

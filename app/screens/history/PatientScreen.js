@@ -1,6 +1,6 @@
 import React, { memo, useEffect, useRef, useState } from 'react';
 import { View, StyleSheet, Image, TouchableOpacity, KeyboardAvoidingView, ScrollView, Platform } from 'react-native';
-import { MaterialCommunityIcons,MaterialIcons } from '@expo/vector-icons';
+import { MaterialCommunityIcons,MaterialIcons,Octicons } from '@expo/vector-icons';
 import { LineChart } from 'react-native-chart-kit';
 import RadioGroup from 'react-native-radio-buttons-group';
 
@@ -51,7 +51,7 @@ function PatientScreen({navigation,route}) {
       };
       setSessions(response.data);
       loadResults(response.data);
-      const newData = [0];
+      const newData = [];
     
       response.data.forEach(element => {
         const result = element.PSBPT / element.PSBPB;
@@ -60,7 +60,7 @@ function PatientScreen({navigation,route}) {
       setData({
         datasets: [
           {
-            data: newData,
+            data: newData.length>0?newData:[0],
             color: (opacity = 1) => `rgba(134, 65, 244, ${opacity})`, // Line color
             strokeWidth: 2, // Line width
           },
@@ -128,7 +128,8 @@ return (
                 <AppText fontFamily='PoppinsSemiBold'>{patient.AGE}</AppText>
             </View>
         </View>
-    <View style={{flexDirection:'row',justifyContent:'space-between',width:width*0.95}}>
+  </View>
+  <View style={{flexDirection:'row',justifyContent:'space-between',width:width*0.95}}>
         <View style={{width:width*0.46,backgroundColor:colors.primary,alignItems:'center',padding:'2%',borderRadius:10,marginVertical:'5%'}}>
           <View style={{flexDirection:'row',justifyContent:'space-between',width:'100%'}}>
               <AppText fontFamily='PoppinsSemiBold'>SYS</AppText>
@@ -178,11 +179,9 @@ return (
       </View>
       </View>
     </View>
-  </View>
-
 
   <View style={{flexDirection:'row',justifyContent:'space-between',width:width*0.95}}>
-      <View style={{width:width*0.46,backgroundColor:colors.primary,alignItems:'center',padding:'2%',borderRadius:10,marginVertical:'3%'}}>
+      <View style={{width:width*0.46,backgroundColor:colors.primary,alignItems:'center',padding:'2%',borderRadius:10,marginBottom:'3%'}}>
       <View style={{flexDirection:'row',justifyContent:'space-between',width:'100%'}}>
           <AppText fontFamily='PoppinsSemiBold'>Stimulation Pulse</AppText>
           <MaterialCommunityIcons name="pulse" size={width*0.07} color="black" />
@@ -190,7 +189,7 @@ return (
       <AppText fontFamily='PoppinsSemiBold' fontSize={width*0.06} color={colors.secondary}>{sessions[state]?.PRE_STIMULATION_PULSE}<AppText color={colors.mediumDark}>BPM</AppText></AppText>
     
       </View>
-      <View style={{width:width*0.46,backgroundColor:colors.primary,alignItems:'center',padding:'2%',borderRadius:10,marginVertical:'3%'}}>
+      <View style={{width:width*0.46,backgroundColor:colors.primary,alignItems:'center',padding:'2%',borderRadius:10,marginBottom:'3%'}}>
       <View style={{flexDirection:'row',justifyContent:'space-between',width:'100%'}}>
           <AppText fontFamily='PoppinsSemiBold'>Respiratory Rate</AppText>
           {/* <MaterialCommunityIcons name="human-male-height-variant" size={width*0.07} color="black" /> */}
@@ -205,8 +204,8 @@ return (
       params:{sessions:sessions}
   })}
   style={{width:width,paddingLeft:'5%',flexDirection:'row',alignItems:'center'}}>
-    <AppText fontFamily='PoppinsSemiBold' fontSize={width*0.05}>Past Records</AppText>
-    <MaterialIcons name="play-arrow" size={width*0.07} color="black" />
+    <AppText fontFamily='PoppinsSemiBold' fontSize={width*0.05} color={colors.secondary}>More Graphs </AppText>
+    <Octicons name="graph" size={width*0.05} color={colors.secondary} />
   </TouchableOpacity>
 
     <View style={{backgroundColor:colors.primary,width:'100%',padding:'3%',marginVertical:'5%',borderRadius:10}}>
@@ -231,19 +230,19 @@ return (
 export default memo(PatientScreen);
 
 const styles = StyleSheet.create({
-container:{
-  paddingVertical:'5%',
-  alignItems:'center'
-},
-keyboardAvoidingView: {
-  flex: 1,
-},
-input:{
-  flexDirection:'row',
-  justifyContent:'space-between',
-  alignItems:'center',
-  paddingVertical:'2%',
-  borderBottomWidth:0.25,
-  borderColor:colors.mediumDark
-}
+  container:{
+    paddingVertical:'5%',
+    alignItems:'center'
+  },
+  keyboardAvoidingView: {
+    flex: 1,
+  },
+  input:{
+    flexDirection:'row',
+    justifyContent:'space-between',
+    alignItems:'center',
+    paddingVertical:'2%',
+    borderBottomWidth:0.25,
+    borderColor:colors.mediumDark
+  }
 });

@@ -9,23 +9,33 @@ import routes from '../../navigations/routes';
 import DoctorsCard from '../../components/DoctorCard';
 import useApi from '../../hooks/useApi';
 import doctor from '../../api/doctor';
+import CardEmpty from '../../components/empty/CardEmpty';
 
-
+const list = [
+    {id:1},
+    {id:1},
+    {id:1},
+    {id:1},
+]
 
 function NewDoctorsScreen({navigation}) {
     const {width}=useAuth();
     const getDoctorsApi= useApi(doctor.doctors);
     const doctorAPi= useApi(doctor.doctor);
     const [ doctors,setDoctors]=useState([]);
-   useEffect(()=>{
-        handleSubmit();
-   },[]);
+    const [active,setActive]=useState(false);
 
+   useEffect(()=>{
+       handleSubmit();
+    },[]);
+    
     async function handleSubmit(){
+        setActive(true);
         const response = await getDoctorsApi.request();
         if(response.ok){
             setDoctors(response.data);
         }
+        setActive(false);
     }
 
     
@@ -60,6 +70,10 @@ return (
             accept={()=>handleAccept(item._id,true)}
             reject={()=>handleAccept(item._id,false)}
             />
+        )})}
+        {active&&list.map((item,index)=>{
+            return(
+                <CardEmpty key={index}/>
         )})}
     </ScrollView>
 </KeyboardAvoidingView>

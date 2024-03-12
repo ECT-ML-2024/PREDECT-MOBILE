@@ -9,14 +9,23 @@ import routes from '../../navigations/routes';
 import patient from '../../api/patient';
 import useApi from '../../hooks/useApi';
 import useActiveScreenFunc from '../../hooks/useActiveScreenFunc';
+import CardEmpty from '../../components/empty/CardEmpty';
 
+const list = [
+    {id:1},
+    {id:1},
+    {id:1},
+    {id:1},
+]
 
 function PatientsScreen({navigation}) {
     const {width}=useAuth();
     const getpatientsApi=useApi(patient.patients);
     const [patients,setPatients]=useState([]);
+    const [active,setActive]=useState(false);
 
     useActiveScreenFunc().FocusedAndBlur(()=>{
+        setActive(true);
         loadPatients();
     },()=>{})
 
@@ -24,8 +33,10 @@ function PatientsScreen({navigation}) {
         const response =await getpatientsApi.request();
         if(!response.ok){
             alert(response.data);
+            setActive(false);
             return
         }
+        setActive(false);
         setPatients(response.data);
     }
 return (
@@ -48,6 +59,11 @@ return (
                 params:{patient:item}
             })}/>
         )})}
+        {active&&list.map((item,index)=>{
+            return(
+                <CardEmpty key={index}/>
+        )})}
+        
     </ScrollView>
     <TouchableOpacity style={[styles.button,{width:width*0.2,height:width*0.2,borderRadius:width/2,}]}
     onPress={()=>navigation.navigate(routes.HISTORY_TAB,{

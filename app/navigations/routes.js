@@ -5,6 +5,8 @@ export default Object.freeze({
   SIGN_UP:'SignUp',
   FORGET_PASSWORD:'ForgetPassword',
   NEW_FORGET_PASSWORD:'NewForgetPassword',
+  UNAUTHORIZED_USERS:'unathorizedUsers',
+  EDIT_PROFILE:'EditProfile',
 
   HOME_TAB:'HomeTab',
   HOME:'home',

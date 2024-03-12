@@ -39,7 +39,7 @@ function Results({sessions,state}) {
     function Component2(title,item){
         return(
             <View style={[styles.input,{flexWrap:'wrap'}]}>
-                <AppText width='70%' fontFamily='PoppinsSemiBold'>{title.toUpperCase()}: </AppText>
+                <AppText width='70%' fontFamily='PoppinsSemiBold'>{title}: </AppText>
                 <AppText fontFamily='PoppinsSemiBold' color={colors.mediumDark}>{CURRENT_DIAGNOSES_DATA[sessions[state ?? 0][item]].title}</AppText>
             </View>
         )
@@ -84,34 +84,39 @@ function Results({sessions,state}) {
             {Component1('Position Right', 'POSITION_RIGHT')}
             {Component1('Position Left', 'POSITION_LEFT')}
             {Component1('Handedness', 'HANDEDNESS')}
-            {Component1('Physical Deformity Visual Impairment', 'PHYSICAL_DEFORMITY_VISUAL_IMPAIRMENT')}
-            {Component1('Physical Deformity Osteoporosis', 'PHYSICAL_DEFORMITY_OSTEOPOROSIS')}
-            {Component1('Physical Deformity Dislocation', 'PHYSICAL_DEFORMITY_DISLOCATION')}
-            {Component1('Physical Deformity Mental Retardation', 'PHYSICAL_DEFORMITY_MENTAL_RETARDATION')}
-            {Component1('Physical Deformity Pedal Oedema', 'PHYSICAL_DEFORMITY_PEDAL_OEDEMA')}
-            {Component1('Physical Deformity Respiratory Infections', 'PHYSICAL_DEFORMITY_RESPIRATORY_INFECTIONS')}
-            {Component1('Physical Deformity Stroke', 'PHYSICAL_DEFORMITY_STROKE')}
-            {Component1('Physical Deformity Cognitive Impairment', 'PHYSICAL_DEFORMITY_COGNITIVE_IMPAIRMENT')}
             {Component1('Current Drug Treatment', 'CURRENT_DRUG_TREATMENT')}
             {Component1('Observations', 'OBSERVATIONS')}
             {Component1('Memory', 'MEMORY')}
 
-            {Component2('Current Diagnoses Schizophrenia', 'CURRENT_DIAGNOSES_SCHIZOPHRENIA')}
-            {Component2('Current Diagnoses Depression', 'CURRENT_DIAGNOSES_DEPRESSION')}
-            {Component2('Current Diagnoses Bipolar', 'CURRENT_DIAGNOSES_BIPOLAR')}
-            {Component2('Current Diagnoses Neurocognitive Disorder Dementia', 'CURRENT_DIAGNOSES_NEUROCOGNITIVE_DISORDER_DEMENTIA')}
-            {Component2('Current Diagnoses Anxiety Disorder', 'CURRENT_DIAGNOSES_ANXIETY_DISORDER')}
-            {Component2('Current Diagnoses Suicide', 'CURRENT_DIAGNOSES_SUICIDE')}
-            {Component2('Current Diagnoses Schizoaffective', 'CURRENT_DIAGNOSES_SCHIZOAFFECTIVE')}
-            {Component2('Current Diagnoses Acute And Transient Psychotic Dis0rder', 'CURRENT_DIAGNOSES_ACUTE_AND_TRANSIENT_PSYCHOTIC_DIS0RDER')}
-            {Component2('Current Diagnoses Mania', 'CURRENT_DIAGNOSES_MANIA')}
-            {Component2('Current Diagnoses Delusional Disorder', 'CURRENT_DIAGNOSES_DELUSIONAL_DISORDER')}
-            {Component2('Current Diagnoses Seizures', 'CURRENT_DIAGNOSES_SEIZURES')}
-            {Component2('Current Diagnoses Psychosis Nos', 'CURRENT_DIAGNOSES_PSYCHOSIS_NOS')}
-            {Component2('Current Diagnoses Depression Nos', 'CURRENT_DIAGNOSES_DEPRESSION_NOS')}
-            {Component2('Current Diagnoses Postpartum Depression', 'CURRENT_DIAGNOSES_POSTPARTUM_DEPRESSION')}
+            <AppText fontFamily='PoppinsSemiBold' fontSize={width*0.045} color={colors.secondary} marginTop='7%'>Physical Deformity</AppText>
+            {Component1('Visual Impairment', 'PHYSICAL_DEFORMITY_VISUAL_IMPAIRMENT')}
+            {Component1('Osteoporosis', 'PHYSICAL_DEFORMITY_OSTEOPOROSIS')}
+            {Component1('Dislocation', 'PHYSICAL_DEFORMITY_DISLOCATION')}
+            {Component1('Mental Retardation', 'PHYSICAL_DEFORMITY_MENTAL_RETARDATION')}
+            {Component1('Pedal Oedema', 'PHYSICAL_DEFORMITY_PEDAL_OEDEMA')}
+            {Component1('Respiratory Infections', 'PHYSICAL_DEFORMITY_RESPIRATORY_INFECTIONS')}
+            {Component1('Stroke', 'PHYSICAL_DEFORMITY_STROKE')}
+            {Component1('Cognitive Impairment', 'PHYSICAL_DEFORMITY_COGNITIVE_IMPAIRMENT')}
 
-            {Component2('Current Diagnoses Neurocognitive Disorder', 'CURRENT_DIAGNOSES_NEUROCOGNITIVE_DISORDER')}
+
+
+            <AppText fontFamily='PoppinsSemiBold' fontSize={width*0.045} color={colors.secondary} marginTop='7%'>Current Diagnoses</AppText>
+            {Component2('Schizophrenia', 'CURRENT_DIAGNOSES_SCHIZOPHRENIA')}
+            {Component2('Depression', 'CURRENT_DIAGNOSES_DEPRESSION')}
+            {Component2('Bipolar', 'CURRENT_DIAGNOSES_BIPOLAR')}
+            {Component2('Neurocognitive Disorder Dementia', 'CURRENT_DIAGNOSES_NEUROCOGNITIVE_DISORDER_DEMENTIA')}
+            {Component2('Anxiety Disorder', 'CURRENT_DIAGNOSES_ANXIETY_DISORDER')}
+            {Component2('Suicide', 'CURRENT_DIAGNOSES_SUICIDE')}
+            {Component2('Schizoaffective', 'CURRENT_DIAGNOSES_SCHIZOAFFECTIVE')}
+            {Component2('Acute And Transient Psychotic Disorder', 'CURRENT_DIAGNOSES_ACUTE_AND_TRANSIENT_PSYCHOTIC_DIS0RDER')}
+            {Component2('Mania', 'CURRENT_DIAGNOSES_MANIA')}
+            {Component2('Delusional Disorder', 'CURRENT_DIAGNOSES_DELUSIONAL_DISORDER')}
+            {Component2('Seizures', 'CURRENT_DIAGNOSES_SEIZURES')}
+            {Component2('Psychosis Nos', 'CURRENT_DIAGNOSES_PSYCHOSIS_NOS')}
+            {Component2('Depression Nos', 'CURRENT_DIAGNOSES_DEPRESSION_NOS')}
+            {Component2('Postpartum Depression', 'CURRENT_DIAGNOSES_POSTPARTUM_DEPRESSION')}
+
+            {Component2('Neurocognitive Disorder', 'CURRENT_DIAGNOSES_NEUROCOGNITIVE_DISORDER')}
                 </View>
         );
     }else{

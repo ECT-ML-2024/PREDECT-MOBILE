@@ -13,6 +13,7 @@ import AppButton from '../../components/AppButton';
 import useApi from '../../hooks/useApi';
 import register from '../../api/register';
 import routes from '../../navigations/routes';
+import AppTextInputPassword from '../../components/AppTextInputPassword';
 
 
 const ReviewSchema = yup.object({
@@ -33,37 +34,38 @@ const ReviewSchema = yup.object({
         value: 'female'
     }
 ]
-function SignUpScreen({navigation}) {
-    const {width,logIn} =useAuth();
-    const registerApi =useApi(register.register)
+function EditProfileScreen({navigation}) {
+    const {width,user,logIn} =useAuth();
+    const registerApi =useApi(register.updateUserProfile)
     const [active,setActive]=useState(false);
-    const [sex, setSex] = useState();
+    const [sex, setSex] = useState(user.sex=='male'?'1':'2');
     const radioButtons = useMemo(() => (setData), []);
 
     const handleSubmit = async ({email,password,username}) =>{
-        setActive(true)
-        const result = await registerApi.request({email:email.trim(),password:password.trim(),sex:setData[sex-1].value,username:username.trim()});
+        setActive(true);
+        const result = await registerApi.request({email:email.trim(),password:password.trim(),sex:setData[sex-1].value,username:username.trim(),doctorId:user._id});
         if(!result.ok){
+            console.log(result.data)
           setActive(false);
           return;
         };
         setActive(false);
-        alert("Registration was successful. Now you can Login!");
-        navigation.navigate(routes.UNAUTHORIZED_USERS);
+        alert("Account has been updated successful!");
+        logIn(result.data)
+        // navigation.goBack();
     }
 
 return (
 <View style={styles.container}>
     <View style={{width:width*0.9}}>
-        <View style={{width:width*0.3,height:width*0.3}}>
-            <Image style={{width:'100%',height:'100%'}} source={require('../../assets/images/preLogo.png')}/>
+        <View style={{width:width*0.25,height:width*0.25}}>
+            <Image style={{width:'100%',height:'100%'}} source={require('../../assets/images/avatar.png')}/>
         </View>
-        <AppText fontSize={width*0.06}>Hi, <AppText fontSize={width*0.06} color={colors.secondary} fontFamily='PoppinsSemiBold'>Sign Up</AppText></AppText>
-        <AppText>to your New Account</AppText>
+        <AppText fontSize={width*0.06} color={colors.secondary} fontFamily='PoppinsSemiBold'>Update Profile</AppText>
     </View>
 
     <Formik
-          initialValues={{email:"", password:"",username:""}}
+          initialValues={{email:user.email, password:user.password,username:user.username}}
           validationSchema={ReviewSchema}
           onSubmit={handleSubmit}
           >
@@ -83,7 +85,7 @@ return (
                     touched={props.touched.email}
                     errors={props.errors.email}/>
 
-                    <AppTextInput placeholder={'Password'}
+                    <AppTextInputPassword placeholder={'Password'}
                     onChangeText={props.handleChange('password')}
                     onBlur={props.handleBlur('password')}
                     value={props.values.password}
@@ -97,16 +99,14 @@ return (
                     />
                 </View>
 
-                <AppButton text={'Sign Up'} width={width*0.9} marginTop={'7%'}
+                <AppButton text={'Submit'} width={width*0.9} marginTop={'7%'}
                 onPress={props.handleSubmit} active={active}/>
             </>)}</Formik>
-
-    <AppText marginTop='5%'>Already have an account? <AppText color={colors.secondary}fontFamily='PoppinsSemiBold' onPress={()=>navigation.goBack()}>Login</AppText></AppText>
 </View>
 );
 }
 
-export default SignUpScreen;
+export default EditProfileScreen;
 const styles = StyleSheet.create({
 container:{
 flex:1,

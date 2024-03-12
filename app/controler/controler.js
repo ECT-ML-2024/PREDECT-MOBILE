@@ -1,3 +1,4 @@
+import EditProfileScreen from "../screens/auth/EditProfileScreen"
 import ForgetPasswordScreen from "../screens/auth/ForgetPasswordScreen"
 import GetStartedScreen from "../screens/auth/GetStartedScreen"
 import IntroScreen from "../screens/auth/IntroScreen"
@@ -13,6 +14,7 @@ import DoneScreen from "../screens/home/DoneScreen"
 import HomeScreen from "../screens/home/HomeScreen"
 import ResultsScreen from "../screens/home/ResultsScreen"
 import NewDoctorsScreen from "../screens/newdoctors/DoctorsScreen"
+import UnathorizedUsersScreen from "../screens/auth/UnathorizedUsersScreen"
 
 // Authentication
 const GetStartedStackScreen = ({ navigation })=> <GetStartedScreen navigation={navigation}/>
@@ -22,6 +24,8 @@ const NewPasswordStackScreen = ({ navigation })=> <NewPasswordScreen navigation=
 const OTPStackScreen = ({ navigation })=> <OTPScreen navigation={navigation}/>
 const SignUpStackScreen = ({ navigation })=> <SignUpScreen navigation={navigation}/>
 const ForgetPasswordStackScreen = ({ navigation })=> <ForgetPasswordScreen navigation={navigation}/>
+const UnathorizedUsersStackScreen = ({ navigation })=> <UnathorizedUsersScreen navigation={navigation}/>
+const EditProfileScreenStackScreen = ({ navigation })=> <EditProfileScreen navigation={navigation}/>
 
 
 // Home
@@ -54,6 +58,7 @@ export default{
   PatientStackScreen,
   GraphStackScreen,
   NewDoctorsStackScreen,
-  AddPatientStackScreen
-
+  AddPatientStackScreen,
+  UnathorizedUsersStackScreen,
+  EditProfileScreenStackScreen
   }

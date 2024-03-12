@@ -20,7 +20,7 @@ export function loadData(dataKey, setData,array) {
     labels: newLabels,
     datasets: [
       {
-        data: newData,
+        data: newData.length>0?newData:[0],
         color: (opacity = 1) => `rgba(134, 65, 244, ${opacity})`,
         strokeWidth: 2,
       },
@@ -39,11 +39,11 @@ export function loadSessionDates(sessions,setCommitsData) {
   // Assign count values based on recency
   sortedSessions.forEach((session, index) => {
     if (index < 1) {
-      countValues.push({ date: session.date, count: 5 });
+      countValues.push({ date: session.date, count: 1 });
     }else if (index < 2){
-      countValues.push({ date: session.date, count: 4 });
+      countValues.push({ date: session.date, count: 1 });
     } else if (index < 4) {
-      countValues.push({ date: session.date, count: 3 });
+      countValues.push({ date: session.date, count: 1 });
     } else {
       countValues.push({ date: session.date, count: 1 });
     }
