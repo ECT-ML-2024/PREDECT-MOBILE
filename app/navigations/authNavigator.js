@@ -14,7 +14,7 @@ return(
       <Stack.Screen name={routes.FORGET_PASSWORD} component={controler.ForgetPasswordStackScreen} options={{headerShown:false}}/>
       <Stack.Screen name={routes.NEW_FORGET_PASSWORD} component={controler.NewPasswordStackScreen} options={{headerShown:false}}/>
       <Stack.Screen name={routes.UNAUTHORIZED_USERS} component={controler.UnathorizedUsersStackScreen} options={{headerShown:false}}/>
-      {/* <Stack.Screen name={routes.EDIT_PROFILE} component={controler.EditProfileScreenStackScreen} options={{headerShown:false}}/> */}
+      <Stack.Screen name={routes.OPT} component={controler.OTPStackScreen} options={{headerShown:false}}/>
     </Stack.Navigator>
   )
 }

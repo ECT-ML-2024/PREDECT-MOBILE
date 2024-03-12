@@ -64,7 +64,7 @@ return (
                     value={props.values.password}
                     touched={props.touched.password}
                     errors={props.errors.password}/>
-                    <AppText textAlign={'right'}>Forgot Password?</AppText>
+                    <AppText textAlign={'right'} onPress={()=>navigation.navigate(routes.FORGET_PASSWORD)}>Forgot Password?</AppText>
                 </View>
                 <AppButton text={'Login'} width={width*0.9} marginTop={'7%'} 
                 onPress={props.handleSubmit} active={active}/>

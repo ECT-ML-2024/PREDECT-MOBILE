@@ -20,8 +20,8 @@ import UnathorizedUsersScreen from "../screens/auth/UnathorizedUsersScreen"
 const GetStartedStackScreen = ({ navigation })=> <GetStartedScreen navigation={navigation}/>
 const LogInStackScreen = ({ navigation })=> <LogInScreen navigation={navigation}/>
 const IntroStackScreen = ({ navigation })=> <IntroScreen navigation={navigation}/>
-const NewPasswordStackScreen = ({ navigation })=> <NewPasswordScreen navigation={navigation}/>
-const OTPStackScreen = ({ navigation })=> <OTPScreen navigation={navigation}/>
+const NewPasswordStackScreen = ({ navigation,route })=> <NewPasswordScreen navigation={navigation} route={route}/>
+const OTPStackScreen = ({ navigation,route })=> <OTPScreen navigation={navigation} route={route}/>
 const SignUpStackScreen = ({ navigation })=> <SignUpScreen navigation={navigation}/>
 const ForgetPasswordStackScreen = ({ navigation })=> <ForgetPasswordScreen navigation={navigation}/>
 const UnathorizedUsersStackScreen = ({ navigation })=> <UnathorizedUsersScreen navigation={navigation}/>

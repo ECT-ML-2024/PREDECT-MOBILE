@@ -7,6 +7,7 @@ export default Object.freeze({
   NEW_FORGET_PASSWORD:'NewForgetPassword',
   UNAUTHORIZED_USERS:'unathorizedUsers',
   EDIT_PROFILE:'EditProfile',
+  OPT:'OPT',
 
   HOME_TAB:'HomeTab',
   HOME:'home',

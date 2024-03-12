@@ -76,6 +76,10 @@ function HomeScreen({navigation}) {
     const [patients,setPatients]=useState();
     const [selectPatient,setSelectPatient]=useState();
     const [show,setShow] = useState(false);
+    const [text1,setText1] = useState('');
+    const [text2,setText2] = useState('');
+
+
 
 
     const {
@@ -511,11 +515,13 @@ return (
             <View style={{width:width*0.45}}>
             <AppText>Systolic pressure</AppText>
             <AppTextInput
-                onChangeText={props.handleChange('PSBPT')}
-                onBlur={props.handleBlur('PSBPT')}
-                value={props.values.PSBPT}
-                touched={props.touched.PSBPT}
-                errors={props.errors.PSBPT}
+                // onChangeText={props.handleChange('PSBPT')}
+                // onBlur={props.handleBlur('PSBPT')}
+                // value={props.values.PSBPT}
+                // touched={props.touched.PSBPT}
+                // errors={props.errors.PSBPT}
+                value={text1}
+                onChangeText={setText1}
                 width='80%'
                 padding='7%'
                 keyboardType='numeric'
@@ -524,11 +530,13 @@ return (
             <View style={{width:width*0.45,alignItems:'flex-end'}}>
             <AppText>Diastolic pressure</AppText>
             <AppTextInput
-                onChangeText={props.handleChange('PSBPB')}
-                onBlur={props.handleBlur('PSBPB')}
-                value={props.values.PSBPB}
-                touched={props.touched.PSBPB}
-                errors={props.errors.PSBPB}
+                // onChangeText={props.handleChange('PSBPB')}
+                // onBlur={props.handleBlur('PSBPB')}
+                // value={props.values.PSBPB}
+                // touched={props.touched.PSBPB}
+                // errors={props.errors.PSBPB}
+                value={text2}
+                onChangeText={setText2}
                 width='80%'
                 padding='7%'
                 keyboardType='numeric'
