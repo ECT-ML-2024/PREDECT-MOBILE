@@ -16,6 +16,8 @@ export const useInitialStates = () => {
     const [selectedPedalOedema,onSelectedPedalOedema]=useState(2);
     const [selectedRespiratoryInfections,onSelectedRespiratoryInfections]=useState(2);
     const [selectedStroke,onSelectedStroke]=useState(2);
+    const [selectedHearingAdequate,onSelectedHearingAdequate]=useState(2);
+
     const [selectedCognitiveImpairment,onSelectedCognitiveImpairment]=useState(2);
     const [selectedDrugTreatment,onSelectedDrugTreatment]=useState(pickersData.CURRENT_DRUG_TREATMENT[0]);
     const [selectedObservations,onSelectedObservations]=useState(pickersData.OBSERVATIONS[0]);
@@ -35,7 +37,7 @@ export const useInitialStates = () => {
     const [selectedDepressionNOS,onSelectedDepressionNOS]=useState(pickersData.CURRENT_DIAGNOSES[0]);
     const [selectedPostpartumDepression,onSelectedPostpartumDepression]=useState(pickersData.CURRENT_DIAGNOSES[0]);
     const [selectedNeurocognitive,onSelectedNeurocognitive]=useState(pickersData.CURRENT_DIAGNOSES[0]);
-    const [GENDER,setGENDER]=useState('MALE');
+    const [GENDER,setGENDER]=useState('0');
     const [AGE,setAGE]=useState('');
     const [selectedDIGIT_SPAN_Forward_2_1_8_5_4,onSelectedDIGIT_SPAN_Forward_2_1_8_5_4]=useState(1);
     const [selectedDIGIT_SPAN_backward_7_4_2,onSelectedDIGIT_SPAN_backward_7_4_2]=useState(1);
@@ -112,7 +114,8 @@ export const useInitialStates = () => {
         selectedDELAYED_RECALL_CHURCH,onSelectedDELAYED_RECALL_CHURCH,
         selectedDELAYED_RECALL_DAISY,onSelectedDELAYED_RECALL_DAISY,
         selectedDELAYED_RECALL_RED,onSelectedDELAYED_RECALL_RED,
-        selectedFLUENCY,onSelectedFLUENCY
+        selectedFLUENCY,onSelectedFLUENCY,
+        selectedHearingAdequate,onSelectedHearingAdequate
     };
     
 };

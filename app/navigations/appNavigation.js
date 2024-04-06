@@ -7,6 +7,7 @@ import routes from './routes';
 import useAuth from '../auth/useAuth';
 import NewWorkersNavigator from './newWorkersNavigation';
 import CustomDrawerContent from './CustomDrawerContent';
+import ProfileNavigator from './profileNavigation';
 
 const Drawer = createDrawerNavigator();
 
@@ -29,6 +30,7 @@ function MyDrawer() {
         <Drawer.Screen name={routes.HOME_TAB} options={{title:'Home'}} component={HomeNavigator} />
         <Drawer.Screen name={routes.HISTORY_TAB} options={{title:'Patient History'}} component={HistoryNavigator} />
         {user.admin&&<Drawer.Screen name={routes.NEW_WORKERS_TAB} options={{title:'New Doctors'}} component={NewWorkersNavigator} />}
+        <Drawer.Screen name={routes.PROFILE_TAB} options={{title:'Profile'}} component={ProfileNavigator} />
       </Drawer.Navigator>
     );
  

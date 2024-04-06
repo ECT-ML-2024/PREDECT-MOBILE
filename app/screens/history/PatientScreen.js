@@ -38,6 +38,16 @@ function PatientScreen({navigation,route}) {
     ],
   });
 
+  const [data_SpO2,setData_SpO2]=useState({
+    datasets: [
+      {
+        data: [0],
+        color: (opacity = 1) => `rgba(134, 65, 244, ${opacity})`, // Line color
+        strokeWidth: 2, // Line width
+      },
+    ],
+  });
+
 
   useEffect(()=>{
     loadPatient();
@@ -52,15 +62,27 @@ function PatientScreen({navigation,route}) {
       setSessions(response.data);
       loadResults(response.data);
       const newData = [];
+      const newData_SpO2 = [];
     
       response.data.forEach(element => {
         const result = element.PSBPT / element.PSBPB;
+        const result_SpO2 = element.Pre_SpO2;
         newData.push(result);
+        newData_SpO2.push(result_SpO2);
       });
       setData({
         datasets: [
           {
             data: newData.length>0?newData:[0],
+            color: (opacity = 1) => `rgba(134, 65, 244, ${opacity})`, // Line color
+            strokeWidth: 2, // Line width
+          },
+        ],
+      })
+      setData_SpO2({
+        datasets: [
+          {
+            data: newData_SpO2.length>0?newData_SpO2:[0],
             color: (opacity = 1) => `rgba(134, 65, 244, ${opacity})`, // Line color
             strokeWidth: 2, // Line width
           },
@@ -132,7 +154,7 @@ return (
   <View style={{flexDirection:'row',justifyContent:'space-between',width:width*0.95}}>
         <View style={{width:width*0.46,backgroundColor:colors.primary,alignItems:'center',padding:'2%',borderRadius:10,marginVertical:'5%'}}>
           <View style={{flexDirection:'row',justifyContent:'space-between',width:'100%'}}>
-              <AppText fontFamily='PoppinsSemiBold'>SYS</AppText>
+              <AppText fontFamily='PoppinsSemiBold' numberOfLines={1} width={'85%'}>BLOOD PRESSURE</AppText>
               <MaterialCommunityIcons name="brain" size={width*0.07} color="black" />
           </View>
           <AppText fontFamily='PoppinsSemiBold' fontSize={width*0.06} color={colors.secondary}>123<AppText color={colors.mediumDark}>mmHg</AppText></AppText>
@@ -156,13 +178,13 @@ return (
       </View>
           <View style={{width:width*0.46,backgroundColor:colors.primary,alignItems:'center',padding:'2%',borderRadius:10,marginVertical:'5%'}}>
           <View style={{flexDirection:'row',justifyContent:'space-between',width:'100%'}}>
-              <AppText fontFamily='PoppinsSemiBold'>DIA</AppText>
+              <AppText fontFamily='PoppinsSemiBold'>SpO2</AppText>
               <MaterialCommunityIcons name="brain" size={width*0.07} color="black" />
           </View>
-          <AppText fontFamily='PoppinsSemiBold' fontSize={width*0.06} color={colors.secondary}>123<AppText color={colors.mediumDark}>mmHg</AppText></AppText>
+          <AppText fontFamily='PoppinsSemiBold' fontSize={width*0.06} color={colors.secondary}>123<AppText color={colors.mediumDark}>%</AppText></AppText>
           <View>
           <LineChart
-            data={data}
+            data={data_SpO2}
             width={width*0.42}
             height={width*0.35}
             chartConfig={{

@@ -6,8 +6,8 @@ export default Object.freeze({
   FORGET_PASSWORD:'ForgetPassword',
   NEW_FORGET_PASSWORD:'NewForgetPassword',
   UNAUTHORIZED_USERS:'unathorizedUsers',
-  EDIT_PROFILE:'EditProfile',
   OPT:'OPT',
+  LOAD:'Load',
 
   HOME_TAB:'HomeTab',
   HOME:'home',
@@ -21,7 +21,9 @@ export default Object.freeze({
   ADD_PATIENT:'AddPatient',
 
   NEW_WORKERS_TAB:'NewWorkersTab',
-  NEW_DOCTORS:'NewDoctors'
+  NEW_DOCTORS:'NewDoctors',
   
+  PROFILE_TAB:'ProfileTab',
+  PROFILE:'Profile'
 
 });

@@ -17,9 +17,8 @@ return (
 
     </View>
     <AppButton text={'See Results'} width='80%'
-    onPress={()=>navigation.navigate(routes.HOME_TAB,{
-        screen:routes.RESULTS,
-        params:{results:results}
+    onPress={()=>navigation.replace(routes.RESULTS,{
+        results:results
     })}
     />
 </View>

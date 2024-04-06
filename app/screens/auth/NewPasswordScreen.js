@@ -1,5 +1,5 @@
 import React, { useState } from 'react';
-import { View, StyleSheet, Image } from 'react-native';
+import { View, StyleSheet, Image, KeyboardAvoidingView, Platform, ScrollView } from 'react-native';
 import { Formik } from 'formik';
 import * as yup from 'yup';
 
@@ -13,14 +13,14 @@ import register from '../../api/register';
 
 
 const ReviewSchema = yup.object({
-    password: yup.string().min(6).required(),
-    cpassword: yup.string().min(6).required()
+    password: yup.string().min(6).required().label('New password'),
+    cpassword: yup.string().min(6).required().label('Confirm password')
   })
 
 function NewPasswordScreen({navigation,route}) {
     const {code,email} =route.params;
     // console.log(email,code)
-    const {width} =useAuth();
+    const {width,height} =useAuth();
     const changePasswordApi= useApi(register.changePassword);
     const [password,setPassword]=useState('');
     const [cpassword,setCPassword]=useState('');
@@ -44,8 +44,18 @@ function NewPasswordScreen({navigation,route}) {
         setActive(false);
     }
 return (
-<View style={styles.container}>
-    <View style={{width:width*0.9}}>
+    <KeyboardAvoidingView
+    behavior={Platform.OS === "ios" ? "padding" : null}
+    style={styles.keyboardAvoidingView}><>
+  
+  <View style={{width:width,height:height*0.1,backgroundColor:colors.primary}}/>
+  <ScrollView contentContainerStyle={styles.container}
+  >
+{/* <View style={styles.container}> */}
+    <View style={{width:width*0.9,marginTop:height*0.1}}>
+    <View style={{width:width*0.3,height:width*0.3}}>
+            <Image style={{width:'100%',height:'100%'}} source={require('../../assets/images/preLogo.png')}/>
+        </View>
         <AppText fontSize={width*0.06} width={width*0.4}>Set your new <AppText fontFamily='PoppinsSemiBold' fontSize={width*0.06} color={colors.secondary} > Password</AppText></AppText>
 
         <AppText>Enter yout new password</AppText>
@@ -65,7 +75,7 @@ return (
                     touched={props.touched.password}
                     errors={props.errors.password}/>
 
-                    <AppTextInput placeholder={'Retype Password'} 
+                    <AppTextInput placeholder={'Confirm Password'} 
                     onChangeText={props.handleChange('cpassword')}
                     onBlur={props.handleBlur('cpassword')}
                     value={props.values.cpassword}
@@ -74,19 +84,24 @@ return (
                 </View>
 
                 <AppText color='red'>{errorMsg}</AppText>
-                <AppButton text={'Login'} width={width*0.9} marginTop={'10%'} onPress={props.handleSubmit}/>
+                <AppButton text={'Submit'} width={width*0.9} marginTop={'10%'} onPress={props.handleSubmit}/>
              </>)}</Formik>
-    
-</View>
+             <View style={{width:'100%',height:height*0.18}}/>
+
+</ScrollView>
+</>
+</KeyboardAvoidingView>
 );
 }
 
 export default NewPasswordScreen;
 const styles = StyleSheet.create({
+
 container:{
-flex:1,
-justifyContent:'center',
- alignItems:'center',
- backgroundColor:colors.primary
-}
+    alignItems:'center',
+    backgroundColor:colors.primary
+  },
+  keyboardAvoidingView: {
+    flex: 1,
+  },
 });

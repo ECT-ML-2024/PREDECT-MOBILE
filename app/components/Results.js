@@ -24,7 +24,7 @@ function Results({sessions,state}) {
         return(
             <View style={styles.input}>
                 <AppText width='70%' fontFamily='PoppinsSemiBold'>{title}: </AppText>
-                <AppText fontFamily='PoppinsSemiBold' color={colors.mediumDark}>{sessions[state ?? 0][item].toFixed(dec)}{unit}</AppText>
+                <AppText fontFamily='PoppinsSemiBold' color={colors.mediumDark}>{sessions[state ?? 0][item]?.toFixed(dec)}{unit}</AppText>
             </View>
         )
     }
@@ -65,6 +65,10 @@ function Results({sessions,state}) {
             {Component('Pre Temperature','PRE_TEMPERATURE','°',1)}
             {Component('Pre Stimulation Pulse','PRE_STIMULATION_PULSE','BPM',0)}
             {Component('Pre Respiratory Rate','PRE_RESPIRATORY_RATE','BPM',0)}
+            {Component('Pre Perfusion Index','Pre_Perfusion_Index','BPM',2)}
+            {Component('Pre SpO2','Pre_SpO2','%',2)}
+            {Component('Fasting Blood Sugars','FASTING_BLOOD_SUGARS','mg/dL',2)}
+            {Component1('Hearing Adequate', 'HEARING_ADEQUATE')}
             {Component('Are You Feeling Better','ARE_YOU_FEELING_BETTER','',0)}
             {Component('Post Stimulation Aggression','POST_STIMULATION_AGGRESSION','',0)}
             {Component('Digit Span Forward','DIGIT_SPAN_Forward_2_1_8_5_4','',0)}

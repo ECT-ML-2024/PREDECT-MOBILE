@@ -110,6 +110,18 @@ const CURRENT_DIAGNOSES = [
   { title: "3 YRS And Above", value: 5 },
 ];
 
+const setSex = [
+  {
+    id: '1', // acts as primary key, should be unique and non-empty string
+    label: 'Male',
+    value: 'MALE'
+},
+{
+    id: '2',
+    label: 'Female',
+    value: 'Female'
+}
+]
 
 
-export default { TYPE_OF_STIMULATION,OUTCOME,ANAESTHESIA,POLARITY,POSITION,HANDEDNESS,TRUEOFFALSE,CURRENT_DRUG_TREATMENT,OBSERVATIONS,MEMORY,CURRENT_DIAGNOSES }
+export default { TYPE_OF_STIMULATION,OUTCOME,ANAESTHESIA,POLARITY,POSITION,HANDEDNESS,TRUEOFFALSE,CURRENT_DRUG_TREATMENT,OBSERVATIONS,MEMORY,CURRENT_DIAGNOSES,setSex }

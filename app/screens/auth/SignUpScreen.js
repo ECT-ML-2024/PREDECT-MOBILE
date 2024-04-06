@@ -1,5 +1,5 @@
 import React, { useMemo, useState } from 'react';
-import { View, StyleSheet, Image } from 'react-native';
+import { View, StyleSheet, Image, KeyboardAvoidingView, Platform, ScrollView } from 'react-native';
 import { Formik } from 'formik';
 import * as yup from 'yup';
 import RadioGroup from 'react-native-radio-buttons-group';
@@ -34,14 +34,19 @@ const ReviewSchema = yup.object({
     }
 ]
 function SignUpScreen({navigation}) {
-    const {width,logIn} =useAuth();
+    const {width,height} =useAuth();
     const registerApi =useApi(register.register)
     const [active,setActive]=useState(false);
     const [sex, setSex] = useState();
     const radioButtons = useMemo(() => (setData), []);
 
     const handleSubmit = async ({email,password,username}) =>{
-        setActive(true)
+        setActive(true);
+        if(setData[sex-1] == undefined){
+            alert('Please select your Gender!');
+            setActive(false);
+            return;
+        }
         const result = await registerApi.request({email:email.trim(),password:password.trim(),sex:setData[sex-1].value,username:username.trim()});
         if(!result.ok){
           setActive(false);
@@ -53,8 +58,15 @@ function SignUpScreen({navigation}) {
     }
 
 return (
-<View style={styles.container}>
-    <View style={{width:width*0.9}}>
+    <KeyboardAvoidingView
+    behavior={Platform.OS === "ios" ? "padding" : null}
+    style={styles.keyboardAvoidingView}><>
+  
+  <View style={{width:width,height:height*0.1,backgroundColor:colors.primary}}/>
+  <ScrollView contentContainerStyle={styles.container}
+  >
+{/* <View style={styles.container}> */}
+    <View style={{width:width*0.9,marginTop:height*0.05}}>
         <View style={{width:width*0.3,height:width*0.3}}>
             <Image style={{width:'100%',height:'100%'}} source={require('../../assets/images/preLogo.png')}/>
         </View>
@@ -102,16 +114,27 @@ return (
             </>)}</Formik>
 
     <AppText marginTop='5%'>Already have an account? <AppText color={colors.secondary}fontFamily='PoppinsSemiBold' onPress={()=>navigation.goBack()}>Login</AppText></AppText>
-</View>
+    <View style={{width:'100%',height:height*0.12}}/>
+{/* </View> */}
+</ScrollView>
+</>
+</KeyboardAvoidingView>
 );
 }
 
 export default SignUpScreen;
 const styles = StyleSheet.create({
+// container:{
+// flex:1,
+// justifyContent:'center',
+//  alignItems:'center',
+//  backgroundColor:colors.primary
+// }
 container:{
-flex:1,
-justifyContent:'center',
- alignItems:'center',
- backgroundColor:colors.primary
-}
+    alignItems:'center',
+    backgroundColor:colors.primary
+  },
+  keyboardAvoidingView: {
+    flex: 1,
+  },
 });

@@ -16,7 +16,8 @@ return(
         backgroundColor:colors.primary,
         color:'blue'
       },
-      headerTitleAlign:'center'}}>
+      headerTitleAlign:'center',
+      headerTitle:"History"}}>
       <Stack.Screen name={routes.PATIENTS} component={controler.PatientsStackScreen} options={{headerShown:false}}/>
       <Stack.Screen name={routes.PATIENT} component={controler.PatientStackScreen} options={{headerShown:false}}/>
       <Stack.Screen name={routes.GRAPH} component={controler.GraphStackScreen} options={{headerShown:false}}/>

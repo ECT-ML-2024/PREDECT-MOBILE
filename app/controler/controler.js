@@ -1,4 +1,3 @@
-import EditProfileScreen from "../screens/auth/EditProfileScreen"
 import ForgetPasswordScreen from "../screens/auth/ForgetPasswordScreen"
 import GetStartedScreen from "../screens/auth/GetStartedScreen"
 import IntroScreen from "../screens/auth/IntroScreen"
@@ -15,6 +14,8 @@ import HomeScreen from "../screens/home/HomeScreen"
 import ResultsScreen from "../screens/home/ResultsScreen"
 import NewDoctorsScreen from "../screens/newdoctors/DoctorsScreen"
 import UnathorizedUsersScreen from "../screens/auth/UnathorizedUsersScreen"
+import ProfileScreen from "../screens/profile/ProfileScreen"
+import LoadingScreen from "../screens/auth/LoadingScreen"
 
 // Authentication
 const GetStartedStackScreen = ({ navigation })=> <GetStartedScreen navigation={navigation}/>
@@ -25,7 +26,7 @@ const OTPStackScreen = ({ navigation,route })=> <OTPScreen navigation={navigatio
 const SignUpStackScreen = ({ navigation })=> <SignUpScreen navigation={navigation}/>
 const ForgetPasswordStackScreen = ({ navigation })=> <ForgetPasswordScreen navigation={navigation}/>
 const UnathorizedUsersStackScreen = ({ navigation })=> <UnathorizedUsersScreen navigation={navigation}/>
-const EditProfileScreenStackScreen = ({ navigation })=> <EditProfileScreen navigation={navigation}/>
+const LoadingStackScreen = ({ navigation })=> <LoadingScreen navigation={navigation}/>
 
 
 // Home
@@ -42,7 +43,10 @@ const AddPatientStackScreen = ({ navigation,route })=> <AddPatientScreen navigat
 
 // New Doctors
 const NewDoctorsStackScreen = ({ navigation,route })=> <NewDoctorsScreen navigation={navigation} route={route}/>
-  
+
+// Profile
+const ProfileStackScreen = ({ navigation,route })=> <ProfileScreen navigation={navigation} route={route}/>
+
 export default{
   GetStartedStackScreen,
   LogInStackScreen,
@@ -60,5 +64,6 @@ export default{
   NewDoctorsStackScreen,
   AddPatientStackScreen,
   UnathorizedUsersStackScreen,
-  EditProfileScreenStackScreen
+  ProfileStackScreen,
+  LoadingStackScreen
   }

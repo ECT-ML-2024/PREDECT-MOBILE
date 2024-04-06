@@ -1,5 +1,5 @@
 import React, { useMemo, useState } from 'react';
-import { View, StyleSheet, Image } from 'react-native';
+import { View, StyleSheet, KeyboardAvoidingView, Platform, ScrollView, Image } from 'react-native';
 import { Formik } from 'formik';
 import * as yup from 'yup';
 import RadioGroup from 'react-native-radio-buttons-group';
@@ -8,12 +8,11 @@ import RadioGroup from 'react-native-radio-buttons-group';
 import AppText from '../../components/Text';
 import useAuth from '../../auth/useAuth';
 import colors from '../../config/colors';
-import AppTextInput from '../../components/AppTextInput';
-import AppButton from '../../components/AppButton';
-import useApi from '../../hooks/useApi';
 import register from '../../api/register';
-import routes from '../../navigations/routes';
+import AppTextInput from '../../components/AppTextInput';
 import AppTextInputPassword from '../../components/AppTextInputPassword';
+import AppButton from '../../components/AppButton';
+import ChangePassword from '../../components/ChangePassword';
 
 
 const ReviewSchema = yup.object({
@@ -34,12 +33,14 @@ const ReviewSchema = yup.object({
         value: 'female'
     }
 ]
-function EditProfileScreen({navigation}) {
-    const {width,user,logIn} =useAuth();
-    const registerApi =useApi(register.updateUserProfile)
+
+function ProfileScreen(props) {
+    const {width,user} =useAuth();
+    const registerApi =useApi(register.updateUserProfile);
     const [active,setActive]=useState(false);
     const [sex, setSex] = useState(user.sex=='male'?'1':'2');
     const radioButtons = useMemo(() => (setData), []);
+
 
     const handleSubmit = async ({email,password,username}) =>{
         setActive(true);
@@ -56,27 +57,27 @@ function EditProfileScreen({navigation}) {
     }
 
 return (
-<View style={styles.container}>
-    <View style={{width:width*0.9}}>
-        <View style={{width:width*0.25,height:width*0.25}}>
-            <Image style={{width:'100%',height:'100%'}} source={require('../../assets/images/avatar.png')}/>
-        </View>
-        <AppText fontSize={width*0.06} color={colors.secondary} fontFamily='PoppinsSemiBold'>Update Profile</AppText>
-    </View>
-
-    <Formik
+    <KeyboardAvoidingView
+    behavior={Platform.OS === "ios" ? "padding" : null}
+    style={styles.keyboardAvoidingView}>
+      <>
+    <ScrollView contentContainerStyle={styles.container}>
+      <View style={{backgroundColor:colors.primary,width:width*0.95,alignItems:'center',padding:'5%',borderRadius:10,marginBottom:'5%'}}>
+          <Image style={{width:width*0.2,height:width*0.2}} source={user.sex =='male'?require('../../assets/images/avatar.png'):require('../../assets/images/female-avatar.png')}/>
+          <Formik
           initialValues={{email:user.email, password:user.password,username:user.username}}
           validationSchema={ReviewSchema}
           onSubmit={handleSubmit}
           >
             {(props)=>(<>
-                <View style={{width:width*0.9,marginTop:'10%'}}>
+                <View style={{width:'95%',marginTop:'5%',}}>
                     <AppTextInput placeholder={'Name'} 
                     onChangeText={props.handleChange('username')}
                     onBlur={props.handleBlur('username')}
                     value={props.values.username}
                     touched={props.touched.username}
-                    errors={props.errors.username}/>
+                    errors={props.errors.username}
+                    />
 
                     <AppTextInput placeholder={'Email'}
                     onChangeText={props.handleChange('email')}
@@ -85,12 +86,6 @@ return (
                     touched={props.touched.email}
                     errors={props.errors.email}/>
 
-                    <AppTextInputPassword placeholder={'Password'}
-                    onChangeText={props.handleChange('password')}
-                    onBlur={props.handleBlur('password')}
-                    value={props.values.password}
-                    touched={props.touched.password}
-                    errors={props.errors.password}/>
                     <RadioGroup 
                         radioButtons={radioButtons} 
                         onPress={setSex}
@@ -99,19 +94,27 @@ return (
                     />
                 </View>
 
-                <AppButton text={'Submit'} width={width*0.9} marginTop={'7%'}
+                <AppButton text={'Update Profile'} width={'95%'} marginTop={'7%'}
                 onPress={props.handleSubmit} active={active}/>
             </>)}</Formik>
-</View>
+
+        
+    </View>
+
+    <ChangePassword/> 
+    </ScrollView>
+    </>
+    </KeyboardAvoidingView>
 );
 }
 
-export default EditProfileScreen;
+export default ProfileScreen;
 const styles = StyleSheet.create({
-container:{
-flex:1,
-justifyContent:'center',
- alignItems:'center',
- backgroundColor:colors.primary
-}
+    container:{
+        paddingVertical:'5%',
+        alignItems:'center'
+      },
+      keyboardAvoidingView: {
+        flex: 1,
+      },
 });

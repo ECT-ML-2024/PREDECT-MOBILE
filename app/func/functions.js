@@ -38,15 +38,15 @@ export function loadSessionDates(sessions,setCommitsData) {
 
   // Assign count values based on recency
   sortedSessions.forEach((session, index) => {
-    if (index < 1) {
-      countValues.push({ date: session.date, count: 1 });
-    }else if (index < 2){
-      countValues.push({ date: session.date, count: 1 });
-    } else if (index < 4) {
-      countValues.push({ date: session.date, count: 1 });
-    } else {
-      countValues.push({ date: session.date, count: 1 });
-    }
+    // if (index < 1) {
+    //   countValues.push({ date: session.date, count: 1 });
+    // }else if (index < 2){
+    //   countValues.push({ date: session.date, count: 1 });
+    // } else if (index < 4) {
+    //   countValues.push({ date: session.date, count: 1 });
+    // } else {
+    // }
+    countValues.push({ date: session.date, count: 1 });
   });
 
   // Update the commitsData state with the newly calculated count values

@@ -18,7 +18,6 @@ function OTPScreen({navigation,route}) {
     const [errorMsg, setErrorMsg] = useState();
     const inputRefs = useRef([]);
 
-    console.log("Email:=>",email);
     useEffect(() => {
         if (code[code.length - 1] !== '' && code.every(char => char !== '')) {
             handleSubmit();
@@ -41,7 +40,6 @@ function OTPScreen({navigation,route}) {
         setActive(true);
         console.log(email)
         const otp = code.filter(char => char !== '').join('');
-        console.log('Submitting OTP:', otp);
         const results =await verifyCodeApi.request({code:otp,email});
 
         if(results.data.status){

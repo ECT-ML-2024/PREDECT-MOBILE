@@ -70,6 +70,7 @@ function HomeScreen({navigation}) {
     const previousScrollY = useRef(0);
     const radioButtons = useMemo(() => (setData), []);
     const radioButtons_DigitSpan = useMemo(() => (zeroAndOneData), []);
+    const radioButtons_Sex = useMemo(() => (pickersData.setSex), []);
 
     const [active,setActive]=useState(false);
     const [loading,setLoading]=useState(false);
@@ -97,6 +98,7 @@ function HomeScreen({navigation}) {
         selectedPedalOedema,onSelectedPedalOedema,
         selectedRespiratoryInfections,onSelectedRespiratoryInfections,
         selectedStroke,onSelectedStroke,
+        selectedHearingAdequate,onSelectedHearingAdequate,
         selectedCognitiveImpairment,onSelectedCognitiveImpairment,
         selectedDrugTreatment,onSelectedDrugTreatment,
         selectedObservations,onSelectedObservations,
@@ -163,6 +165,7 @@ function HomeScreen({navigation}) {
             PHYSICAL_DEFORMITY_PEDAL_OEDEMA:setData[selectedPedalOedema-1].value,
             PHYSICAL_DEFORMITY_RESPIRATORY_INFECTIONS:setData[selectedRespiratoryInfections-1].value,
             PHYSICAL_DEFORMITY_STROKE:setData[selectedStroke-1].value,
+            HEARING_ADEQUATE:setData[selectedHearingAdequate-1].value,
             PHYSICAL_DEFORMITY_COGNITIVE_IMPAIRMENT:setData[selectedCognitiveImpairment-1].value,
             DIGIT_SPAN_Forward_2_1_8_5_4:zeroAndOneData[selectedDIGIT_SPAN_Forward_2_1_8_5_4-1].value,
             DIGIT_SPAN_backward_7_4_2:zeroAndOneData[selectedDIGIT_SPAN_backward_7_4_2-1].value,
@@ -172,7 +175,7 @@ function HomeScreen({navigation}) {
             DELAYED_RECALL_DAISY:zeroAndOneData[selectedDELAYED_RECALL_DAISY-1].value,
             DELAYED_RECALL_RED:zeroAndOneData[selectedDELAYED_RECALL_RED-1].value,
             FLUENCY:zeroAndOneData[selectedFLUENCY-1].value,
-            GENDER:GENDER,
+            GENDER:pickersData.setSex[GENDER-1].value,
             CURRENT_DRUG_TREATMENT: selectedDrugTreatment.title,
             OBSERVATIONS: selectedObservations.title,
             MEMORY: selectedMemory.title,
@@ -195,7 +198,6 @@ function HomeScreen({navigation}) {
             ...values
         }
 
-        
         const res = await predictApi.request(finalData);
         if(res.ok){
             navigation.navigate(routes.HOME_TAB,{
@@ -208,7 +210,7 @@ function HomeScreen({navigation}) {
 
     function continueFunc(item){
         setAGE(item.AGE.toString());
-        setGENDER(item.GENDER);
+        setGENDER(item.GENDER=='MALE'?'1':'2');
     }
 
 
@@ -256,9 +258,12 @@ return (
             ORIENTATION:"",
             NO_OF_SESSIONS:"",
             PSBPT:"",
-            PSBPB:""
+            PSBPB:"",
+            Pre_Perfusion_Index: "",
+            Pre_SpO2: "",
+            FASTING_BLOOD_SUGARS: "",
         }}
-          validationSchema={ReviewSchema}
+        //   validationSchema={ReviewSchema}
           onSubmit={handleSubmit}
           >
            {(props)=>( <>
@@ -266,27 +271,35 @@ return (
         <AppText>Name*</AppText>
         <AppPatientsPicker items={patients} onSelectedItem={setSelectPatient} selectedItem={selectPatient} placeholder={"Select"} disabled={loading} continueFunc={continueFunc}/>
         
-        <AppText>Sex</AppText>
-        <View style={{width:'60%',flexDirection:'row',justifyContent:'space-between',alignItems:'center',marginBottom:'5%'}}>
-            <TouchableOpacity style={{width:width*0.2,justifyContent:'center',alignItems:'center',borderRadius:10,padding:"1%",borderWidth:GENDER=='MALE'?2:0,borderColor:colors.secondary,backgroundColor:GENDER=='MALE'?colors.textInputBG:null,}}
-            onPress={()=>setGENDER('MALE')}>
-                <Fontisto name="male" size={24} color={GENDER=='MALE'?colors.dark:colors.mediumDark} />
-                <AppText>Male</AppText>
-            </TouchableOpacity>
-            <TouchableOpacity style={{width:width*0.2,justifyContent:'center',alignItems:'center',borderRadius:10,padding:"1%",borderColor:colors.secondary,borderWidth:GENDER=='Female'?2:0,backgroundColor:GENDER=='Female'?colors.textInputBG:null}}
-            onPress={()=>setGENDER('Female')}>
-            <Fontisto name="female" size={24} color={GENDER=='Female'?colors.dark:colors.mediumDark} />
-                <AppText>Female</AppText>
-            </TouchableOpacity>
-        </View>
 
+        <View style={styles.box}>
+            <View style={{width:width*0.5}}>
+            <AppText>Sex</AppText>
+                <RadioGroup 
+                radioButtons={radioButtons_Sex} 
+                onPress={setGENDER}
+                selectedId={GENDER}
+                layout='row'
+                containerStyle={{marginBottom:'10%'}}
+            />
+            </View>
+            <View style={{width:width*0.33,alignItems:'flex-end'}}>
+            <AppText>Fluency</AppText>
+                <RadioGroup 
+                radioButtons={radioButtons_DigitSpan} 
+                onPress={onSelectedFLUENCY}
+                selectedId={selectedFLUENCY}
+                layout='row'
+                containerStyle={{marginBottom:'10%'}}
+            />
+            </View>
+        </View>
         <View style={styles.box}>
             <View style={{width:width*0.4}}>
                 <AppText>Age</AppText>
                 <AppTextInput
                     onChangeText={(text)=>setAGE(text)}
                     value={AGE}
-                    width='90%'
                     padding='7%'
                     keyboardType='numeric'
                 />
@@ -299,12 +312,12 @@ return (
                     value={props.values.PRE_TEMPERATURE}
                     touched={props.touched.PRE_TEMPERATURE}
                     errors={props.errors.PRE_TEMPERATURE}
-                    width='90%'
                     padding='7%'
                     keyboardType='numeric'
                 />
             </View>
         </View>
+
         <View style={styles.box}>
             <View style={{width:width*0.4}}>
                 <AppText>Clock</AppText>
@@ -314,7 +327,6 @@ return (
                     value={props.values.CLOCK}
                     touched={props.touched.CLOCK}
                     errors={props.errors.CLOCK}
-                    width='90%'
                     padding='7%'
                     keyboardType='numeric'
                 />
@@ -327,7 +339,6 @@ return (
                 value={props.values.LANGUAGE}
                 touched={props.touched.LANGUAGE}
                 errors={props.errors.LANGUAGE}
-                width='90%'
                 padding='7%'
                 keyboardType='numeric'
                 />
@@ -342,20 +353,22 @@ return (
                 value={props.values.PRE_STIMULATION_PULSE}
                 touched={props.touched.PRE_STIMULATION_PULSE}
                 errors={props.errors.PRE_STIMULATION_PULSE}
-                width='80%'
+                width='90%'
                 padding='6%'
                 keyboardType='numeric'
             />
             </View>
             <View style={{width:width*0.4,alignItems:'flex-end'}}>
-                <AppText>Fluency</AppText>
-                <RadioGroup 
-                radioButtons={radioButtons_DigitSpan} 
-                onPress={onSelectedFLUENCY}
-                selectedId={selectedFLUENCY}
-                layout='row'
-                containerStyle={{marginBottom:'10%'}}
-            />
+            <AppText>Orientation</AppText>
+                <AppTextInput
+                    onChangeText={props.handleChange('ORIENTATION')}
+                    onBlur={props.handleBlur('ORIENTATION')}
+                    value={props.values.ORIENTATION}
+                    touched={props.touched.ORIENTATION}
+                    errors={props.errors.ORIENTATION}
+                    padding='7%'
+                    keyboardType='numeric'
+                />
             </View>
         </View>
         <View style={styles.box}>
@@ -367,27 +380,26 @@ return (
                     value={props.values.PRE_RESPIRATORY_RATE}
                     touched={props.touched.PRE_RESPIRATORY_RATE}
                     errors={props.errors.PRE_RESPIRATORY_RATE}
-                    width='80%'
+                    width='90%'
                     padding='6%'
                     keyboardType='numeric'
                 />
             </View>
             <View style={{width:width*0.4,alignItems:'flex-end'}}>
-                <AppText>Orientation</AppText>
+            <AppText>No of Sessions</AppText>
                 <AppTextInput
-                    onChangeText={props.handleChange('ORIENTATION')}
-                    onBlur={props.handleBlur('ORIENTATION')}
-                    value={props.values.ORIENTATION}
-                    touched={props.touched.ORIENTATION}
-                    errors={props.errors.ORIENTATION}
-                    width='90%'
+                    onChangeText={props.handleChange('NO_OF_SESSIONS')}
+                    onBlur={props.handleBlur('NO_OF_SESSIONS')}
+                    value={props.values.NO_OF_SESSIONS}
+                    touched={props.touched.NO_OF_SESSIONS}
+                    errors={props.errors.NO_OF_SESSIONS}
                     padding='7%'
                     keyboardType='numeric'
                 />
             </View>
         </View>
         <View style={styles.box}>
-            <View style={{width:width*0.5}}>
+            <View style={{width:width*0.4}}>
                 <AppText>Are You Feeling Better?</AppText>
                 <AppTextInput
                     onChangeText={props.handleChange('ARE_YOU_FEELING_BETTER')}
@@ -395,43 +407,83 @@ return (
                     value={props.values.ARE_YOU_FEELING_BETTER}
                     touched={props.touched.ARE_YOU_FEELING_BETTER}
                     errors={props.errors.ARE_YOU_FEELING_BETTER}
-                    width='80%'
                     padding='6%'
                     keyboardType='numeric'
                 />
             </View>
             <View style={{width:width*0.4,alignItems:'flex-end'}}>
-                <AppText>No of Sessions</AppText>
-                <AppTextInput
-                    onChangeText={props.handleChange('NO_OF_SESSIONS')}
-                    onBlur={props.handleBlur('NO_OF_SESSIONS')}
-                    value={props.values.NO_OF_SESSIONS}
-                    touched={props.touched.NO_OF_SESSIONS}
-                    errors={props.errors.NO_OF_SESSIONS}
-                    width='90%'
-                    padding='7%'
-                    keyboardType='numeric'
-                />
-            </View>
-        </View>
-        
-
-        <AppText>Post Stimulation Aggression</AppText>
+            <AppText>Post Stimulation Aggression</AppText>
         <AppTextInput
             onChangeText={props.handleChange('POST_STIMULATION_AGGRESSION')}
             onBlur={props.handleBlur('POST_STIMULATION_AGGRESSION')}
             value={props.values.POST_STIMULATION_AGGRESSION}
             touched={props.touched.POST_STIMULATION_AGGRESSION}
             errors={props.errors.POST_STIMULATION_AGGRESSION}
-            width='70%'
             keyboardType='numeric'
+            padding='6%'
         />
+            </View>
+        </View>
+
+        <View style={styles.box}>
+            <View style={{width:width*0.4}}>
+                <AppText>Pre Perfusion Index</AppText>
+                <AppTextInput
+                    onChangeText={props.handleChange('Pre_Perfusion_Index')}
+                    onBlur={props.handleBlur('Pre_Perfusion_Index')}
+                    value={props.values.Pre_Perfusion_Index}
+                    touched={props.touched.Pre_Perfusion_Index}
+                    errors={props.errors.Pre_Perfusion_Index}
+                    padding='6%'
+                    keyboardType='numeric'
+                />
+            </View>
+            <View style={{width:width*0.4,alignItems:'flex-end'}}>
+            <AppText>Pre_SpO2</AppText>
+                <AppTextInput
+                    onChangeText={props.handleChange('Pre_SpO2')}
+                    onBlur={props.handleBlur('Pre_SpO2')}
+                    value={props.values.Pre_SpO2}
+                    touched={props.touched.Pre_SpO2}
+                    errors={props.errors.Pre_SpO2}
+                    keyboardType='numeric'
+                    padding='6%'/>
+            </View>
+        </View>
+        
+        <View style={styles.box}>
+            <View style={{width:width*0.4}}>
+                <AppText>Fasting Blood Sugars</AppText>
+                <AppTextInput
+                    onChangeText={props.handleChange('FASTING_BLOOD_SUGARS')}
+                    onBlur={props.handleBlur('FASTING_BLOOD_SUGARS')}
+                    value={props.values.FASTING_BLOOD_SUGARS}
+                    touched={props.touched.FASTING_BLOOD_SUGARS}
+                    errors={props.errors.FASTING_BLOOD_SUGARS}
+                    padding='6%'
+                    keyboardType='numeric'
+                />
+            </View>
+            <View style={{width:width*0.4,alignItems:'flex-end'}}>
+            <AppText>Hearing Adequate</AppText>
+                <RadioGroup 
+                    radioButtons={radioButtons} 
+                    onPress={onSelectedHearingAdequate}
+                    selectedId={selectedHearingAdequate}
+                    layout='row'
+                    containerStyle={{marginBottom:'10%',alignSelf:'flex-end'}}
+                />
+            </View>
+        </View>
+        
+
+        
 
         
 
     <AppText fontFamily='PoppinsSemiBold'>Digit Span</AppText>
-        <View style={styles.box}>
-            <View style={{width:width*0.45}}>
+        <View style={{flexDirection:'row'}}>
+            <View style={{width:width*0.5}}>
                 <AppText>Forward 2 1 8 5 4</AppText>
                 <RadioGroup 
                 radioButtons={radioButtons_DigitSpan} 
@@ -442,7 +494,7 @@ return (
             />
                 
             </View>
-            <View style={{width:width*0.45,alignItems:'flex-end'}}>
+            <View style={{width:width*0.45,}}>
                 <AppText>Backward 7 4 2</AppText>
                 <RadioGroup 
                 radioButtons={radioButtons_DigitSpan} 
@@ -501,7 +553,7 @@ return (
             </View>
         </View>
 
-        <AppText>Delayed Recall Church</AppText>
+        <AppText>Church</AppText>
         <RadioGroup 
             radioButtons={radioButtons_DigitSpan} 
             onPress={onSelectedDELAYED_RECALL_CHURCH}
@@ -515,14 +567,14 @@ return (
             <View style={{width:width*0.45}}>
             <AppText>Systolic pressure</AppText>
             <AppTextInput
-                // onChangeText={props.handleChange('PSBPT')}
-                // onBlur={props.handleBlur('PSBPT')}
-                // value={props.values.PSBPT}
-                // touched={props.touched.PSBPT}
-                // errors={props.errors.PSBPT}
-                value={text1}
-                onChangeText={setText1}
-                width='80%'
+                onChangeText={props.handleChange('PSBPT')}
+                onBlur={props.handleBlur('PSBPT')}
+                value={props.values.PSBPT}
+                touched={props.touched.PSBPT}
+                errors={props.errors.PSBPT}
+                // value={text1}
+                // onChangeText={setText1}
+                width='90%'
                 padding='7%'
                 keyboardType='numeric'
             />
@@ -530,14 +582,14 @@ return (
             <View style={{width:width*0.45,alignItems:'flex-end'}}>
             <AppText>Diastolic pressure</AppText>
             <AppTextInput
-                // onChangeText={props.handleChange('PSBPB')}
-                // onBlur={props.handleBlur('PSBPB')}
-                // value={props.values.PSBPB}
-                // touched={props.touched.PSBPB}
-                // errors={props.errors.PSBPB}
-                value={text2}
-                onChangeText={setText2}
-                width='80%'
+                onChangeText={props.handleChange('PSBPB')}
+                onBlur={props.handleBlur('PSBPB')}
+                value={props.values.PSBPB}
+                touched={props.touched.PSBPB}
+                errors={props.errors.PSBPB}
+                // value={text2}
+                // onChangeText={setText2}
+                width='90%'
                 padding='7%'
                 keyboardType='numeric'
             />
@@ -715,7 +767,7 @@ return (
         <AppPicker items={pickersData.CURRENT_DIAGNOSES}  onSelectedItem={onSelectedPostpartumDepression} selectedItem={selectedPostpartumDepression}/>
 
         <AppText>Neurocognitive Disorder</AppText>
-        <AppPicker items={pickersData.CURRENT_DIAGNOSES}  onSelectedItem={onSelectedNeurocognitive} selectedItem={selectedNeurocognitive}/>
+        <AppPicker items={pickersData.CURRENT_DIAGNOSES}  onSelectedItem={onSelectedNeurocognitive} selectedItem={selectedNeurocognitive} width='80%'/>
 
        
 
@@ -725,11 +777,7 @@ return (
             <AppButton width='30%' backgroundColor={colors.textInputBG} textColor={colors.secondary} text={'Reset'}/>
             <AppButton width='60%' text={'Submit'}
             onPress={props.handleSubmit}
-            active={active}
-            // onPress={()=>navigation.navigate(routes.HOME_TAB,{
-            //     screen:routes.DONE
-            // })}
-             />
+            active={active}/>
         </View>
         </>)}
         </Formik>

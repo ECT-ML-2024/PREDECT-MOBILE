@@ -7,7 +7,7 @@ import AppButton from '../../components/AppButton';
 
 
 
-function ResultsScreen({route}) {
+function ResultsScreen({route,navigation}) {
     const {width,height}=useAuth();
     const {results} = route.params;
 return (
@@ -54,7 +54,7 @@ return (
             {/* ))} */}
         </View>
 
-        <AppButton width='80%' alignSelf='center' text={'Done'}/>
+        <AppButton width='80%' alignSelf='center' text={'Done'} onPress={()=>navigation.goBack()}/>
 
 
     </ScrollView>

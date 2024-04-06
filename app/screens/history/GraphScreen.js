@@ -22,9 +22,6 @@ const data = {
 
 
 
-  const list=[
-    {id:1},
-  ]
 function GraphScreen({route}) {
   const {sessions}= route.params;
 
@@ -144,7 +141,16 @@ function GraphScreen({route}) {
       loadSessionDates(sessions,setCommitsData);
     }
     
-    
+    function getDateOfLast15DaysAgo() {
+      // Get the current date
+      var currentDate = new Date();
+      
+      // Subtract 15 days from the current date
+      var last15DaysDate = new Date(currentDate);
+      last15DaysDate.setDate(currentDate.getDate() + 13);
+      
+      return last15DaysDate;
+    }
     
 return (
 <ScrollView contentContainerStyle={styles.container}>
@@ -157,7 +163,7 @@ return (
               </View>
             <ContributionGraph
             values={commitsData}
-            endDate={new Date("2024-03-21")}
+            endDate={getDateOfLast15DaysAgo()}
             numDays={54}
             width={width*0.8}
             height={width*0.9}
