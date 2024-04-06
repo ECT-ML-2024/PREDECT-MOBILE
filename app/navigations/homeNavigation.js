@@ -18,6 +18,8 @@ const HomeNavigator = ({navigation,route}) =>{
       headerTitleAlign:'center'
     }}>
       <Stack.Screen name={routes.HOME} component={controler.HomeStackScreen} options={{headerShown:false}}/>
+      <Stack.Screen name={routes.SECOND} component={controler.SecondStackScreen} options={{headerShown:false}}/>
+      <Stack.Screen name={routes.THIRD} component={controler.ThirdStackScreen} options={{headerShown:false}}/>
       <Stack.Screen name={routes.DONE} component={controler.DoneStackScreen} options={{headerShown:false}}/>
       <Stack.Screen name={routes.RESULTS} component={controler.ResultsStackScreen} options={{headerShown:false}}/>
     </Stack.Navigator>

@@ -11,6 +11,8 @@ export default Object.freeze({
 
   HOME_TAB:'HomeTab',
   HOME:'home',
+  SECOND:'Second',
+  THIRD:'Third',
   RESULTS:'results',
   DONE:'done',
 

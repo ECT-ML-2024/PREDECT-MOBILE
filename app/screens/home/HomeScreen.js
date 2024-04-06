@@ -35,6 +35,7 @@ import patient from '../../api/patient';
 import AppPatientsPicker from '../../components/AppPatientsPicker';
 import useActiveScreenFunc from '../../hooks/useActiveScreenFunc';
 import ScrollUpButton from '../../components/ScrollUpButton';
+import AppButtonOP from '../../components/AppButtonOP';
 
 const setData =[
     {
@@ -64,68 +65,22 @@ const zeroAndOneData =[
 
 function HomeScreen({navigation}) {
     const {width,height}=useAuth();
-    const predictApi=useApi(predict.predict);
     const getpatientsApi=useApi(patient.patients);
-    const scrollViewRef = useRef();
-    const previousScrollY = useRef(0);
     const radioButtons = useMemo(() => (setData), []);
-    const radioButtons_DigitSpan = useMemo(() => (zeroAndOneData), []);
+    const radioButtons_Fluency = useMemo(() => (zeroAndOneData), []);
     const radioButtons_Sex = useMemo(() => (pickersData.setSex), []);
 
     const [active,setActive]=useState(false);
     const [loading,setLoading]=useState(false);
     const [patients,setPatients]=useState();
     const [selectPatient,setSelectPatient]=useState();
-    const [show,setShow] = useState(false);
-    const [text1,setText1] = useState('');
-    const [text2,setText2] = useState('');
 
 
 
 
     const {
-        selectedTypeOfSimulation,onSelectedTypeOfSimulation,
-        selectedOutcome,onSelectedOutcome,
-        selectedAnaesthesia,onSelectedAnaesthesia,
-        selectedPolarity,onSelectedPolarity,
-        selectedPositionRight,onSelectedPositionRight,
-        selectedPositionLeft,onSelectedPositionLeft,
-        selectedHandedness,onSelectedHandedness,
-        selectedVisualImpairment,onSelectedVisualImpairment,
-        selectedOsteoporosis,onSelectedOsteoporosis,
-        selectedDislocation,onSelectedDislocation,
-        selectedMentalRetardation,onSelectedMentalRetardation,
-        selectedPedalOedema,onSelectedPedalOedema,
-        selectedRespiratoryInfections,onSelectedRespiratoryInfections,
-        selectedStroke,onSelectedStroke,
         selectedHearingAdequate,onSelectedHearingAdequate,
-        selectedCognitiveImpairment,onSelectedCognitiveImpairment,
-        selectedDrugTreatment,onSelectedDrugTreatment,
-        selectedObservations,onSelectedObservations,
-        selectedMemory,onSelectedMemory,
-        selectedSchizophrenia,onSelectedSchizophrenia,
-        selectedDepression,onSelectedDepression,
-        selectedBipolar,onSelectedBipolar,
-        selectedNeurocognitiveDisorderDementia,onSelectedNeurocognitiveDisorderDementia,
-        selectedAnxiety,onSelectedAnxiety,
-        selectedSuicide,onSelectedSuicide,
-        selectedSchizoaffective,onSelectedSchizoaffective,
-        selectedAcuteAndTransientPsychotic,onSelectedAcuteAndTransientPsychotic,
-        selectedMania,onSelectedMania,
-        selectedDelusional,onSelectedDelusional,
-        selectedSeizures,onSelectedSeizures,
-        selectedPsychosisNOS,onSelectedPsychosisNOS,
-        selectedDepressionNOS,onSelectedDepressionNOS,
-        selectedPostpartumDepression,onSelectedPostpartumDepression,
-        selectedNeurocognitive,onSelectedNeurocognitive,
         GENDER,setGENDER,AGE,setAGE,
-        selectedDIGIT_SPAN_Forward_2_1_8_5_4,onSelectedDIGIT_SPAN_Forward_2_1_8_5_4,
-        selectedDIGIT_SPAN_backward_7_4_2,onSelectedDIGIT_SPAN_backward_7_4_2,
-        selectedDELAYED_RECALL_FACE,onSelectedDELAYED_RECALL_FACE,
-        selectedDELAYED_RECALL_VELVET,onSelectedDELAYED_RECALL_VELVET,
-        selectedDELAYED_RECALL_CHURCH,onSelectedDELAYED_RECALL_CHURCH,
-        selectedDELAYED_RECALL_DAISY,onSelectedDELAYED_RECALL_DAISY,
-        selectedDELAYED_RECALL_RED,onSelectedDELAYED_RECALL_RED,
         selectedFLUENCY,onSelectedFLUENCY
     } = useInitialStates();
 
@@ -148,64 +103,19 @@ function HomeScreen({navigation}) {
     
      
     const handleSubmit =async (values)=>{
-        setActive(true)
         let finalData = {
             AGE:parseInt(AGE),
-            TYPE_OF_STIMULATION: selectedTypeOfSimulation.title,
-            OUTCOME: selectedOutcome.title,
-            ANAESTHESIA: selectedAnaesthesia.title,
-            POLARITY: selectedPolarity.title,
-            POSITION_RIGHT: selectedPositionRight.title,
-            POSITION_LEFT: selectedPositionLeft.title,
-            HANDEDNESS: selectedHandedness.title,
-            PHYSICAL_DEFORMITY_VISUAL_IMPAIRMENT:setData[selectedVisualImpairment-1].value,
-            PHYSICAL_DEFORMITY_OSTEOPOROSIS: setData[selectedOsteoporosis-1].value,
-            PHYSICAL_DEFORMITY_DISLOCATION:setData[selectedDislocation-1].value,
-            PHYSICAL_DEFORMITY_MENTAL_RETARDATION:setData[selectedMentalRetardation-1].value,
-            PHYSICAL_DEFORMITY_PEDAL_OEDEMA:setData[selectedPedalOedema-1].value,
-            PHYSICAL_DEFORMITY_RESPIRATORY_INFECTIONS:setData[selectedRespiratoryInfections-1].value,
-            PHYSICAL_DEFORMITY_STROKE:setData[selectedStroke-1].value,
-            HEARING_ADEQUATE:setData[selectedHearingAdequate-1].value,
-            PHYSICAL_DEFORMITY_COGNITIVE_IMPAIRMENT:setData[selectedCognitiveImpairment-1].value,
-            DIGIT_SPAN_Forward_2_1_8_5_4:zeroAndOneData[selectedDIGIT_SPAN_Forward_2_1_8_5_4-1].value,
-            DIGIT_SPAN_backward_7_4_2:zeroAndOneData[selectedDIGIT_SPAN_backward_7_4_2-1].value,
-            DELAYED_RECALL_FACE:zeroAndOneData[selectedDELAYED_RECALL_FACE-1].value,
-            DELAYED_RECALL_VELVET:zeroAndOneData[selectedDELAYED_RECALL_VELVET-1].value,
-            DELAYED_RECALL_CHURCH:zeroAndOneData[selectedDELAYED_RECALL_CHURCH-1].value,
-            DELAYED_RECALL_DAISY:zeroAndOneData[selectedDELAYED_RECALL_DAISY-1].value,
-            DELAYED_RECALL_RED:zeroAndOneData[selectedDELAYED_RECALL_RED-1].value,
             FLUENCY:zeroAndOneData[selectedFLUENCY-1].value,
             GENDER:pickersData.setSex[GENDER-1].value,
-            CURRENT_DRUG_TREATMENT: selectedDrugTreatment.title,
-            OBSERVATIONS: selectedObservations.title,
-            MEMORY: selectedMemory.title,
-            CURRENT_DIAGNOSES_SCHIZOPHRENIA: selectedSchizophrenia.value,
-            CURRENT_DIAGNOSES_DEPRESSION: selectedDepression.value,
-            CURRENT_DIAGNOSES_BIPOLAR: selectedBipolar.value,
-            CURRENT_DIAGNOSES_NEUROCOGNITIVE_DISORDER_DEMENTIA: selectedNeurocognitiveDisorderDementia.value,
-            CURRENT_DIAGNOSES_ANXIETY_DISORDER: selectedAnxiety.value,
-            CURRENT_DIAGNOSES_SUICIDE: selectedSuicide.value,
-            CURRENT_DIAGNOSES_SCHIZOAFFECTIVE: selectedSchizoaffective.value,
-            CURRENT_DIAGNOSES_ACUTE_AND_TRANSIENT_PSYCHOTIC_DIS0RDER: selectedAcuteAndTransientPsychotic.value,
-            CURRENT_DIAGNOSES_MANIA: selectedMania.value,
-            CURRENT_DIAGNOSES_DELUSIONAL_DISORDER: selectedDelusional.value,
-            CURRENT_DIAGNOSES_SEIZURES: selectedSeizures.value,
-            CURRENT_DIAGNOSES_PSYCHOSIS_NOS: selectedPsychosisNOS.value,
-            CURRENT_DIAGNOSES_DEPRESSION_NOS: selectedDepressionNOS.value,
-            CURRENT_DIAGNOSES_POSTPARTUM_DEPRESSION: selectedPostpartumDepression.value,
-            CURRENT_DIAGNOSES_NEUROCOGNITIVE_DISORDER: selectedNeurocognitive.value,
+            HEARING_ADEQUATE:setData[selectedHearingAdequate-1].value,
             PatientID:selectPatient._id,
             ...values
         }
 
-        const res = await predictApi.request(finalData);
-        if(res.ok){
-            navigation.navigate(routes.HOME_TAB,{
-                screen:routes.DONE,
-                params:{results:res.data}
-            });
-        }
-        setActive(false);
+        navigation.navigate(routes.HOME_TAB,{
+            screen:routes.SECOND,
+            params:{results:finalData}
+        })
     }
 
     function continueFunc(item){
@@ -214,34 +124,13 @@ function HomeScreen({navigation}) {
     }
 
 
-    const scrollToTop = () => {
-        // Use the `scrollTo` method to scroll to the top
-        scrollViewRef.current.scrollTo({ y: 0, animated: true });
-        setTimeout(() => setShow(false), 500);
-    };
-    
-    const handleScroll = (event) => {
-        const currentScrollY = event.nativeEvent.contentOffset.y;
-        const isScrollingUp = currentScrollY < previousScrollY.current && currentScrollY< height;
-        const isScrollingDown = currentScrollY > previousScrollY.current && currentScrollY> height*0.8;
 
-        isScrollingUp ?setShow(false): null;
-        isScrollingDown ? setShow(true): null;
-
-        // Update the previous scroll position
-        previousScrollY.current = currentScrollY;
-    };
     
 return (
     <KeyboardAvoidingView
         behavior={Platform.OS === "ios" ? "padding" : null}
-        style={styles.keyboardAvoidingView}><>
-
-    <ScrollView contentContainerStyle={styles.container}
-     ref={scrollViewRef}
-     onScroll={handleScroll}
-     scrollEventThrottle={500}
-    >
+        style={styles.keyboardAvoidingView}>
+    <ScrollView contentContainerStyle={styles.container}>
         <AppText fontFamily='PoppinsSemiBold' fontSize={width*0.05}>ECT Parameters Prediction System</AppText>
         <AppText>Lorem ipsum dolor sit amet, consectetur 
         adipiscing elit. Maecenas at hendrerit lectus, 
@@ -286,7 +175,7 @@ return (
             <View style={{width:width*0.33,alignItems:'flex-end'}}>
             <AppText>Fluency</AppText>
                 <RadioGroup 
-                radioButtons={radioButtons_DigitSpan} 
+                radioButtons={radioButtons_Fluency} 
                 onPress={onSelectedFLUENCY}
                 selectedId={selectedFLUENCY}
                 layout='row'
@@ -476,92 +365,6 @@ return (
             </View>
         </View>
         
-
-        
-
-        
-
-    <AppText fontFamily='PoppinsSemiBold'>Digit Span</AppText>
-        <View style={{flexDirection:'row'}}>
-            <View style={{width:width*0.5}}>
-                <AppText>Forward 2 1 8 5 4</AppText>
-                <RadioGroup 
-                radioButtons={radioButtons_DigitSpan} 
-                onPress={onSelectedDIGIT_SPAN_Forward_2_1_8_5_4}
-                selectedId={selectedDIGIT_SPAN_Forward_2_1_8_5_4}
-                layout='row'
-                containerStyle={{marginBottom:'10%'}}
-            />
-                
-            </View>
-            <View style={{width:width*0.45,}}>
-                <AppText>Backward 7 4 2</AppText>
-                <RadioGroup 
-                radioButtons={radioButtons_DigitSpan} 
-                onPress={onSelectedDIGIT_SPAN_backward_7_4_2}
-                selectedId={selectedDIGIT_SPAN_backward_7_4_2}
-                layout='row'
-                containerStyle={{marginBottom:'10%'}}
-            />
-            </View>
-        </View>
-
-    <AppText fontFamily='PoppinsSemiBold'>Delayed Recall</AppText>
-        <View style={styles.box}>
-            <View style={{width:width*0.45}}>
-                <AppText>Face</AppText>
-                <RadioGroup 
-                radioButtons={radioButtons_DigitSpan} 
-                onPress={onSelectedDELAYED_RECALL_FACE}
-                selectedId={selectedDELAYED_RECALL_FACE}
-                layout='row'
-                containerStyle={{marginBottom:'10%'}}
-            />
-            </View>
-            <View style={{width:width*0.4}}>
-                <AppText>Velvet</AppText>
-                <RadioGroup 
-                radioButtons={radioButtons_DigitSpan} 
-                onPress={onSelectedDELAYED_RECALL_VELVET}
-                selectedId={selectedDELAYED_RECALL_VELVET}
-                layout='row'
-                containerStyle={{marginBottom:'10%'}}
-            />
-            </View>
-        </View>
-
-        <View style={styles.box}>
-            <View style={{width:width*0.45}}>
-            <AppText>Daisy</AppText>
-            <RadioGroup 
-                radioButtons={radioButtons_DigitSpan} 
-                onPress={onSelectedDELAYED_RECALL_DAISY}
-                selectedId={selectedDELAYED_RECALL_DAISY}
-                layout='row'
-                containerStyle={{marginBottom:'10%'}}
-            />
-            </View>
-            <View style={{width:width*0.4}}>
-            <AppText>Red</AppText>
-                <RadioGroup 
-                radioButtons={radioButtons_DigitSpan} 
-                onPress={onSelectedDELAYED_RECALL_RED}
-                selectedId={selectedDELAYED_RECALL_RED}
-                layout='row'
-                containerStyle={{marginBottom:'10%'}}
-            />
-            </View>
-        </View>
-
-        <AppText>Church</AppText>
-        <RadioGroup 
-            radioButtons={radioButtons_DigitSpan} 
-            onPress={onSelectedDELAYED_RECALL_CHURCH}
-            selectedId={selectedDELAYED_RECALL_CHURCH}
-            layout='row'
-            containerStyle={{marginBottom:'10%'}}
-        />
-
         <AppText fontFamily='PoppinsSemiBold'>Blood Pressure</AppText>
             <View style={styles.box}>
             <View style={{width:width*0.45}}>
@@ -572,8 +375,6 @@ return (
                 value={props.values.PSBPT}
                 touched={props.touched.PSBPT}
                 errors={props.errors.PSBPT}
-                // value={text1}
-                // onChangeText={setText1}
                 width='90%'
                 padding='7%'
                 keyboardType='numeric'
@@ -587,203 +388,22 @@ return (
                 value={props.values.PSBPB}
                 touched={props.touched.PSBPB}
                 errors={props.errors.PSBPB}
-                // value={text2}
-                // onChangeText={setText2}
                 width='90%'
                 padding='7%'
                 keyboardType='numeric'
             />
             </View>
-        </View> 
-
-        <AppText>Type of Stimulation</AppText>
-        <AppPicker items={pickersData.TYPE_OF_STIMULATION}  onSelectedItem={onSelectedTypeOfSimulation} selectedItem={selectedTypeOfSimulation} width='70%'/>
-
-
-        <AppText>Outcome</AppText>
-        <AppPicker items={pickersData.OUTCOME}  onSelectedItem={onSelectedOutcome} selectedItem={selectedOutcome}/>
-
-        <AppText>Anaesthesia</AppText>
-        <AppPicker items={pickersData.ANAESTHESIA}  onSelectedItem={onSelectedAnaesthesia} selectedItem={selectedAnaesthesia}/>
-
-        <AppText>Polarity</AppText>
-        <AppPicker items={pickersData.POLARITY}  onSelectedItem={onSelectedPolarity} selectedItem={selectedPolarity} width='50%'/>
-
-        <AppText>Position Right</AppText>
-        <AppPicker items={pickersData.POSITION}  onSelectedItem={onSelectedPositionRight} selectedItem={selectedPositionRight} width='70%'/>
-
-        <AppText>Position Left</AppText>
-        <AppPicker items={pickersData.POSITION}  onSelectedItem={onSelectedPositionLeft} selectedItem={selectedPositionLeft} width='70%'/>
-
-        <AppText>Handedness</AppText>
-        <AppPicker items={pickersData.HANDEDNESS}  onSelectedItem={onSelectedHandedness} selectedItem={selectedHandedness} width='70%'/>
-
-        <AppText fontFamily='PoppinsSemiBold'>Physical Deformity</AppText>
-        <View style={styles.box}>
-            <View style={{width:width*0.4}}>
-            <AppText>Visual Impairment</AppText>
-            <RadioGroup 
-                radioButtons={radioButtons} 
-                onPress={onSelectedVisualImpairment}
-                selectedId={selectedVisualImpairment}
-                layout='row'
-                containerStyle={{marginBottom:'10%',alignSelf:'flex-end'}}
-            />
-            </View>
-            <View style={{width:width*0.4}}>
-                <AppText>Osteoporosis</AppText>
-                <RadioGroup 
-                radioButtons={radioButtons} 
-                onPress={onSelectedOsteoporosis}
-                selectedId={selectedOsteoporosis}
-                layout='row'
-                containerStyle={{marginBottom:'5%'}}
-            />
-            </View>
-        </View>
-
-        <View style={styles.box}>
-            <View style={{width:width*0.4}}>
-            <AppText>Dislocation</AppText>
-            <RadioGroup 
-                radioButtons={radioButtons} 
-                onPress={onSelectedDislocation}
-                selectedId={selectedDislocation}
-                layout='row'
-                containerStyle={{marginBottom:'10%',alignSelf:'flex-end'}}
-            />
-            </View>
-            <View style={{width:width*0.4}}>
-            <AppText>Mental Retardation</AppText>
-            <RadioGroup 
-                radioButtons={radioButtons} 
-                onPress={onSelectedMentalRetardation}
-                selectedId={selectedMentalRetardation}
-                layout='row'
-                containerStyle={{marginBottom:'10%',}}
-            />
-            </View>
-        </View>
-        <View style={styles.box}>
-            <View style={{width:width*0.4}}>
-            <AppText>Pedal Oedema</AppText>
-            <RadioGroup 
-                radioButtons={radioButtons} 
-                onPress={onSelectedPedalOedema}
-                selectedId={selectedPedalOedema}
-                layout='row'
-                containerStyle={{marginBottom:'10%',alignSelf:'flex-end'}}
-            />
-
-            </View>
-            <View style={{width:width*0.45}}>
-            <AppText>Respiratory Infections</AppText>
-            <RadioGroup 
-                radioButtons={radioButtons} 
-                onPress={onSelectedRespiratoryInfections}
-                selectedId={selectedRespiratoryInfections}
-                layout='row'
-                containerStyle={{marginBottom:'10%',alignSelf:'flex-end'}}
-            />
-            </View>
-        </View>
-
-        <View style={styles.box}>
-            <View style={{width:width*0.4}}>
-            <AppText>Stroke</AppText>
-            <RadioGroup 
-                radioButtons={radioButtons} 
-                onPress={onSelectedStroke}
-                selectedId={selectedStroke}
-                layout='row'
-                containerStyle={{marginBottom:'10%',alignSelf:'flex-end'}}
-            />
-
-
-            </View>
-            <View style={{width:width*0.45}}>
-            <AppText>Cognitive Impairment</AppText>
-            <RadioGroup 
-                radioButtons={radioButtons} 
-                onPress={onSelectedCognitiveImpairment}
-                selectedId={selectedCognitiveImpairment}
-                layout='row'
-                containerStyle={{marginBottom:'10%'}}
-            />
-            </View>
-        </View>
-        
-
-        <AppText>Current Drug Treatment</AppText>
-        <AppPicker items={pickersData.CURRENT_DRUG_TREATMENT}  onSelectedItem={onSelectedDrugTreatment} selectedItem={selectedDrugTreatment}/>
-
-        <AppText>Observations</AppText>
-        <AppPicker items={pickersData.OBSERVATIONS}  onSelectedItem={onSelectedObservations} selectedItem={selectedObservations}/>
-
-        <AppText>Memory</AppText>
-        <AppPicker items={pickersData.MEMORY}  onSelectedItem={onSelectedMemory} selectedItem={selectedMemory}/>
-
-        <AppText fontFamily='PoppinsSemiBold'>Current Diagnoses</AppText>
-        <AppText>Schizophrenia</AppText>
-        <AppPicker items={pickersData.CURRENT_DIAGNOSES}  onSelectedItem={onSelectedSchizophrenia} selectedItem={selectedSchizophrenia}/>
-
-        <AppText>Depression</AppText>
-        <AppPicker items={pickersData.CURRENT_DIAGNOSES}  onSelectedItem={onSelectedDepression} selectedItem={selectedDepression}/>
-
-        <AppText>Bipolar</AppText>
-        <AppPicker items={pickersData.CURRENT_DIAGNOSES}  onSelectedItem={onSelectedBipolar} selectedItem={selectedBipolar}/>
-
-        <AppText>Neurocognitive Disorder Dementia</AppText>
-        <AppPicker items={pickersData.CURRENT_DIAGNOSES}  onSelectedItem={onSelectedNeurocognitiveDisorderDementia} selectedItem={selectedNeurocognitiveDisorderDementia}/>
-
-        <AppText>Anxiety Disorder</AppText>
-        <AppPicker items={pickersData.CURRENT_DIAGNOSES}  onSelectedItem={onSelectedAnxiety} selectedItem={selectedAnxiety}/>
-
-        <AppText>Suicide</AppText>
-        <AppPicker items={pickersData.CURRENT_DIAGNOSES}  onSelectedItem={onSelectedSuicide} selectedItem={selectedSuicide}/>
-
-        <AppText>Schizoaffective</AppText>
-        <AppPicker items={pickersData.CURRENT_DIAGNOSES}  onSelectedItem={onSelectedSchizoaffective} selectedItem={selectedSchizoaffective}/>
-
-        <AppText>Acute and Transient Psychotic Disorder</AppText>
-        <AppPicker items={pickersData.CURRENT_DIAGNOSES}  onSelectedItem={onSelectedAcuteAndTransientPsychotic} selectedItem={selectedAcuteAndTransientPsychotic}/>
-
-        <AppText>Mania</AppText>
-        <AppPicker items={pickersData.CURRENT_DIAGNOSES}  onSelectedItem={onSelectedMania} selectedItem={selectedMania}/>
-
-        <AppText>Delusional Disorder</AppText>
-        <AppPicker items={pickersData.CURRENT_DIAGNOSES}  onSelectedItem={onSelectedDelusional} selectedItem={selectedDelusional}/>
-
-        <AppText>Seizures</AppText>
-        <AppPicker items={pickersData.CURRENT_DIAGNOSES}  onSelectedItem={onSelectedSeizures} selectedItem={selectedSeizures}/>
-
-        <AppText>Psychosis NOS</AppText>
-        <AppPicker items={pickersData.CURRENT_DIAGNOSES}  onSelectedItem={onSelectedPsychosisNOS} selectedItem={selectedPsychosisNOS}/>
-
-        <AppText>Depression NOS</AppText>
-        <AppPicker items={pickersData.CURRENT_DIAGNOSES}  onSelectedItem={onSelectedDepressionNOS} selectedItem={selectedDepressionNOS}/>
-
-        <AppText>Postpartum Depression</AppText>
-        <AppPicker items={pickersData.CURRENT_DIAGNOSES}  onSelectedItem={onSelectedPostpartumDepression} selectedItem={selectedPostpartumDepression}/>
-
-        <AppText>Neurocognitive Disorder</AppText>
-        <AppPicker items={pickersData.CURRENT_DIAGNOSES}  onSelectedItem={onSelectedNeurocognitive} selectedItem={selectedNeurocognitive} width='80%'/>
-
-       
+        </View>        
 
         </View>
 
         <View style={{flexDirection:'row',justifyContent:'space-between'}}>
             <AppButton width='30%' backgroundColor={colors.textInputBG} textColor={colors.secondary} text={'Reset'}/>
-            <AppButton width='60%' text={'Submit'}
-            onPress={props.handleSubmit}
-            active={active}/>
+            <AppButtonOP width='60%' text={'Next'} onPress={props.handleSubmit}/>
         </View>
         </>)}
         </Formik>
     </ScrollView>
-    <ScrollUpButton show={show} scrollToTop={scrollToTop}/>
-        </>
 </KeyboardAvoidingView>
 );
 }

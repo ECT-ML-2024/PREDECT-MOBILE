@@ -16,6 +16,8 @@ import NewDoctorsScreen from "../screens/newdoctors/DoctorsScreen"
 import UnathorizedUsersScreen from "../screens/auth/UnathorizedUsersScreen"
 import ProfileScreen from "../screens/profile/ProfileScreen"
 import LoadingScreen from "../screens/auth/LoadingScreen"
+import SecondScreen from "../screens/home/SecondScreen"
+import ThirdScreen from "../screens/home/ThirdScreen"
 
 // Authentication
 const GetStartedStackScreen = ({ navigation })=> <GetStartedScreen navigation={navigation}/>
@@ -31,6 +33,8 @@ const LoadingStackScreen = ({ navigation })=> <LoadingScreen navigation={navigat
 
 // Home
 const HomeStackScreen = ({ navigation,route })=> <HomeScreen navigation={navigation} route={route}/>
+const SecondStackScreen = ({ navigation,route })=> <SecondScreen navigation={navigation} route={route}/>
+const ThirdStackScreen = ({ navigation,route })=> <ThirdScreen navigation={navigation} route={route}/>
 const ResultsStackScreen = ({ navigation,route })=> <ResultsScreen navigation={navigation} route={route}/>
 const DoneStackScreen = ({ navigation,route })=> <DoneScreen navigation={navigation} route={route}/>
 
@@ -65,5 +69,7 @@ export default{
   AddPatientStackScreen,
   UnathorizedUsersStackScreen,
   ProfileStackScreen,
-  LoadingStackScreen
+  LoadingStackScreen,
+  SecondStackScreen,
+  ThirdStackScreen
   }
