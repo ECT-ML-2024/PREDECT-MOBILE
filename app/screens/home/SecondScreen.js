@@ -1,5 +1,5 @@
-import React, { memo, useMemo, useState,useRef } from 'react';
-import { View, StyleSheet, KeyboardAvoidingView, ScrollView, Platform, TouchableOpacity } from 'react-native';
+import React, { memo, useMemo, } from 'react';
+import { View, StyleSheet, KeyboardAvoidingView, ScrollView, Platform } from 'react-native';
 import RadioGroup from 'react-native-radio-buttons-group';
 
 
@@ -9,13 +9,12 @@ import useAuth from '../../auth/useAuth';
 import AppButton from '../../components/AppButton';
 import routes from '../../navigations/routes';
 import { useInitialStates } from '../../hooks/useStateHook';
-
 import useActiveScreenFunc from '../../hooks/useActiveScreenFunc';
 import AppButtonOP from '../../components/AppButtonOP';
 
 const setData =[
     {
-        id: '1', // acts as primary key, should be unique and non-empty string
+        id: '1',
         label: 'Yes',
         value: 'YES'
     },
@@ -28,7 +27,7 @@ const setData =[
 
 const zeroAndOneData =[
     {
-        id: '1', // acts as primary key, should be unique and non-empty string
+        id: '1',
         label: '0',
         value: '0'
     },
@@ -66,11 +65,6 @@ function SecondScreen({navigation,route}) {
         selectedDELAYED_RECALL_RED,onSelectedDELAYED_RECALL_RED,
     } = useInitialStates();
 
-    useActiveScreenFunc().FocusedAndBlur(()=>{
-        
-    },()=>{
-        console.log("Out!")
-    });
 
    
     

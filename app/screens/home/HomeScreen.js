@@ -1,6 +1,5 @@
-import React, { memo, useMemo, useState,useRef } from 'react';
-import { View, StyleSheet, KeyboardAvoidingView, ScrollView, Platform, TouchableOpacity } from 'react-native';
-import { Fontisto } from '@expo/vector-icons';
+import React, { memo, useMemo, useState } from 'react';
+import { View, StyleSheet, KeyboardAvoidingView, ScrollView, Platform } from 'react-native';
 import { Formik } from 'formik';
 import * as yup from 'yup';
 import RadioGroup from 'react-native-radio-buttons-group';
@@ -24,53 +23,22 @@ import AppText from '../../components/Text';
 import colors from '../../config/colors';
 import useAuth from '../../auth/useAuth';
 import AppTextInput from '../../components/AppTextInput';
-import AppButton from '../../components/AppButton';
 import routes from '../../navigations/routes';
 import { useInitialStates } from '../../hooks/useStateHook';
-import AppPicker from '../../components/AppPicker';
 import pickersData from '../../config/pickersData';
 import useApi from '../../hooks/useApi';
-import predict from '../../api/predict';
 import patient from '../../api/patient';
 import AppPatientsPicker from '../../components/AppPatientsPicker';
 import useActiveScreenFunc from '../../hooks/useActiveScreenFunc';
-import ScrollUpButton from '../../components/ScrollUpButton';
 import AppButtonOP from '../../components/AppButtonOP';
 
-const setData =[
-    {
-        id: '1', // acts as primary key, should be unique and non-empty string
-        label: 'Yes',
-        value: 'YES'
-    },
-    {
-        id: '2',
-        label: 'No',
-        value: 'NO'
-    }
-]
-
-const zeroAndOneData =[
-    {
-        id: '1', // acts as primary key, should be unique and non-empty string
-        label: '0',
-        value: '0'
-    },
-    {
-        id: '2',
-        label: '1',
-        value: '1'
-    }
-]
 
 function HomeScreen({navigation}) {
     const {width,height}=useAuth();
     const getpatientsApi=useApi(patient.patients);
-    const radioButtons = useMemo(() => (setData), []);
-    const radioButtons_Fluency = useMemo(() => (zeroAndOneData), []);
+    const radioButtons = useMemo(() => (pickersData.YES_OR_NO), []);
+    const radioButtons_Fluency = useMemo(() => (pickersData.zeroAndOneData), []);
     const radioButtons_Sex = useMemo(() => (pickersData.setSex), []);
-
-    const [active,setActive]=useState(false);
     const [loading,setLoading]=useState(false);
     const [patients,setPatients]=useState();
     const [selectPatient,setSelectPatient]=useState();
@@ -90,6 +58,7 @@ function HomeScreen({navigation}) {
         setLoading(false)
     },()=>{
         console.log("Out!")
+        setSelectPatient()
     });
 
     async function loadPatients(){
@@ -102,12 +71,16 @@ function HomeScreen({navigation}) {
     }
     
      
-    const handleSubmit =async (values)=>{
+    const handleSubmit =async (values,actions)=>{
+        if(!selectPatient){
+            alert('You need to select a patient before you can proceed!')
+            return;
+        }
         let finalData = {
             AGE:parseInt(AGE),
-            FLUENCY:zeroAndOneData[selectedFLUENCY-1].value,
+            FLUENCY:pickersData.zeroAndOneData[selectedFLUENCY-1].value,
             GENDER:pickersData.setSex[GENDER-1].value,
-            HEARING_ADEQUATE:setData[selectedHearingAdequate-1].value,
+            HEARING_ADEQUATE:pickersData.YES_OR_NO[selectedHearingAdequate-1].value,
             PatientID:selectPatient._id,
             ...values
         }
@@ -116,6 +89,8 @@ function HomeScreen({navigation}) {
             screen:routes.SECOND,
             params:{results:finalData}
         })
+        actions.resetForm();
+        setAGE('')
     }
 
     function continueFunc(item){
@@ -152,7 +127,7 @@ return (
             Pre_SpO2: "",
             FASTING_BLOOD_SUGARS: "",
         }}
-        //   validationSchema={ReviewSchema}
+          validationSchema={ReviewSchema}
           onSubmit={handleSubmit}
           >
            {(props)=>( <>
@@ -397,8 +372,8 @@ return (
 
         </View>
 
-        <View style={{flexDirection:'row',justifyContent:'space-between'}}>
-            <AppButton width='30%' backgroundColor={colors.textInputBG} textColor={colors.secondary} text={'Reset'}/>
+        <View style={{flexDirection:'row',justifyContent:'flex-end'}}>
+            {/* <AppButton width='30%' backgroundColor={colors.textInputBG} textColor={colors.secondary} text={'Reset'}/> */}
             <AppButtonOP width='60%' text={'Next'} onPress={props.handleSubmit}/>
         </View>
         </>)}

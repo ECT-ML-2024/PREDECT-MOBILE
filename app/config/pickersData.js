@@ -44,9 +44,17 @@ const OUTCOME = [
     { title: "LEFT" },
     { title: "AMBIDEXTROUS" },
 ];
-  const TRUEOFFALSE = [
-    { title: "YES" },
-    { title: "NO" },
+  const YES_OR_NO = [
+    {
+      id: '1', // acts as primary key, should be unique and non-empty string
+      label: 'Yes',
+      value: 'YES'
+    },
+    {
+        id: '2',
+        label: 'No',
+        value: 'NO'
+    }
 ];
 
 const CURRENT_DRUG_TREATMENT = [
@@ -123,5 +131,16 @@ const setSex = [
 }
 ]
 
-
-export default { TYPE_OF_STIMULATION,OUTCOME,ANAESTHESIA,POLARITY,POSITION,HANDEDNESS,TRUEOFFALSE,CURRENT_DRUG_TREATMENT,OBSERVATIONS,MEMORY,CURRENT_DIAGNOSES,setSex }
+const zeroAndOneData =[
+  {
+      id: '1', // acts as primary key, should be unique and non-empty string
+      label: '0',
+      value: '0'
+  },
+  {
+      id: '2',
+      label: '1',
+      value: '1'
+  }
+]
+export default { TYPE_OF_STIMULATION,OUTCOME,ANAESTHESIA,POLARITY,POSITION,HANDEDNESS,YES_OR_NO,CURRENT_DRUG_TREATMENT,OBSERVATIONS,MEMORY,CURRENT_DIAGNOSES,setSex,zeroAndOneData }
