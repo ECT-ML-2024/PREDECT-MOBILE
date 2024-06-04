@@ -102,10 +102,8 @@ return (
         style={styles.keyboardAvoidingView}>
 
     <ScrollView contentContainerStyle={styles.container}>
-        <AppText fontFamily='PoppinsSemiBold' fontSize={width*0.05}>ECT Parameters Prediction System</AppText>
-        <AppText>Lorem ipsum dolor sit amet, consectetur 
-        adipiscing elit. Maecenas at hendrerit lectus, 
-        ac pretium mauris.</AppText>
+        <View style={{width:width*.6,height:3,borderRadius:10,backgroundColor:colors.secondary,position:'absolute',}}/>
+        <AppText>Please fill out the fields below before proceeding to the next section. Note that you can go back, but once you do, you will lose the information on this page.</AppText>
     
         <View style={{marginTop:'5%'}}>
         
@@ -304,7 +302,8 @@ const styles = StyleSheet.create({
     container:{
         backgroundColor:colors.primary,
         // alignItems:'center',
-        padding:'5%'
+        padding:'5%',
+        // paddingTop:0,
     },
     keyboardAvoidingView: {
         flex: 1,

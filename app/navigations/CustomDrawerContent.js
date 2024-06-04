@@ -18,11 +18,11 @@ return (
     <DrawerContentScrollView {...props}>
     {/* Render user's name */}
     <View style={{ padding: 16,flexDirection:'row',alignItems:'center'}}>
-      <Image style={{width:width*0.2,height:width*0.2}} source={user.sex=='male'?require('../assets/images/avatar.png'):require('../assets/images/female-avatar.png')}/>
+      <Image style={{width:width*0.2,height:width*0.2,borderRadius:width*0.2}} source={require('../assets/images/doctors.jpg')}/>
       
       <View style={{marginLeft:'2%'}}>
       <AppText fontFamily='PoppinsSemiBold'>Welcome</AppText>
-      <AppText color={colors.secondary} width={width*0.5} fontFamily='PoppinsSemiBold'>{user.username}</AppText>
+      <AppText color={colors.secondary} width={width*0.5} fontFamily='PoppinsSemiBold'>{JSON.parse(user).name}</AppText>
       </View>
     </View>
       <AppButtonOP text={'Logout'} width='90%' alignSelf='center' marginBottom='10%'

@@ -1,4 +1,4 @@
-import ForgetPasswordScreen from "../screens/auth/ForgetPasswordScreen"
+// import ForgetPasswordScreen from "../screens/auth/ForgetPasswordScreen"
 import GetStartedScreen from "../screens/auth/GetStartedScreen"
 import IntroScreen from "../screens/auth/IntroScreen"
 import LogInScreen from "../screens/auth/LogInScreen"
@@ -18,6 +18,7 @@ import ProfileScreen from "../screens/profile/ProfileScreen"
 import LoadingScreen from "../screens/auth/LoadingScreen"
 import SecondScreen from "../screens/home/SecondScreen"
 import ThirdScreen from "../screens/home/ThirdScreen"
+import DashboardScreen from "../screens/home/DashboardScreen"
 
 // Authentication
 const GetStartedStackScreen = ({ navigation })=> <GetStartedScreen navigation={navigation}/>
@@ -26,12 +27,13 @@ const IntroStackScreen = ({ navigation })=> <IntroScreen navigation={navigation}
 const NewPasswordStackScreen = ({ navigation,route })=> <NewPasswordScreen navigation={navigation} route={route}/>
 const OTPStackScreen = ({ navigation,route })=> <OTPScreen navigation={navigation} route={route}/>
 const SignUpStackScreen = ({ navigation })=> <SignUpScreen navigation={navigation}/>
-const ForgetPasswordStackScreen = ({ navigation })=> <ForgetPasswordScreen navigation={navigation}/>
+// const ForgetPasswordStackScreen = ({ navigation })=> <ForgetPasswordScreen navigation={navigation}/>
 const UnathorizedUsersStackScreen = ({ navigation })=> <UnathorizedUsersScreen navigation={navigation}/>
 const LoadingStackScreen = ({ navigation })=> <LoadingScreen navigation={navigation}/>
 
 
 // Home
+const DashboardStackScreen = ({ navigation,route })=> <DashboardScreen navigation={navigation} route={route}/>
 const HomeStackScreen = ({ navigation,route })=> <HomeScreen navigation={navigation} route={route}/>
 const SecondStackScreen = ({ navigation,route })=> <SecondScreen navigation={navigation} route={route}/>
 const ThirdStackScreen = ({ navigation,route })=> <ThirdScreen navigation={navigation} route={route}/>
@@ -57,8 +59,8 @@ export default{
   IntroStackScreen,
   OTPStackScreen,
   SignUpStackScreen,
-  ForgetPasswordStackScreen,
   NewPasswordStackScreen,
+  DashboardStackScreen,
   HomeStackScreen,
   ResultsStackScreen,
   DoneStackScreen,
@@ -71,5 +73,5 @@ export default{
   ProfileStackScreen,
   LoadingStackScreen,
   SecondStackScreen,
-  ThirdStackScreen
+  ThirdStackScreen,
   }

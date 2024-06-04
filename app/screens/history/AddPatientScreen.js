@@ -56,7 +56,7 @@ function AddPatientScreen({navigation}) {
       }
 
      useActiveScreenFunc() .FocusedAndBlur(()=>{},()=>{
-        navigation.goBack();
+        // navigation.goBack();
      })
 return (
     <KeyboardAvoidingView

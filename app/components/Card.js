@@ -11,12 +11,12 @@ return (
             <View style={{width:width*0.15,height:width*0.15,justifyContent:'center',alignItems:'center'}}>
                 <Image
                 style={{width:'100%',height:'100%'}}
-                source={item.GENDER=='MALE'?require('../assets/images/avatar.png'):require('../assets/images/female-avatar.png')}/>
-                <AppText color={colors.mediumDark}>{item.GENDER.toUpperCase()}</AppText>
+                source={item.gender=='Male'?require('../assets/images/avatar.png'):require('../assets/images/female-avatar.png')}/>
+                <AppText color={colors.mediumDark}>{item.gender.toUpperCase()}</AppText>
             </View>
             <View style={{marginLeft:'5%'}}>
-                <AppText fontFamily='PoppinsSemiBold' fontSize={width*0.045}>{item.NAME}</AppText>
-                <AppText color={colors.mediumDark}>{item.AGE} years</AppText>
+                <AppText fontFamily='PoppinsSemiBold' fontSize={width*0.045}>{item.firstName}</AppText>
+                <AppText color={colors.mediumDark}>{item.age} years</AppText>
                 <AppText color={colors.mediumDark}>Last visit: {item.lastVisit.toString().substr(0,10)}</AppText>
             </View>
         </TouchableOpacity>

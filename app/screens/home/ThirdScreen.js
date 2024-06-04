@@ -62,7 +62,7 @@ function SecondScreen({navigation,route}) {
     useActiveScreenFunc().FocusedAndBlur(()=>{
         
     },()=>{
-        console.log("Out!")
+        // console.log("Out!")
     });
 
     
@@ -143,10 +143,9 @@ return (
      onScroll={handleScroll}
      scrollEventThrottle={500}
     >
-        <AppText fontFamily='PoppinsSemiBold' fontSize={width*0.05}>ECT Parameters Prediction System</AppText>
-        <AppText>Lorem ipsum dolor sit amet, consectetur 
-        adipiscing elit. Maecenas at hendrerit lectus, 
-        ac pretium mauris.</AppText>
+        <View style={{width:width*.9,height:3,borderRadius:10,backgroundColor:colors.secondary,position:'absolute',}}/>
+        <AppText fontFamily='PoppinsSemiBold' fontSize={width*0.05}>Last Stage</AppText>
+        <AppText>Please fill out the fields below before proceeding to the next section. Note that you can go back, but once you do, you will lose the information on this page.</AppText>
         
         <View style={{marginTop:'5%'}}>
        

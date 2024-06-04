@@ -14,6 +14,8 @@ import OfflineNotice from './app/components/OfflineNotice';
 import NewPasswordScreen from './app/screens/auth/NewPasswordScreen';
 import MyDrawer from './app/navigations/appNavigation';
 import AuthNavigator from './app/navigations/authNavigator';
+import AppStatusBar from './app/components/AppStatusBar';
+import MenuButton from './app/components/MenuButton ';
 
 export default function App() {
   const window = Dimensions.get('window');
@@ -35,8 +37,7 @@ export default function App() {
   const restoreToken = async ()=>{
    const token = await authStorage.getToken();
     if(!token) return;
-    console.log(jwtDecode(token))
-    setUser(jwtDecode(token).doctor);
+    setUser(token);
   }
   useEffect(() => {
     async function prepare() {
@@ -67,7 +68,7 @@ if (!fontsLoaded) return null;
      {/* <ThemeProvider> */}
       {/* <OfflineNotice/> */}
      <NavigationContainer onReady={onNavigationContainerReady}>
-      {/* <AppStatusBar/> */}
+      <AppStatusBar/>
       {/* <MyDrawer/> */}
       {user ? <MyDrawer width={width}/>: <AuthNavigator/>}
      </NavigationContainer>

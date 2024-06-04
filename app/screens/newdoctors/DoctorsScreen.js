@@ -10,6 +10,7 @@ import DoctorsCard from '../../components/DoctorCard';
 import useApi from '../../hooks/useApi';
 import doctor from '../../api/doctor';
 import CardEmpty from '../../components/empty/CardEmpty';
+import useActiveScreenFunc from '../../hooks/useActiveScreenFunc';
 
 const list = [
     {id:1},
@@ -25,9 +26,10 @@ function NewDoctorsScreen({navigation}) {
     const [ doctors,setDoctors]=useState([]);
     const [active,setActive]=useState(false);
 
-   useEffect(()=>{
-       handleSubmit();
-    },[]);
+
+useActiveScreenFunc().FocusedAndBlur(()=>{
+        handleSubmit();
+    },()=>{})
     
     async function handleSubmit(){
         setActive(true);

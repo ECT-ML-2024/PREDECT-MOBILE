@@ -7,6 +7,18 @@ import useAuth from '../auth/useAuth';
 import colors from '../config/colors';
 import AppText from './Text';
 
+
+const data1 = {
+  labels: ['Jan', 'Feb', 'Mar', 'Apr', 'May', 'Jun'],
+  datasets: [
+    {
+      data: [20, 45, 28, 80, 99, 43],
+      color: (opacity = 1) => `rgba(134, 65, 244, ${opacity})`, // Line color
+      strokeWidth: 2, // Line width
+    },
+  ],
+};
+
 function AppBarChart({data,title,yAxisSuffix}) {
     const {width}=useAuth();
 return (

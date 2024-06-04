@@ -22,7 +22,7 @@ return (
             disabled={disabled}
             onPress={()=>setModal(true)}>
                 <View style={{flexDirection:'row',alignItems:'center'}}>
-                  <AppText fontSize={15} color={selectedItem ? colors.dark : 'red'} children={selectedItem ? selectedItem.NAME : placeholder}/>
+                  <AppText fontSize={15} color={selectedItem ? colors.dark : 'red'} children={selectedItem ? selectedItem._id.toString().substr(15, 21) : placeholder}/>
                 </View>
                 <MaterialCommunityIcons name="chevron-down" size={20} color={colors.dark} />
             </TouchableOpacity>
@@ -55,7 +55,7 @@ return (
                               }}
                           style={{marginVertical:width*0.05,marginHorizontal:width*0.05,alignSelf:'center'}}>
                                {/* <Image source={item.imageUri} style={{width:width*0.28,height:width*0.28,borderRadius:width*0.28,}}/> */}
-                               <AppText textAlign="center" children={item.NAME}/>
+                               <AppText textAlign="center" children={item._id.toString().substr(15, 21)}/>
                           </TouchableOpacity>
                            
                         );

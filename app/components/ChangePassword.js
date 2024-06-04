@@ -27,20 +27,14 @@ function ChangePassword({navigation}) {
 
     async function handleSubmit({current_password,new_password}){
         setActive(true);
-        if(current_password !== user.password){
-            setErrorMsg({msg:"Wrong password!",color:"red"});
-            setTimeout(() => {
-                setErrorMsg({msg:"",color:"red"});
-                setActive(false);
-            }, 3000);
-            return;
-        }
-        const result = await changePasswordApi.request({password:new_password,code:user.code,email:user.email});
+        const result = await changePasswordApi.request({new_password,current_password,email:user.email});
         console.log(result.status)
         if(result.status == 201){
             // alert('Password has been reset successfully!');
             setErrorMsg({msg:"Password has been reset successfully!",color:"green"});
             logIn(result.data,navigation);
+        }else{
+            setErrorMsg({msg:"Wrong password!",color:"red"});
         }
         setTimeout(() => {
             setErrorMsg({msg:"",color:"red"});

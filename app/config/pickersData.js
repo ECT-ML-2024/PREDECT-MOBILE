@@ -122,7 +122,7 @@ const setSex = [
   {
     id: '1', // acts as primary key, should be unique and non-empty string
     label: 'Male',
-    value: 'MALE'
+    value: 'Male'
 },
 {
     id: '2',

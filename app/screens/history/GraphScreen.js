@@ -1,7 +1,7 @@
 import React, { useEffect, useState } from 'react';
 import { View, StyleSheet, ScrollView } from 'react-native';
-import { MaterialCommunityIcons,MaterialIcons } from '@expo/vector-icons';
-import { LineChart,Grid,ContributionGraph,BarChart  } from 'react-native-chart-kit';
+import { MaterialCommunityIcons } from '@expo/vector-icons';
+import { ContributionGraph  } from 'react-native-chart-kit';
 import useAuth from '../../auth/useAuth';
 import colors from '../../config/colors';
 import AppText from '../../components/Text';
@@ -9,16 +9,6 @@ import AppBarChart from '../../components/AppBarChart';
 import { formatDate, loadData, loadSessionDates } from '../../func/functions';
 
 
-const data = {
-    labels: ['Jan', 'Feb', 'Mar', 'Apr', 'May', 'Jun'],
-    datasets: [
-      {
-        data: [20, 45, 28, 80, 99, 43],
-        color: (opacity = 1) => `rgba(134, 65, 244, ${opacity})`, // Line color
-        strokeWidth: 2, // Line width
-      },
-    ],
-  };
 
 
 

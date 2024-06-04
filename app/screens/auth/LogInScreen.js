@@ -15,7 +15,7 @@ import auth from '../../api/auth';
 
 
 const ReviewSchema = yup.object({
-    email: yup.string().min(5).required(),
+    code: yup.string().min(6).max(6).required(),
     password: yup.string().min(6).required()
   })
 
@@ -24,9 +24,9 @@ function LogInScreen({navigation}) {
     const loginApi =useApi(auth.login)
     const [active,setActive]=useState(false);
 
-    const handleSubmit = async ({email,password}) =>{
+    const handleSubmit = async ({code,password}) =>{
       setActive(true)
-      const result = await loginApi.request(email,password);
+      const result = await loginApi.request(code,password);
       if(!result.ok){
         setActive(false);
         alert(result.data)
@@ -52,18 +52,18 @@ return (
     </View>
 
     <Formik
-          initialValues={{email:"", password:""}}
+          initialValues={{code:"", password:""}}
           validationSchema={ReviewSchema}
           onSubmit={handleSubmit}
           >
             {(props)=>(<>
                 <View style={{width:width*0.9,marginTop:'10%'}}>
-                <AppTextInput placeholder={'Email'}
-                    onChangeText={props.handleChange('email')}
-                    onBlur={props.handleBlur('email')}
-                    value={props.values.email}
-                    touched={props.touched.email}
-                    errors={props.errors.email}/>
+                <AppTextInput placeholder={'Code'}
+                    onChangeText={props.handleChange('code')}
+                    onBlur={props.handleBlur('code')}
+                    value={props.values.code}
+                    touched={props.touched.code}
+                    errors={props.errors.code}/>
 
                     <AppTextInput placeholder={'Password'}
                     onChangeText={props.handleChange('password')}
@@ -71,14 +71,14 @@ return (
                     value={props.values.password}
                     touched={props.touched.password}
                     errors={props.errors.password}/>
-                    <AppText textAlign={'right'} onPress={()=>navigation.navigate(routes.FORGET_PASSWORD)}>Forgot Password?</AppText>
+                    <AppText textAlign={'right'} onPress={()=>navigation.navigate(routes.OPT)}>Forgot Password?</AppText>
                 </View>
                 <AppButton text={'Login'} width={width*0.9} marginTop={'7%'} 
                 onPress={props.handleSubmit} active={active}/>
             </>)}</Formik>
  
 
-    <AppText marginTop='5%'>Don’t have an account? <AppText color={colors.secondary}fontFamily='PoppinsSemiBold' onPress={()=>navigation.navigate(routes.SIGN_UP)}>Sign Up</AppText></AppText>
+    {/* <AppText marginTop='5%'>Don’t have an account? <AppText color={colors.secondary}fontFamily='PoppinsSemiBold' onPress={()=>navigation.navigate(routes.SIGN_UP)}>Sign Up</AppText></AppText> */}
     <View style={{width:'100%',height:height*0.175}}/>
 
 </ScrollView>

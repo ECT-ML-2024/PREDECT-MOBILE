@@ -18,24 +18,22 @@ const ReviewSchema = yup.object({
   })
 
 function NewPasswordScreen({navigation,route}) {
-    const {code,email} =route.params;
-    // console.log(email,code)
+    const {resetCode,code} =route.params;
     const {width,height} =useAuth();
     const changePasswordApi= useApi(register.changePassword);
-    const [password,setPassword]=useState('');
-    const [cpassword,setCPassword]=useState('');
     const [active,setActive]=useState(false);
     const [errorMsg, setErrorMsg] = useState();
 
 
 
     async function handleSubmit({password,cpassword}){
+      console.log(password,resetCode,code)
         setActive(true);
         if(password !== cpassword){
             setErrorMsg('passwords mismatch');
             return
         }
-        const result = await changePasswordApi.request({password,code,email});
+        const result = await changePasswordApi.request({new_password:password,code,resetCode,current_password:""});
         console.log(result.status)
         if(result.status == 201){
             alert('Password has been reset successfully!');

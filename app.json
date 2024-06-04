@@ -1,6 +1,6 @@
 {
   "expo": {
-    "name": "predect",
+    "name": "Predect",
     "slug": "predect",
     "version": "1.0.0",
     "orientation": "portrait",
@@ -21,7 +21,8 @@
       "adaptiveIcon": {
         "foregroundImage": "./assets/adaptive-icon.png",
         "backgroundColor": "#ffffff"
-      }
+      },
+      "package": "com.onedon.predect"
     },
     "web": {
       "favicon": "./assets/favicon.png"
@@ -29,6 +30,11 @@
     "plugins": [
       "expo-secure-store",
       "expo-font"
-    ]
+    ],
+    "extra": {
+      "eas": {
+        "projectId": "145f8bcb-52f4-4126-afd7-aae7dac4923e"
+      }
+    }
   }
 }

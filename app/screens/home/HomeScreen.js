@@ -4,19 +4,25 @@ import { Formik } from 'formik';
 import * as yup from 'yup';
 import RadioGroup from 'react-native-radio-buttons-group';
 
-
 const ReviewSchema = yup.object({
     PRE_TEMPERATURE: yup.string().label('This').required(),
+    POST_TEMPERATURE: yup.string().label('This').required(),
     PRE_STIMULATION_PULSE: yup.string().label('This').required(),
+    POST_STIMULATION_PULSE: yup.string().label('This').required(),
     PRE_RESPIRATORY_RATE: yup.string().label('This').required(),
+    POST_RESPIRATORY_RATE: yup.string().label('This').required(),
     ARE_YOU_FEELING_BETTER: yup.number().min(0).max(5).label('This').required(),
     POST_STIMULATION_AGGRESSION: yup.number().min(0).max(5).label('This').required(),
     CLOCK: yup.number().min(0).max(3).label('This').required(),
     LANGUAGE: yup.number().min(0).max(2).label('This').required(),
     ORIENTATION: yup.number().min(0).max(6).label('This').required(),
     NO_OF_SESSIONS: yup.number().min(0).label('This').required(),
-    PSBPT: yup.number().min(0).label('This').required(),
-    PSBPB: yup.number().min(0).label('This').required(),
+    PRE_Sys_BP: yup.number().min(0).label('This').required(),
+    PRE_Dia_BP: yup.number().min(0).label('This').required(),
+    POST_Sys_BP: yup.number().min(0).label('This').required(),
+    POST_Dia_BP: yup.number().min(0).label('This').required(),
+    Pre_SpO2: yup.number().min(0).label('This').required(),
+    Post_SpO2: yup.number().min(0).label('This').required(),
   });
 
 import AppText from '../../components/Text';
@@ -39,9 +45,12 @@ function HomeScreen({navigation}) {
     const radioButtons = useMemo(() => (pickersData.YES_OR_NO), []);
     const radioButtons_Fluency = useMemo(() => (pickersData.zeroAndOneData), []);
     const radioButtons_Sex = useMemo(() => (pickersData.setSex), []);
+    const radioButtons_FirstTimer = useMemo(() => (pickersData.YES_OR_NO), []);
     const [loading,setLoading]=useState(false);
     const [patients,setPatients]=useState();
     const [selectPatient,setSelectPatient]=useState();
+    const [name,setName]=useState();
+    const [firstTimer,setFirstTimer]=useState(2);
 
 
 
@@ -57,7 +66,7 @@ function HomeScreen({navigation}) {
         loadPatients();
         setLoading(false)
     },()=>{
-        console.log("Out!")
+        // console.log("Out!")
         setSelectPatient()
     });
 
@@ -85,17 +94,23 @@ function HomeScreen({navigation}) {
             ...values
         }
 
-        navigation.navigate(routes.HOME_TAB,{
-            screen:routes.SECOND,
-            params:{results:finalData}
-        })
-        actions.resetForm();
-        setAGE('')
+        console.log('====================================');
+        console.log(Object.keys(finalData).length,finalData);
+        console.log('====================================');
+        // navigation.navigate(routes.HOME_TAB,{
+        //     screen:routes.SECOND,
+        //     params:{results:finalData}
+        // })
+        // actions.resetForm();
+        // setAGE('')
     }
 
     function continueFunc(item){
-        setAGE(item.AGE.toString());
-        setGENDER(item.GENDER=='MALE'?'1':'2');
+        console.log("Killer")
+        setAGE(item.age.toString());
+        setName(item.firstName);
+        setGENDER(item.gender=='Male'?'1':'2');
+        console.log(item.gender=='Male'?'1':'2')
     }
 
 
@@ -106,61 +121,68 @@ return (
         behavior={Platform.OS === "ios" ? "padding" : null}
         style={styles.keyboardAvoidingView}>
     <ScrollView contentContainerStyle={styles.container}>
-        <AppText fontFamily='PoppinsSemiBold' fontSize={width*0.05}>ECT Parameters Prediction System</AppText>
-        <AppText>Lorem ipsum dolor sit amet, consectetur 
-        adipiscing elit. Maecenas at hendrerit lectus, 
-        ac pretium mauris.</AppText>
+    <View style={{width:width*.3,height:3,borderRadius:10,backgroundColor:colors.secondary,position:'absolute',}}/>
+        
+        <AppText>Please fill out the fields below before proceeding to the next section.</AppText>
         <Formik
           initialValues={{
             PRE_TEMPERATURE:"",
+            POST_TEMPERATURE:"",
             PRE_STIMULATION_PULSE:"",
+            POST_STIMULATION_PULSE:"",
             PRE_RESPIRATORY_RATE:"",
+            POST_RESPIRATORY_RATE:"",
             ARE_YOU_FEELING_BETTER:"",
             POST_STIMULATION_AGGRESSION:"",
             CLOCK:"",
             LANGUAGE:"",
             ORIENTATION:"",
             NO_OF_SESSIONS:"",
-            PSBPT:"",
-            PSBPB:"",
-            Pre_Perfusion_Index: "",
+            PRE_Sys_BP:"",
+            PRE_Dia_BP:"",
+            POST_Sys_BP:"",
+            POST_Dia_BP:"",
             Pre_SpO2: "",
-            FASTING_BLOOD_SUGARS: "",
+            Post_SpO2: "",
         }}
-          validationSchema={ReviewSchema}
+        //   validationSchema={ReviewSchema}
           onSubmit={handleSubmit}
           >
            {(props)=>( <>
         <View style={{marginTop:'5%'}}>
-        <AppText>Name*</AppText>
+        <AppText color='red'>Is the patient a first timer?{pickersData.YES_OR_NO[firstTimer-1]?.value}</AppText>
+        <RadioGroup 
+                radioButtons={radioButtons_FirstTimer} 
+                onPress={setFirstTimer}
+                selectedId={firstTimer}
+                layout='row'
+                containerStyle={{marginBottom:'5%'}}
+            />
+        <AppText>Folder Id*</AppText>
         <AppPatientsPicker items={patients} onSelectedItem={setSelectPatient} selectedItem={selectPatient} placeholder={"Select"} disabled={loading} continueFunc={continueFunc}/>
         
-
-        <View style={styles.box}>
-            <View style={{width:width*0.5}}>
-            <AppText>Sex</AppText>
-                <RadioGroup 
-                radioButtons={radioButtons_Sex} 
-                onPress={setGENDER}
-                selectedId={GENDER}
-                layout='row'
-                containerStyle={{marginBottom:'10%'}}
-            />
-            </View>
-            <View style={{width:width*0.33,alignItems:'flex-end'}}>
-            <AppText>Fluency</AppText>
-                <RadioGroup 
-                radioButtons={radioButtons_Fluency} 
-                onPress={onSelectedFLUENCY}
-                selectedId={selectedFLUENCY}
-                layout='row'
-                containerStyle={{marginBottom:'10%'}}
-            />
-            </View>
+        <AppText>Name</AppText>
+        <View style={{width:'100%',backgroundColor:colors.textInputBG,padding:'3.8%',borderRadius:10,justifyContent:'center',marginBottom:'5%'}}>
+            <AppText>{name}</AppText>
         </View>
-        <View style={styles.box}>
-            <View style={{width:width*0.4}}>
-                <AppText>Age</AppText>
+        <View style={{
+            width:'100%',
+            justifyContent:"space-between",flexDirection:'row',
+            flexWrap:'wrap'
+        }}>
+            <View style={{width:width*0.5}}>
+                <AppText>Sex</AppText>
+                    <RadioGroup 
+                    radioButtons={radioButtons_Sex} 
+                    onPress={setGENDER}
+                    selectedId={GENDER}
+                    layout='row'
+                    containerStyle={{marginBottom:'10%'}}
+                />
+            </View>
+
+            <View style={{width:width*0.33}}>
+            <AppText>Age</AppText>
                 <AppTextInput
                     onChangeText={(text)=>setAGE(text)}
                     value={AGE}
@@ -168,8 +190,9 @@ return (
                     keyboardType='numeric'
                 />
             </View>
-            <View style={{width:width*0.4,alignItems:'flex-end'}}>
-                <AppText>Pre Temperature</AppText>
+
+            <View style={{width:width*0.4}}>
+            <AppText>Pre Temperature</AppText>
                 <AppTextInput
                     onChangeText={props.handleChange('PRE_TEMPERATURE')}
                     onBlur={props.handleBlur('PRE_TEMPERATURE')}
@@ -180,9 +203,74 @@ return (
                     keyboardType='numeric'
                 />
             </View>
-        </View>
 
-        <View style={styles.box}>
+            <View style={{width:width*0.4,alignItems:'flex-end'}}>
+            <AppText>Post Temperature</AppText>
+                <AppTextInput
+                    onChangeText={props.handleChange('POST_TEMPERATURE')}
+                    onBlur={props.handleBlur('POST_TEMPERATURE')}
+                    value={props.values.POST_TEMPERATURE}
+                    touched={props.touched.POST_TEMPERATURE}
+                    errors={props.errors.POST_TEMPERATURE}
+                    padding='7%'
+                    keyboardType='numeric'
+                />
+            </View>
+
+            <View style={{width:width*0.4}}>
+            <AppText>Pre Stimulation Pulse</AppText>
+                <AppTextInput
+                    onChangeText={props.handleChange('PRE_STIMULATION_PULSE')}
+                    onBlur={props.handleBlur('PRE_STIMULATION_PULSE')}
+                    value={props.values.PRE_STIMULATION_PULSE}
+                    touched={props.touched.PRE_STIMULATION_PULSE}
+                    errors={props.errors.PRE_STIMULATION_PULSE}
+                    // width='90%'
+                    padding='7%'
+                    keyboardType='numeric'
+                />  
+            </View>
+
+            <View style={{width:width*0.4,alignItems:'flex-end'}}>
+            <AppText>Post Stimulation Pulse</AppText>
+                <AppTextInput
+                    onChangeText={props.handleChange('POST_STIMULATION_PULSE')}
+                    onBlur={props.handleBlur('POST_STIMULATION_PULSE')}
+                    value={props.values.POST_STIMULATION_PULSE}
+                    touched={props.touched.POST_STIMULATION_PULSE}
+                    errors={props.errors.POST_STIMULATION_PULSE}
+                    padding='7%'
+                    keyboardType='numeric'
+                />  
+            </View>
+
+            <View style={{width:width*0.4}}>
+            <AppText>Pre Respiratory Rate</AppText>
+                <AppTextInput
+                    onChangeText={props.handleChange('PRE_RESPIRATORY_RATE')}
+                    onBlur={props.handleBlur('PRE_RESPIRATORY_RATE')}
+                    value={props.values.PRE_RESPIRATORY_RATE}
+                    touched={props.touched.PRE_RESPIRATORY_RATE}
+                    errors={props.errors.PRE_RESPIRATORY_RATE}
+                    // width='90%'
+                    padding='7%'
+                    keyboardType='numeric'
+                />
+            </View>
+
+            <View style={{width:width*0.4,alignItems:'flex-end'}}>
+                <AppText>Post Respiratory Rate</AppText>
+                <AppTextInput
+                    onChangeText={props.handleChange('POST_RESPIRATORY_RATE')}
+                    onBlur={props.handleBlur('POST_RESPIRATORY_RATE')}
+                    value={props.values.POST_RESPIRATORY_RATE}
+                    touched={props.touched.POST_RESPIRATORY_RATE}
+                    errors={props.errors.POST_RESPIRATORY_RATE}
+                    padding='7%'
+                    keyboardType='numeric'
+                />
+            </View>
+
             <View style={{width:width*0.4}}>
                 <AppText>Clock</AppText>
                 <AppTextInput
@@ -195,6 +283,7 @@ return (
                     keyboardType='numeric'
                 />
             </View>
+
             <View style={{width:width*0.4,alignItems:'flex-end'}}>
                 <AppText>Language</AppText>
                 <AppTextInput
@@ -207,21 +296,18 @@ return (
                 keyboardType='numeric'
                 />
             </View>
-        </View>
-        <View style={styles.box}>
+
             <View style={{width:width*0.45}}>
-            <AppText>Pre Stimulation Pulse</AppText>
-            <AppTextInput
-                onChangeText={props.handleChange('PRE_STIMULATION_PULSE')}
-                onBlur={props.handleBlur('PRE_STIMULATION_PULSE')}
-                value={props.values.PRE_STIMULATION_PULSE}
-                touched={props.touched.PRE_STIMULATION_PULSE}
-                errors={props.errors.PRE_STIMULATION_PULSE}
-                width='90%'
-                padding='6%'
-                keyboardType='numeric'
+            <AppText>Fluency</AppText>
+                <RadioGroup 
+                radioButtons={radioButtons_Fluency} 
+                onPress={onSelectedFLUENCY}
+                selectedId={selectedFLUENCY}
+                layout='row'
+                containerStyle={{marginBottom:'10%'}}
             />
             </View>
+
             <View style={{width:width*0.4,alignItems:'flex-end'}}>
             <AppText>Orientation</AppText>
                 <AppTextInput
@@ -234,35 +320,7 @@ return (
                     keyboardType='numeric'
                 />
             </View>
-        </View>
-        <View style={styles.box}>
-            <View style={{width:width*0.45}}>
-                <AppText>Pre Respiratory Rate</AppText>
-                <AppTextInput
-                    onChangeText={props.handleChange('PRE_RESPIRATORY_RATE')}
-                    onBlur={props.handleBlur('PRE_RESPIRATORY_RATE')}
-                    value={props.values.PRE_RESPIRATORY_RATE}
-                    touched={props.touched.PRE_RESPIRATORY_RATE}
-                    errors={props.errors.PRE_RESPIRATORY_RATE}
-                    width='90%'
-                    padding='6%'
-                    keyboardType='numeric'
-                />
-            </View>
-            <View style={{width:width*0.4,alignItems:'flex-end'}}>
-            <AppText>No of Sessions</AppText>
-                <AppTextInput
-                    onChangeText={props.handleChange('NO_OF_SESSIONS')}
-                    onBlur={props.handleBlur('NO_OF_SESSIONS')}
-                    value={props.values.NO_OF_SESSIONS}
-                    touched={props.touched.NO_OF_SESSIONS}
-                    errors={props.errors.NO_OF_SESSIONS}
-                    padding='7%'
-                    keyboardType='numeric'
-                />
-            </View>
-        </View>
-        <View style={styles.box}>
+
             <View style={{width:width*0.4}}>
                 <AppText>Are You Feeling Better?</AppText>
                 <AppTextInput
@@ -275,35 +333,22 @@ return (
                     keyboardType='numeric'
                 />
             </View>
+
             <View style={{width:width*0.4,alignItems:'flex-end'}}>
             <AppText>Post Stimulation Aggression</AppText>
-        <AppTextInput
-            onChangeText={props.handleChange('POST_STIMULATION_AGGRESSION')}
-            onBlur={props.handleBlur('POST_STIMULATION_AGGRESSION')}
-            value={props.values.POST_STIMULATION_AGGRESSION}
-            touched={props.touched.POST_STIMULATION_AGGRESSION}
-            errors={props.errors.POST_STIMULATION_AGGRESSION}
-            keyboardType='numeric'
-            padding='6%'
-        />
+            <AppTextInput
+                onChangeText={props.handleChange('POST_STIMULATION_AGGRESSION')}
+                onBlur={props.handleBlur('POST_STIMULATION_AGGRESSION')}
+                value={props.values.POST_STIMULATION_AGGRESSION}
+                touched={props.touched.POST_STIMULATION_AGGRESSION}
+                errors={props.errors.POST_STIMULATION_AGGRESSION}
+                keyboardType='numeric'
+                padding='6%'
+            />
             </View>
-        </View>
 
-        <View style={styles.box}>
             <View style={{width:width*0.4}}>
-                <AppText>Pre Perfusion Index</AppText>
-                <AppTextInput
-                    onChangeText={props.handleChange('Pre_Perfusion_Index')}
-                    onBlur={props.handleBlur('Pre_Perfusion_Index')}
-                    value={props.values.Pre_Perfusion_Index}
-                    touched={props.touched.Pre_Perfusion_Index}
-                    errors={props.errors.Pre_Perfusion_Index}
-                    padding='6%'
-                    keyboardType='numeric'
-                />
-            </View>
-            <View style={{width:width*0.4,alignItems:'flex-end'}}>
-            <AppText>Pre_SpO2</AppText>
+            <AppText>Pre SpO2</AppText>
                 <AppTextInput
                     onChangeText={props.handleChange('Pre_SpO2')}
                     onBlur={props.handleBlur('Pre_SpO2')}
@@ -313,21 +358,19 @@ return (
                     keyboardType='numeric'
                     padding='6%'/>
             </View>
-        </View>
-        
-        <View style={styles.box}>
-            <View style={{width:width*0.4}}>
-                <AppText>Fasting Blood Sugars</AppText>
+
+            <View style={{width:width*0.4,alignItems:'flex-end'}}>
+            <AppText>Post SpO2</AppText>
                 <AppTextInput
-                    onChangeText={props.handleChange('FASTING_BLOOD_SUGARS')}
-                    onBlur={props.handleBlur('FASTING_BLOOD_SUGARS')}
-                    value={props.values.FASTING_BLOOD_SUGARS}
-                    touched={props.touched.FASTING_BLOOD_SUGARS}
-                    errors={props.errors.FASTING_BLOOD_SUGARS}
-                    padding='6%'
+                    onChangeText={props.handleChange('Post_SpO2')}
+                    onBlur={props.handleBlur('Post_SpO2')}
+                    value={props.values.Post_SpO2}
+                    touched={props.touched.Post_SpO2}
+                    errors={props.errors.Post_SpO2}
                     keyboardType='numeric'
-                />
+                    padding='6%'/>
             </View>
+
             <View style={{width:width*0.4,alignItems:'flex-end'}}>
             <AppText>Hearing Adequate</AppText>
                 <RadioGroup 
@@ -339,17 +382,18 @@ return (
                 />
             </View>
         </View>
-        
+
+
         <AppText fontFamily='PoppinsSemiBold'>Blood Pressure</AppText>
             <View style={styles.box}>
             <View style={{width:width*0.45}}>
-            <AppText>Systolic pressure</AppText>
+            <AppText>Pre Systolic pressure</AppText>
             <AppTextInput
-                onChangeText={props.handleChange('PSBPT')}
-                onBlur={props.handleBlur('PSBPT')}
-                value={props.values.PSBPT}
-                touched={props.touched.PSBPT}
-                errors={props.errors.PSBPT}
+                onChangeText={props.handleChange('PRE_Sys_BP')}
+                onBlur={props.handleBlur('PRE_Sys_BP')}
+                value={props.values.PRE_Sys_BP}
+                touched={props.touched.PRE_Sys_BP}
+                errors={props.errors.PRE_Sys_BP}
                 width='90%'
                 padding='7%'
                 keyboardType='numeric'
@@ -358,18 +402,45 @@ return (
             <View style={{width:width*0.45,alignItems:'flex-end'}}>
             <AppText>Diastolic pressure</AppText>
             <AppTextInput
-                onChangeText={props.handleChange('PSBPB')}
-                onBlur={props.handleBlur('PSBPB')}
-                value={props.values.PSBPB}
-                touched={props.touched.PSBPB}
-                errors={props.errors.PSBPB}
+                onChangeText={props.handleChange('PRE_Dia_BP')}
+                onBlur={props.handleBlur('PRE_Dia_BP')}
+                value={props.values.PRE_Dia_BP}
+                touched={props.touched.PRE_Dia_BP}
+                errors={props.errors.PRE_Dia_BP}
                 width='90%'
                 padding='7%'
                 keyboardType='numeric'
             />
             </View>
-        </View>        
-
+            </View>
+            <View style={styles.box}>
+            <View style={{width:width*0.45}}>
+            <AppText>Pre Systolic pressure</AppText>
+            <AppTextInput
+                onChangeText={props.handleChange('POST_Sys_BP')}
+                onBlur={props.handleBlur('POST_Sys_BP')}
+                value={props.values.POST_Sys_BP}
+                touched={props.touched.POST_Sys_BP}
+                errors={props.errors.POST_Sys_BP}
+                width='90%'
+                padding='7%'
+                keyboardType='numeric'
+            />
+            </View>
+            <View style={{width:width*0.45,alignItems:'flex-end'}}>
+            <AppText>Post Diastolic pressure</AppText>
+            <AppTextInput
+                onChangeText={props.handleChange('POST_Dia_BP')}
+                onBlur={props.handleBlur('POST_Dia_BP')}
+                value={props.values.POST_Dia_BP}
+                touched={props.touched.POST_Dia_BP}
+                errors={props.errors.POST_Dia_BP}
+                width='90%'
+                padding='7%'
+                keyboardType='numeric'
+            />
+            </View>
+            </View>
         </View>
 
         <View style={{flexDirection:'row',justifyContent:'flex-end'}}>

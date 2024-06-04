@@ -4,7 +4,6 @@ import { MaterialCommunityIcons,MaterialIcons,Octicons } from '@expo/vector-icon
 import { LineChart } from 'react-native-chart-kit';
 import RadioGroup from 'react-native-radio-buttons-group';
 
-
 import AppText from '../../components/Text';
 import useAuth from '../../auth/useAuth';
 import colors from '../../config/colors';
@@ -27,11 +26,13 @@ function PatientScreen({navigation,route}) {
   const [show,setShow] = useState(false);
   const scrollViewRef = useRef();
   const previousScrollY = useRef(0);
+  const dataChart=[ {value:50,label:"M"}, {value:80,label:"N"}, {value:90,label:"O"}, {value:70,label:"P"} ]
+
 
   const [data,setData]=useState({
     datasets: [
       {
-        data: [0],
+        data: [0,0,0],
         color: (opacity = 1) => `rgba(134, 65, 244, ${opacity})`, // Line color
         strokeWidth: 2, // Line width
       },
@@ -41,7 +42,7 @@ function PatientScreen({navigation,route}) {
   const [data_SpO2,setData_SpO2]=useState({
     datasets: [
       {
-        data: [0],
+        data: [0,0,0],
         color: (opacity = 1) => `rgba(134, 65, 244, ${opacity})`, // Line color
         strokeWidth: 2, // Line width
       },
@@ -96,7 +97,7 @@ function PatientScreen({navigation,route}) {
     array.forEach((element,index) => {
       newData.push({
         id: index.toString(),
-        label: index.toString(),
+        label: (index+1).toString(),
       })
     });
     setStateData(newData);
@@ -114,6 +115,16 @@ function PatientScreen({navigation,route}) {
       const currentScrollY = event.nativeEvent.contentOffset.y;
       const isScrollingUp = currentScrollY < previousScrollY.current && currentScrollY< height;
       const isScrollingDown = currentScrollY > previousScrollY.current && currentScrollY> height*0.8;
+
+      // if(currentScrollY > previousScrollY.current && currentScrollY> height*0.2){
+      //   navigation.setOptions({
+      //     headerTitle: 'Patient sessions history',
+      //   });
+      // }else{
+      //   navigation.setOptions({
+      //     headerTitle: 'Patient Details',
+      //   });
+      // }
 
       isScrollingUp ? setShow(false): null;
       isScrollingDown ? setShow(true): null;
@@ -134,20 +145,20 @@ return (
       scrollEventThrottle={500}
   >
     <View style={{backgroundColor:colors.primary,width:width*0.9,alignItems:'center',padding:'3%',borderRadius:10}}>
-        <Image style={{width:width*0.2,height:width*0.2}} source={patient.GENDER =='MALE'?require('../../assets/images/avatar.png'):require('../../assets/images/female-avatar.png')}/>
-        <AppText fontFamily='PoppinsSemiBold' fontSize={width*0.05}>{patient.NAME}</AppText>
+        <Image style={{width:width*0.2,height:width*0.2}} source={patient.gender =='Male'?require('../../assets/images/avatar.png'):require('../../assets/images/female-avatar.png')}/>
+        <AppText numberOfLines={1} fontFamily='PoppinsSemiBold' width={'90%'} fontSize={width*0.05}>{patient.firstName} {patient.surname}234562345345</AppText>
         <View style={{flexDirection:'row',marginTop:'2%'}}>
             <View style={{flex:1,alignItems:'center'}}>
-                <AppText color={colors.mediumDark}>Condition</AppText>
-                <AppText fontFamily='PoppinsSemiBold'>Severe</AppText>
+                <AppText color={colors.mediumDark}>Status</AppText>
+                <AppText fontFamily='PoppinsSemiBold'>New</AppText>
             </View>
             <View style={{flex:1,alignItems:'center',borderLeftWidth:1,borderRightWidth:1}}>
                 <AppText color={colors.mediumDark}>Sex</AppText>
-                <AppText fontFamily='PoppinsSemiBold'>{patient.GENDER.toUpperCase()}</AppText>
+                <AppText fontFamily='PoppinsSemiBold'>{patient.gender.toUpperCase()}</AppText>
             </View>
             <View style={{flex:1,alignItems:'center'}}>
                 <AppText color={colors.mediumDark}>Age</AppText>
-                <AppText fontFamily='PoppinsSemiBold'>{patient.AGE}</AppText>
+                <AppText fontFamily='PoppinsSemiBold'>{patient.age}</AppText>
             </View>
         </View>
   </View>
@@ -159,7 +170,8 @@ return (
           </View>
           <AppText fontFamily='PoppinsSemiBold' fontSize={width*0.06} color={colors.secondary}>123<AppText color={colors.mediumDark}>mmHg</AppText></AppText>
           <View >
-        <LineChart
+          
+         <LineChart
           data={data}
           width={width*0.42}
           height={width*0.35}
@@ -173,7 +185,7 @@ return (
           }}
           bezier
           withVerticalLines={false}
-        />
+        /> 
       </View>
       </View>
           <View style={{width:width*0.46,backgroundColor:colors.primary,alignItems:'center',padding:'2%',borderRadius:10,marginVertical:'5%'}}>
@@ -197,7 +209,7 @@ return (
             }}
             bezier
             withVerticalLines={false}
-          />
+          /> 
       </View>
       </View>
     </View>

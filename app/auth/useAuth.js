@@ -9,12 +9,12 @@ export default useAuth = () => {
   const { user, setUser,width,shops,setShops,height,shopImage,setShopImage,orders,setOrders,serviceData,setServiceData,modal,setModal } = useContext(AuthContext);
 
   const logIn = (authToken,navigation) => {
-    const user = jwtDecode(authToken);
-    if (user.doctor.authorized){
-      setUser(user.doctor);
-    }else{
-      navigation.navigate(routes.UNAUTHORIZED_USERS);
-    }
+    // const user = jwtDecode(authToken);
+    // if (user.doctor.authorized){
+      setUser(authToken);
+    // }else{
+    //   navigation.navigate(routes.UNAUTHORIZED_USERS);
+    // }
     authStorage.storeToken(authToken);
   };
 

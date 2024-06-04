@@ -38,13 +38,11 @@ function ProfileScreen(props) {
     const {width,user} =useAuth();
     const registerApi =useApi(register.updateUserProfile);
     const [active,setActive]=useState(false);
-    const [sex, setSex] = useState(user.sex=='male'?'1':'2');
-    const radioButtons = useMemo(() => (setData), []);
 
 
-    const handleSubmit = async ({email,password,username}) =>{
+    const handleSubmit = async ({email,username}) =>{
         setActive(true);
-        const result = await registerApi.request({email:email.trim(),password:password.trim(),sex:setData[sex-1].value,username:username.trim(),doctorId:user._id});
+        const result = await registerApi.request({email:email.trim(),username:username.trim(),doctorId:user._id});
         if(!result.ok){
             console.log(result.data)
           setActive(false);
@@ -63,9 +61,9 @@ return (
       <>
     <ScrollView contentContainerStyle={styles.container}>
       <View style={{backgroundColor:colors.primary,width:width*0.95,alignItems:'center',padding:'5%',borderRadius:10,marginBottom:'5%'}}>
-          <Image style={{width:width*0.2,height:width*0.2}} source={user.sex =='male'?require('../../assets/images/avatar.png'):require('../../assets/images/female-avatar.png')}/>
+          <Image style={{width:width*0.2,height:width*0.2,borderRadius:width*0.2}} source={require('../../assets/images/doctors.jpg')}/>
           <Formik
-          initialValues={{email:user.email, password:user.password,username:user.username}}
+          initialValues={{email:user.email,username:user.username}}
           validationSchema={ReviewSchema}
           onSubmit={handleSubmit}
           >
@@ -86,12 +84,7 @@ return (
                     touched={props.touched.email}
                     errors={props.errors.email}/>
 
-                    <RadioGroup 
-                        radioButtons={radioButtons} 
-                        onPress={setSex}
-                        selectedId={sex}
-                        layout='row'
-                    />
+                    
                 </View>
 
                 <AppButton text={'Update Profile'} width={'95%'} marginTop={'7%'}
