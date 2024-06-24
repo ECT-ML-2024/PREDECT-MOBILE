@@ -35,24 +35,27 @@ const ReviewSchema = yup.object({
 ]
 
 function ProfileScreen(props) {
-    const {width,user} =useAuth();
-    const registerApi =useApi(register.updateUserProfile);
+    const {height,width,user,logIn} =useAuth();
     const [active,setActive]=useState(false);
+    const changePasswordApi= useApi(register.changePassword);
+    const [errorMsg, setErrorMsg] = useState({msg:"",color:"red"});
 
-
-    const handleSubmit = async ({email,username}) =>{
-        setActive(true);
-        const result = await registerApi.request({email:email.trim(),username:username.trim(),doctorId:user._id});
-        if(!result.ok){
-            console.log(result.data)
+    async function handleSubmit({current_password,new_password,code}){
+      setActive(true);
+      const result = await changePasswordApi.request({new_password,current_password,email:user.email,code});
+      
+      if(result.status == 201){
+          // alert('Password has been reset successfully!');
+          setErrorMsg({msg:"Password has been reset successfully!",color:"green"});
+          logIn(result.data);
+      }else{
+          // setErrorMsg({msg:"Wrong password!",color:"red"});
+      }
+      setTimeout(() => {
+          // setErrorMsg({msg:"",color:"red"});
           setActive(false);
-          return;
-        };
-        setActive(false);
-        alert("Account has been updated successful!");
-        logIn(result.data)
-        // navigation.goBack();
-    }
+      }, 3000);
+  }
 
 return (
     <KeyboardAvoidingView
@@ -60,41 +63,48 @@ return (
     style={styles.keyboardAvoidingView}>
       <>
     <ScrollView contentContainerStyle={styles.container}>
-      <View style={{backgroundColor:colors.primary,width:width*0.95,alignItems:'center',padding:'5%',borderRadius:10,marginBottom:'5%'}}>
+      <View style={{backgroundColor:colors.primary,width:width*0.95,height:height*0.95,alignItems:'center',paddingTop:'30%',borderRadius:10,marginBottom:'5%'}}>
           <Image style={{width:width*0.2,height:width*0.2,borderRadius:width*0.2}} source={require('../../assets/images/doctors.jpg')}/>
           <Formik
-          initialValues={{email:user.email,username:user.username}}
-          validationSchema={ReviewSchema}
+          initialValues={{current_password:"",new_password:"",code:""}}
+          // validationSchema={ReviewSchema}
           onSubmit={handleSubmit}
           >
             {(props)=>(<>
                 <View style={{width:'95%',marginTop:'5%',}}>
-                    <AppTextInput placeholder={'Name'} 
-                    onChangeText={props.handleChange('username')}
-                    onBlur={props.handleBlur('username')}
-                    value={props.values.username}
-                    touched={props.touched.username}
-                    errors={props.errors.username}
-                    />
+                <AppTextInput placeholder={'Code'} 
+            onChangeText={props.handleChange('code')}
+            onBlur={props.handleBlur('code')}
+            value={props.values.code}
+            touched={props.touched.code}
+            errors={props.errors.code}/>
 
-                    <AppTextInput placeholder={'Email'}
-                    onChangeText={props.handleChange('email')}
-                    onBlur={props.handleBlur('email')}
-                    value={props.values.email}
-                    touched={props.touched.email}
-                    errors={props.errors.email}/>
+                  
+                <AppTextInputPassword placeholder={'Current Password'} 
+            onChangeText={props.handleChange('current_password')}
+            onBlur={props.handleBlur('current_password')}
+            value={props.values.current_password}
+            touched={props.touched.current_password}
+            errors={props.errors.current_password}/>
+
+            <AppTextInputPassword placeholder={'New Password'} 
+            onChangeText={props.handleChange('new_password')}
+            onBlur={props.handleBlur('new_password')}
+            value={props.values.new_password}
+            touched={props.touched.new_password}
+            errors={props.errors.new_password}/>
 
                     
                 </View>
-
-                <AppButton text={'Update Profile'} width={'95%'} marginTop={'7%'}
-                onPress={props.handleSubmit} active={active}/>
+                <AppText color={errorMsg.color}>{errorMsg.msg}</AppText>
+                <AppButton text={'Update'} width={'95%'} marginTop={'7%'}
+                onPress={()=>props.handleSubmit()} active={active}/>
             </>)}</Formik>
 
         
     </View>
 
-    <ChangePassword/> 
+    {/* <ChangePassword/>  */}
     </ScrollView>
     </>
     </KeyboardAvoidingView>

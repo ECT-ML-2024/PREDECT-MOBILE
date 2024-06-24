@@ -49,7 +49,7 @@ function Results({sessions,state}) {
     if(sessions.length>0){
         return (
         <View style={{backgroundColor:colors.primary,padding:'2%',borderRadius:10}}>
-            <AppText fontFamily='PoppinsSemiBold' fontSize={width*0.05} color={colors.secondary}>PREDICTED VALUES</AppText>
+            <AppText fontFamily='PoppinsSemiBold' fontSize={width*0.05} color={colors.secondary}>PREDICTION FROM AI MODEL</AppText>
             {Component('Energy','ENERGY','J')}
             {Component('Current','CURRENT','mA')}
             {Component('Frequency','FREQUENCY','Hz')}
@@ -67,7 +67,7 @@ function Results({sessions,state}) {
             {Component('Pre Respiratory Rate','PRE_RESPIRATORY_RATE','BPM',0)}
             {Component('Pre Perfusion Index','Pre_Perfusion_Index','BPM',2)}
             {Component('Pre SpO2','Pre_SpO2','%',2)}
-            {Component('Fasting Blood Sugars','FASTING_BLOOD_SUGARS','mg/dL',2)}
+            {/* {Component('Fasting Blood Sugars','FASTING_BLOOD_SUGARS','mg/dL',2)} */}
             {Component1('Hearing Adequate', 'HEARING_ADEQUATE')}
             {Component('Are You Feeling Better','ARE_YOU_FEELING_BETTER','',0)}
             {Component('Post Stimulation Aggression','POST_STIMULATION_AGGRESSION','',0)}

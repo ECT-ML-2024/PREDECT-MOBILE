@@ -3,7 +3,7 @@ import { View, StyleSheet,TextInput,Text } from 'react-native';
 import useAuth from '../auth/useAuth';
 import colors from '../config/colors';
 
-function AppTextInput({placeholder,padding='3%',borderRadius=10,textContentType,onChangeText,onBlur,value,touched,errors,secureTextEntry=false,keyboardType='default',multiline=false,maxLength,onFocus,...others}) {
+function AppTextInput({placeholder,padding='3%',borderRadius=10,textContentType,onChangeText,onBlur,value,touched,errors,secureTextEntry=false,editable=true,keyboardType='default',multiline=false,maxLength,onFocus,...others}) {
 
     const {width} = useAuth();
 return (
@@ -22,6 +22,7 @@ return (
                 maxLength={maxLength}
                 placeholderTextColor={colors.mediumDark}
                 onFocus={onFocus}
+                editable={editable}
                 />
         </View>
         {/* {touched && errors && <ErrorMessage error={errors}/>} */}

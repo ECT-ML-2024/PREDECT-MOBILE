@@ -19,8 +19,12 @@ return (
    
             <TouchableOpacity
             style={{backgroundColor:colors.textInputBG, padding:'3.5%',marginBottom:"5%",borderRadius:10,flexDirection:'row',alignItems:'center',justifyContent:'space-between',borderWidth:1,borderColor:colors.primary,...otherprop}}
-            disabled={disabled}
-            onPress={()=>setModal(true)}>
+            // disabled={disabled}
+            onPress={()=>{
+              if(disabled){
+                setModal(true)
+              }
+            }}>
                 <View style={{flexDirection:'row',alignItems:'center'}}>
                   <AppText fontSize={15} color={selectedItem ? colors.dark : 'red'} children={selectedItem ? selectedItem._id.toString().substr(15, 21) : placeholder}/>
                 </View>

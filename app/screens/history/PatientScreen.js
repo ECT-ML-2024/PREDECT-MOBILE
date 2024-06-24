@@ -1,5 +1,5 @@
 import React, { memo, useEffect, useRef, useState } from 'react';
-import { View, StyleSheet, Image, TouchableOpacity, KeyboardAvoidingView, ScrollView, Platform } from 'react-native';
+import { View, StyleSheet, Image, TouchableOpacity, KeyboardAvoidingView, ScrollView, Platform,ActivityIndicator } from 'react-native';
 import { MaterialCommunityIcons,MaterialIcons,Octicons } from '@expo/vector-icons';
 import { LineChart } from 'react-native-chart-kit';
 import RadioGroup from 'react-native-radio-buttons-group';
@@ -20,13 +20,15 @@ function PatientScreen({navigation,route}) {
   const { patient }=route.params;
   const {width,height,user}=useAuth();
   const getPatientAPi=useApi(patientApi.patient);
+  const deletePatientAPi=useApi(patientApi.patientdelete);
   const [sessions,setSessions]=useState([]);
   const [stateData,setStateData]=useState([]);
   const [state, setState] = useState('0');
   const [show,setShow] = useState(false);
+  const [active,setActive] = useState(false);
+
   const scrollViewRef = useRef();
   const previousScrollY = useRef(0);
-  const dataChart=[ {value:50,label:"M"}, {value:80,label:"N"}, {value:90,label:"O"}, {value:70,label:"P"} ]
 
 
   const [data,setData]=useState({
@@ -66,10 +68,18 @@ function PatientScreen({navigation,route}) {
       const newData_SpO2 = [];
     
       response.data.forEach(element => {
-        const result = element.PSBPT / element.PSBPB;
-        const result_SpO2 = element.Pre_SpO2;
-        newData.push(result);
-        newData_SpO2.push(result_SpO2);
+        const pre_result = element.PRE_Sys_BP / element.PRE_Dia_BP;
+        newData.push(pre_result);
+        if(element.POST_Sys_BP){
+          const post_result = element.POST_Sys_BP / element.POST_Dia_BP;
+          newData.push(post_result);
+        }
+        const pre_result_SpO2 = element.Pre_SpO2;
+        newData_SpO2.push(pre_result_SpO2);
+        if(element.Post_SpO2){
+          const post_result_SpO2 = element.Post_SpO2;
+          newData_SpO2.push(post_result_SpO2);
+        }
       });
       setData({
         datasets: [
@@ -133,6 +143,18 @@ function PatientScreen({navigation,route}) {
       previousScrollY.current = currentScrollY;
     };
 
+
+    async function handleDelete(){
+        setActive(true)
+        const response = await deletePatientAPi.request(patient._id);
+        setActive(false)
+        if(response.ok){
+          alert('Patient has been deleted successfully!');
+          }else{
+          alert('Error occured in deleting the patient, try again later!');
+        }
+        navigation.goBack();
+    }
 
 return (
   <KeyboardAvoidingView
@@ -254,7 +276,14 @@ return (
     </View>
 
     {/* Results */}
-     <Results sessions={sessions} state={state}/>   
+     <Results sessions={sessions} state={state}/>
+     
+     <TouchableOpacity style={{paddingVertical:'3%',paddingHorizontal:'5%',backgroundColor:'red',borderRadius:10,width:width/2,justifyContent:'center',alignItems:'center'}}
+     onPress={handleDelete}>
+        {active&&<ActivityIndicator size={width*0.07} color={colors.primary}/>}
+        {!active&&<AppText color={colors.primary}>Delete Patient</AppText>}
+     </TouchableOpacity>
+     <View style={{height:'2%',width:width}}></View>
   </ScrollView>
   
   <ScrollUpButton show={show} scrollToTop={scrollToTop}/>

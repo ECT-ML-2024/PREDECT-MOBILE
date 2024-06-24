@@ -27,14 +27,12 @@ function NewPasswordScreen({navigation,route}) {
 
 
     async function handleSubmit({password,cpassword}){
-      console.log(password,resetCode,code)
         setActive(true);
         if(password !== cpassword){
             setErrorMsg('passwords mismatch');
             return
         }
         const result = await changePasswordApi.request({new_password:password,code,resetCode,current_password:""});
-        console.log(result.status)
         if(result.status == 201){
             alert('Password has been reset successfully!');
         }

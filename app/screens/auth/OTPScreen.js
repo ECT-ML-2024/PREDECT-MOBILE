@@ -27,9 +27,6 @@ function OTPScreen({navigation}) {
 
     async function handleSubmit(values){
         setActive(true);
-        console.log('====================================');
-        console.log(values);
-        console.log('====================================');
         const results =await verifyCodeApi.request({code:values.code,resetCode:values.resetCode});
 
         if(results.data.status){
@@ -40,7 +37,6 @@ function OTPScreen({navigation}) {
         }else{
             setErrorMsg('code mismatch');
         }
-        console.log("=>",results.data.status);
 
         setActive(false);
     };

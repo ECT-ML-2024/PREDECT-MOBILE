@@ -23,6 +23,8 @@ function PatientsScreen({navigation}) {
     const getpatientsApi=useApi(patient.patients);
     const [patients,setPatients]=useState([]);
     const [active,setActive]=useState(false);
+    const [filteredDoctors, setFilteredDoctors] = useState([]);
+    const [searchQuery, setSearchQuery] = useState('');
 
     useActiveScreenFunc().FocusedAndBlur(()=>{
         setActive(true);
@@ -38,6 +40,15 @@ function PatientsScreen({navigation}) {
         }
         setActive(false);
         setPatients(response.data);
+        setFilteredDoctors(response.data);
+    }
+
+    const handleSearch = (text) => {
+        setSearchQuery(text);
+        const filtered = patients.filter(doctor =>
+            doctor.firstName.toLowerCase().includes(text.toLowerCase())
+        );
+        setFilteredDoctors(filtered);
     }
 return (
     <KeyboardAvoidingView
@@ -47,12 +58,14 @@ return (
             <View style={{backgroundColor:colors.textInputBG,width:width*0.9,borderRadius:10,padding:'2%',alignSelf:'center',flexDirection:'row',marginVertical:'5%'}}>
             <Ionicons name="search" size={24} color="black" />
             <TextInput placeholder='Patient Name' 
+            onChangeText={handleSearch}
+            value={searchQuery}
             placeholderTextColor={colors.mediumDark}
             style={{flex:1,marginLeft:'3%',fontSize:width*0.04,color:colors.dark}}/>
             </View>
             </View>
     <ScrollView contentContainerStyle={styles.container}>
-        {patients.map((item,index)=>{
+        {filteredDoctors.map((item,index)=>{
             return(
             <Card item={item} key={index} onPress={()=>navigation.navigate(routes.HISTORY_TAB,{
                 screen:routes.PATIENT,

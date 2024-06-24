@@ -19,12 +19,15 @@ const list = [
     {id:1},
 ]
 
-function NewDoctorsScreen({navigation}) {
+function DoctorsScreen({navigation}) {
     const {width}=useAuth();
     const getDoctorsApi= useApi(doctor.doctors);
     const doctorAPi= useApi(doctor.doctor);
     const [ doctors,setDoctors]=useState([]);
     const [active,setActive]=useState(false);
+    const [filteredDoctors, setFilteredDoctors] = useState([]);
+    const [searchQuery, setSearchQuery] = useState('');
+
 
 
 useActiveScreenFunc().FocusedAndBlur(()=>{
@@ -36,6 +39,7 @@ useActiveScreenFunc().FocusedAndBlur(()=>{
         const response = await getDoctorsApi.request();
         if(response.ok){
             setDoctors(response.data);
+            setFilteredDoctors(response.data);
         }
         setActive(false);
     }
@@ -51,6 +55,14 @@ useActiveScreenFunc().FocusedAndBlur(()=>{
         await doctorAPi.request(data);
         handleSubmit();
     }
+
+    const handleSearch = (text) => {
+        setSearchQuery(text);
+        const filtered = doctors.filter(doctor =>
+            doctor.name.toLowerCase().includes(text.toLowerCase())
+        );
+        setFilteredDoctors(filtered);
+    }
 return (
     <KeyboardAvoidingView
         behavior={Platform.OS === "ios" ? "padding" : null}
@@ -60,15 +72,15 @@ return (
             <Ionicons name="search" size={24} color="black" />
             <TextInput placeholder='Name' 
             placeholderTextColor={colors.mediumDark}
+            onChangeText={handleSearch}
+            value={searchQuery}
             style={{flex:1,marginLeft:'3%',fontSize:width*0.04,color:colors.dark}}/>
             </View>
             </View>
     <ScrollView contentContainerStyle={styles.container}>
-        {doctors.map((item,index)=>{
+        {filteredDoctors.map((item,index)=>{
             return(
-            <DoctorsCard item={item} key={index} onPress={()=>navigation.navigate(routes.HISTORY_TAB,{
-                screen:routes.PATIENT
-            })}
+            <DoctorsCard item={item} key={index}
             accept={()=>handleAccept(item._id,true)}
             reject={()=>handleAccept(item._id,false)}
             />
@@ -82,7 +94,7 @@ return (
 );
 }
 
-export default NewDoctorsScreen;
+export default DoctorsScreen;
 const styles = StyleSheet.create({
 container:{
 // flex:1,

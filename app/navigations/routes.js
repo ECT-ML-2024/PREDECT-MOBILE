@@ -11,11 +11,13 @@ export default Object.freeze({
 
   HOME_TAB:'HomeTab',
   DASHBOARD:'Dashboard',
+  ADMIN_DASHBOARD:'AdminDashboard',
   HOME:'home',
   SECOND:'Second',
   THIRD:'Third',
   RESULTS:'results',
   DONE:'done',
+  ADD_DOCTOR:'Add_Doctor',
 
   HISTORY_TAB:'HistoryTab',
   PATIENTS:'Patients',
@@ -23,8 +25,8 @@ export default Object.freeze({
   GRAPH:'Graph',
   ADD_PATIENT:'AddPatient',
 
-  NEW_WORKERS_TAB:'NewWorkersTab',
-  NEW_DOCTORS:'NewDoctors',
+  DOCTORS_TAB:'NewWorkersTab',
+  DOCTORS:'NewDoctors',
   
   PROFILE_TAB:'ProfileTab',
   PROFILE:'Profile'

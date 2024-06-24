@@ -6,16 +6,15 @@ import colors from '../../config/colors';
 import DashboardCard from '../../components/DashboardCard';
 import routes from '../../navigations/routes';
 
-function DashboardScreen({navigation}) {
-    const {width,height,user}=useAuth();
-
+function AdminDashboardScreen({navigation}) {
+    const {width,height}=useAuth();
 return (
 <View style={styles.container}>
 
     <View style={{width:width,flexDirection:'row',justifyContent:'space-between',alignItems:'center',backgroundColor:colors.primary,paddingHorizontal:'5%',
         height:height*0.1
     }}>
-        <AppText fontFamily='PoppinsSemiBold' fontSize={width*0.05} width='80%' numberOfLines={1}>Hello, {user.name}</AppText>
+        <AppText fontFamily='PoppinsSemiBold' fontSize={width*0.05} width='80%' numberOfLines={1}>Hello, Christian</AppText>
         <Image style={{width:width*0.15,height:width*0.15,borderRadius:width*0.15}} source={require('../../assets/images/doctors.jpg')}/>
     </View>
 
@@ -29,17 +28,13 @@ return (
 
 
     <ScrollView contentContainerStyle={{width:width*0.9,flexDirection:'row',justifyContent:'space-between',flexWrap:'wrap',rowGap:width*0.05,padding:'5%',paddingTop:'10%',paddingBottom:'5%',backgroundColor:colors.primary,height:height*0.65,width:width}}>
-    <DashboardCard imegeUrl={require('../../assets/images/predict.png')} title={'New Diagnosis'}
+    <DashboardCard imegeUrl={require('../../assets/images/doctors.jpg')} title={'Doctors'}
+    onPress={()=>navigation.navigate(routes.DOCTORS_TAB,{
+        screen:routes.DOCTORS
+    })}/>
+    <DashboardCard imegeUrl={require('../../assets/images/documents.png')} title={'Add Doctor'}
     onPress={()=>navigation.navigate(routes.HOME_TAB,{
-        screen:routes.HOME
-    })}/>
-    <DashboardCard imegeUrl={require('../../assets/images/patient-care.png')} title={'Patients'}
-    onPress={()=>navigation.navigate(routes.HISTORY_TAB,{
-        screen:routes.PATIENTS
-    })}/>
-    <DashboardCard imegeUrl={require('../../assets/images/documents.png')} title={'Add Patient'}
-    onPress={()=>navigation.navigate(routes.HISTORY_TAB,{
-        screen:routes.ADD_PATIENT
+        screen:routes.ADD_DOCTOR
     })}/>
     <DashboardCard imegeUrl={require('../../assets/images/avatar.png')} title={'Profile'}
     onPress={()=>navigation.navigate(routes.PROFILE_TAB,{
@@ -51,7 +46,7 @@ return (
 );
 }
 
-export default DashboardScreen;
+export default AdminDashboardScreen;
 const styles = StyleSheet.create({
 container:{
 flex:1,

@@ -12,13 +12,15 @@ import PatientsScreen from "../screens/history/PatientsScreen"
 import DoneScreen from "../screens/home/DoneScreen"
 import HomeScreen from "../screens/home/HomeScreen"
 import ResultsScreen from "../screens/home/ResultsScreen"
-import NewDoctorsScreen from "../screens/newdoctors/DoctorsScreen"
+import DoctorsScreen from "../screens/newdoctors/DoctorsScreen"
 import UnathorizedUsersScreen from "../screens/auth/UnathorizedUsersScreen"
 import ProfileScreen from "../screens/profile/ProfileScreen"
 import LoadingScreen from "../screens/auth/LoadingScreen"
 import SecondScreen from "../screens/home/SecondScreen"
 import ThirdScreen from "../screens/home/ThirdScreen"
 import DashboardScreen from "../screens/home/DashboardScreen"
+import AdminDashboardScreen from "../screens/admin/AdminDashboardScreen"
+import AddDoctorScreen from "../screens/admin/AddDoctorScreen"
 
 // Authentication
 const GetStartedStackScreen = ({ navigation })=> <GetStartedScreen navigation={navigation}/>
@@ -33,6 +35,8 @@ const LoadingStackScreen = ({ navigation })=> <LoadingScreen navigation={navigat
 
 
 // Home
+const AdminDashboardStackScreen = ({ navigation,route })=> <AdminDashboardScreen navigation={navigation} route={route}/>
+const AddDoctorStackScreen = ({ navigation,route })=> <AddDoctorScreen navigation={navigation} route={route}/>
 const DashboardStackScreen = ({ navigation,route })=> <DashboardScreen navigation={navigation} route={route}/>
 const HomeStackScreen = ({ navigation,route })=> <HomeScreen navigation={navigation} route={route}/>
 const SecondStackScreen = ({ navigation,route })=> <SecondScreen navigation={navigation} route={route}/>
@@ -48,7 +52,7 @@ const GraphStackScreen = ({ navigation,route })=> <GraphScreen navigation={navig
 const AddPatientStackScreen = ({ navigation,route })=> <AddPatientScreen navigation={navigation} route={route}/>
 
 // New Doctors
-const NewDoctorsStackScreen = ({ navigation,route })=> <NewDoctorsScreen navigation={navigation} route={route}/>
+const DoctorsStackScreen = ({ navigation,route })=> <DoctorsScreen navigation={navigation} route={route}/>
 
 // Profile
 const ProfileStackScreen = ({ navigation,route })=> <ProfileScreen navigation={navigation} route={route}/>
@@ -67,11 +71,13 @@ export default{
   PatientsStackScreen,
   PatientStackScreen,
   GraphStackScreen,
-  NewDoctorsStackScreen,
+  DoctorsStackScreen,
   AddPatientStackScreen,
   UnathorizedUsersStackScreen,
   ProfileStackScreen,
   LoadingStackScreen,
   SecondStackScreen,
   ThirdStackScreen,
+  AdminDashboardStackScreen,
+  AddDoctorStackScreen
   }

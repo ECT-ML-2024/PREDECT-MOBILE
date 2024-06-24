@@ -19,14 +19,14 @@ import ScrollUpButton from '../../components/ScrollUpButton';
 
 function SecondScreen({navigation,route}) {
     const {results} = route.params;
-    const {width,height}=useAuth();
+    const {width,height,user}=useAuth();
     const predictApi=useApi(predict.predict);
     const scrollViewRef = useRef();
     const previousScrollY = useRef(0);
 
     const [active,setActive]=useState(false);
     const [show,setShow] = useState(false);
-    // console.log(results)
+    // console.log(Object.keys(results))
     
 
 
@@ -79,7 +79,6 @@ function SecondScreen({navigation,route}) {
             POSITION_RIGHT: selectedPositionRight.title,
             POSITION_LEFT: selectedPositionLeft.title,
             HANDEDNESS: selectedHandedness.title,
-            
             CURRENT_DRUG_TREATMENT: selectedDrugTreatment.title,
             OBSERVATIONS: selectedObservations.title,
             MEMORY: selectedMemory.title,
@@ -97,7 +96,13 @@ function SecondScreen({navigation,route}) {
             CURRENT_DIAGNOSES_PSYCHOSIS_NOS: selectedPsychosisNOS.value,
             CURRENT_DIAGNOSES_DEPRESSION_NOS: selectedDepressionNOS.value,
             CURRENT_DIAGNOSES_POSTPARTUM_DEPRESSION: selectedPostpartumDepression.value,
-            CURRENT_DIAGNOSES_NEUROCOGNITIVE_DISORDER: selectedNeurocognitive.value,            
+            CURRENT_DIAGNOSES_NEUROCOGNITIVE_DISORDER: selectedNeurocognitive.value, 
+            doctorName:user.name           
+        }
+
+        if(results.firstTimer){
+            delete finalData.OUTCOME
+            delete finalData.OBSERVATIONS
         }
 
         
@@ -154,8 +159,8 @@ return (
         <AppPicker items={pickersData.TYPE_OF_STIMULATION}  onSelectedItem={onSelectedTypeOfSimulation} selectedItem={selectedTypeOfSimulation} width='70%'/>
 
 
-        <AppText>Outcome</AppText>
-        <AppPicker items={pickersData.OUTCOME}  onSelectedItem={onSelectedOutcome} selectedItem={selectedOutcome}/>
+        {!results.firstTimer&&<><AppText>Outcome</AppText>
+        <AppPicker items={pickersData.OUTCOME}  onSelectedItem={onSelectedOutcome} selectedItem={selectedOutcome}/></>}
 
         <AppText>Anaesthesia</AppText>
         <AppPicker items={pickersData.ANAESTHESIA}  onSelectedItem={onSelectedAnaesthesia} selectedItem={selectedAnaesthesia}/>
@@ -176,12 +181,12 @@ return (
         <AppText>Current Drug Treatment</AppText>
         <AppPicker items={pickersData.CURRENT_DRUG_TREATMENT}  onSelectedItem={onSelectedDrugTreatment} selectedItem={selectedDrugTreatment}/>
 
-        <AppText>Observations</AppText>
-        <AppPicker items={pickersData.OBSERVATIONS}  onSelectedItem={onSelectedObservations} selectedItem={selectedObservations}/>
+        {!results.firstTimer&&<><AppText>Observations</AppText>
+        <AppPicker items={pickersData.OBSERVATIONS}  onSelectedItem={onSelectedObservations} selectedItem={selectedObservations}/></>}
 
         <AppText>Memory</AppText>
         <AppPicker items={pickersData.MEMORY}  onSelectedItem={onSelectedMemory} selectedItem={selectedMemory}/>
-
+    
         <AppText fontFamily='PoppinsSemiBold'>Current Diagnoses</AppText>
         <AppText>Schizophrenia</AppText>
         <AppPicker items={pickersData.CURRENT_DIAGNOSES}  onSelectedItem={onSelectedSchizophrenia} selectedItem={selectedSchizophrenia}/>

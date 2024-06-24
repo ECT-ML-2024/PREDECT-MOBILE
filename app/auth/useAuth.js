@@ -11,7 +11,7 @@ export default useAuth = () => {
   const logIn = (authToken,navigation) => {
     // const user = jwtDecode(authToken);
     // if (user.doctor.authorized){
-      setUser(authToken);
+      setUser(JSON.parse(authToken));
     // }else{
     //   navigation.navigate(routes.UNAUTHORIZED_USERS);
     // }

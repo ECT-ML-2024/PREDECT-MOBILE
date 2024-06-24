@@ -37,7 +37,7 @@ export default function App() {
   const restoreToken = async ()=>{
    const token = await authStorage.getToken();
     if(!token) return;
-    setUser(token);
+    setUser(JSON.parse(token));
   }
   useEffect(() => {
     async function prepare() {

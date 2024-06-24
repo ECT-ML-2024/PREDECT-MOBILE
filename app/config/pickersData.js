@@ -143,4 +143,19 @@ const zeroAndOneData =[
       value: '1'
   }
 ]
-export default { TYPE_OF_STIMULATION,OUTCOME,ANAESTHESIA,POLARITY,POSITION,HANDEDNESS,YES_OR_NO,CURRENT_DRUG_TREATMENT,OBSERVATIONS,MEMORY,CURRENT_DIAGNOSES,setSex,zeroAndOneData }
+
+const education = [
+  { title:'Primary School' },
+  { title:'Junior High School' },
+  { title:'Secondary Education' },
+  { title:'Tertiary Education' },
+  { title:'No Education' },
+]
+
+const religion = [
+  { title:'Christianity' },
+  { title:'Islam' },
+  { title:'African  Traditional' },
+  { title:'Other' },
+]
+export default { TYPE_OF_STIMULATION,OUTCOME,ANAESTHESIA,POLARITY,POSITION,HANDEDNESS,YES_OR_NO,CURRENT_DRUG_TREATMENT,OBSERVATIONS,MEMORY,CURRENT_DIAGNOSES,setSex,zeroAndOneData,education,religion }

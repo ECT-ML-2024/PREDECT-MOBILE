@@ -28,7 +28,6 @@ function ChangePassword({navigation}) {
     async function handleSubmit({current_password,new_password}){
         setActive(true);
         const result = await changePasswordApi.request({new_password,current_password,email:user.email});
-        console.log(result.status)
         if(result.status == 201){
             // alert('Password has been reset successfully!');
             setErrorMsg({msg:"Password has been reset successfully!",color:"green"});

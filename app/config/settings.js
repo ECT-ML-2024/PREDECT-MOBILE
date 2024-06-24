@@ -2,7 +2,7 @@ import Constants from "expo-constants";
 
 const settings = {
   dev: {
-    apiUrl: "http://192.168.1.7:3000/api/",
+    apiUrl: "http://192.168.43.7:3000/api/",
     // apiUrl: "https://predect-server.onrender.com/api/",
   },
   staging: {

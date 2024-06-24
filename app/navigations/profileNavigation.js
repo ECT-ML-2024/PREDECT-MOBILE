@@ -17,7 +17,7 @@ return(
         color:'blue'
       },
       headerTitleAlign:'center'}}>
-      <Stack.Screen name={routes.NEW_DOCTORS} component={controler.ProfileStackScreen} options={{headerShown:false}}/>
+      <Stack.Screen name={routes.DOCTORS} component={controler.ProfileStackScreen} options={{headerShown:false}}/>
        
     </Stack.Navigator>
   )

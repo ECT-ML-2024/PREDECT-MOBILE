@@ -47,6 +47,8 @@ export const useInitialStates = () => {
     const [selectedDELAYED_RECALL_DAISY,onSelectedDELAYED_RECALL_DAISY]=useState(1);
     const [selectedDELAYED_RECALL_RED,onSelectedDELAYED_RECALL_RED]=useState(1);
     const [selectedFLUENCY,onSelectedFLUENCY]=useState(1);
+    const [selectedReligion,onSelectedReligion]=useState(pickersData.religion[0]);
+    const [selectedEducation,onSelectedEducation]=useState(pickersData.education[0]);
 
 
     return {
@@ -115,7 +117,9 @@ export const useInitialStates = () => {
         selectedDELAYED_RECALL_DAISY,onSelectedDELAYED_RECALL_DAISY,
         selectedDELAYED_RECALL_RED,onSelectedDELAYED_RECALL_RED,
         selectedFLUENCY,onSelectedFLUENCY,
-        selectedHearingAdequate,onSelectedHearingAdequate
+        selectedHearingAdequate,onSelectedHearingAdequate,
+        selectedReligion,onSelectedReligion,
+        selectedEducation,onSelectedEducation,
     };
     
 };

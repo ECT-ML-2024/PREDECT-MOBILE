@@ -22,7 +22,7 @@ return (
       
       <View style={{marginLeft:'2%'}}>
       <AppText fontFamily='PoppinsSemiBold'>Welcome</AppText>
-      <AppText color={colors.secondary} width={width*0.5} fontFamily='PoppinsSemiBold'>{JSON.parse(user).name}</AppText>
+      <AppText color={colors.secondary} width={width*0.5} fontFamily='PoppinsSemiBold'>{user.name}</AppText>
       </View>
     </View>
       <AppButtonOP text={'Logout'} width='90%' alignSelf='center' marginBottom='10%'

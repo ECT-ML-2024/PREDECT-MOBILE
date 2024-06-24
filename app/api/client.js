@@ -18,14 +18,13 @@ apiClient.get =async (url,params,axiosConfig)=>{
     // // Decrypt response data
     const key = CryptoJS.enc.Utf8.parse('8c5424a7-971b-4eb5-a73b-6162d120d00c').toString();
     try {
-        var bytes  = CryptoJS.AES.decrypt(response.data,'key');
+        var bytes  = CryptoJS.AES.decrypt(response.data,key);
         const decryptedString = bytes.toString(CryptoJS.enc.Utf8);
         const decryptedData = JSON.parse(decryptedString);
         response.data=decryptedData;
     } catch (error) {
         console.error('Error parsing decrypted data:', error);
     }
-    console.log(1)
 
     return response
 }
@@ -36,7 +35,7 @@ apiClient.post =async (url,params,axiosConfig)=>{
     // // Decrypt response data
     const key = CryptoJS.enc.Utf8.parse('8c5424a7-971b-4eb5-a73b-6162d120d00c').toString();
     try {
-        var bytes  = CryptoJS.AES.decrypt(response.data,'key');
+        var bytes  = CryptoJS.AES.decrypt(response.data,key);
         const decryptedString = bytes.toString(CryptoJS.enc.Utf8);
         const decryptedData = JSON.parse(decryptedString);
 
@@ -45,9 +44,9 @@ apiClient.post =async (url,params,axiosConfig)=>{
         console.error('Error parsing decrypted data:', error);
     }
 
-    console.log('====================================');
-    console.log(response);
-    console.log('====================================');    
+    // console.log('====================================');
+    // console.log(response);
+    // console.log('====================================');    
     return response
 }
 

@@ -1,9 +1,10 @@
 import React, { useMemo, useState } from 'react';
-import { View, StyleSheet, Image, Platform, KeyboardAvoidingView, ScrollView } from 'react-native';
+import { View, StyleSheet, Image, Platform, KeyboardAvoidingView, ScrollView, Pressable } from 'react-native';
 import { Formik } from 'formik';
 import * as yup from 'yup';
 import RadioGroup from 'react-native-radio-buttons-group';
-
+import DateTimePicker from '@react-native-community/datetimepicker';
+import { AntDesign,Ionicons,MaterialIcons } from '@expo/vector-icons';
 
 import AppText from '../../components/Text';
 import useAuth from '../../auth/useAuth';
@@ -15,6 +16,9 @@ import register from '../../api/register';
 import routes from '../../navigations/routes';
 import patient from '../../api/patient';
 import useActiveScreenFunc from '../../hooks/useActiveScreenFunc';
+import AppPicker from '../../components/AppPicker';
+import pickersData from '../../config/pickersData';
+import { useInitialStates } from '../../hooks/useStateHook';
 
 
 const ReviewSchema = yup.object({
@@ -27,7 +31,7 @@ const ReviewSchema = yup.object({
     {
         id: '1', // acts as primary key, should be unique and non-empty string
         label: 'Male',
-        value: 'MALE'
+        value: 'Male'
     },
     {
         id: '2',
@@ -42,11 +46,45 @@ function AddPatientScreen({navigation}) {
     const [sex, setSex] = useState();
     const radioButtons = useMemo(() => (setData), []);
 
+    const [show, setShow] = useState(false);
+    const [mode, setMode] = useState('date');
+    const [date, setDate] = useState(new Date(Date.now()));
 
-    const handleSubmit = async ({NAME,AGE}) =>{
+
+    const {selectedReligion,onSelectedReligion,
+        selectedEducation,onSelectedEducation}=useInitialStates()
+    const onChange = (event, selectedDate) => {
+        const currentDate = selectedDate || date;
+        setShow(Platform.OS === 'ios');
+        setDate(currentDate);
+    };
+
+    const showMode = (currentMode) => {
+        setShow(true);
+        setMode(currentMode);
+    };
+
+    const showDatepicker = () => {
+        showMode('date');
+    };
+
+    const getDate = () => {
+        showDatepicker();
+    };
+
+
+
+
+    const handleSubmit = async (values) =>{
         setActive(true);
 
-        const result = await addPatientApi.request({NAME:NAME.trim(),AGE,GENDER:setData[sex-1].value,doctorId:user._id});
+        const result = await addPatientApi.request({
+            ...values,
+            dob:date,
+            gender:setData[sex-1].value,
+            religion:selectedReligion.title,
+            education:selectedEducation.title
+        });
         if(!result.ok){
           setActive(false);
           return;
@@ -55,16 +93,16 @@ function AddPatientScreen({navigation}) {
         alert("Registration was successful. Now you can add patients records!");
       }
 
-     useActiveScreenFunc() .FocusedAndBlur(()=>{},()=>{
-        // navigation.goBack();
-     })
+    //  useActiveScreenFunc() .FocusedAndBlur(()=>{},()=>{
+    //     // navigation.goBack();
+    //  })
 return (
     <KeyboardAvoidingView
         behavior={Platform.OS === "ios" ? "padding" : null}
         style={styles.keyboardAvoidingView}>
     <ScrollView contentContainerStyle={styles.container}>
 
-    <View style={{width:width*0.9,height:height*0.2,justifyContent:'flex-end',marginVertical:'10%'}}>
+    <View style={{width:width*0.9,justifyContent:'flex-end',marginBottom:'10%'}}>
         <View style={{width:width*0.3,height:width*0.3}}>
             <Image style={{width:'100%',height:'100%'}} source={require('../../assets/images/preLogo.png')}/>
         </View>
@@ -73,39 +111,99 @@ return (
 
 
     <Formik
-          initialValues={{NAME:"", AGE:"",}}
-          validationSchema={ReviewSchema}
+          initialValues={{
+            firstName:"",surname:"",address:"",occupation:"",telephone:"",ethnicity:""}}
+        //   validationSchema={ReviewSchema}
           onSubmit={handleSubmit}
           >
             {(props)=>(<>
-                <View style={{width:width*0.9,height:height*0.25,justifyContent:'center'}}>
-                    <AppTextInput placeholder={'Name'} 
-                    onChangeText={props.handleChange('NAME')}
-                    onBlur={props.handleBlur('NAME')}
-                    value={props.values.NAME}
-                    touched={props.touched.NAME}
-                    errors={props.errors.NAME}/>
+                <View style={{width:width*0.9,justifyContent:'center'}}>
+                    <AppTextInput placeholder={'First Name'} 
+                    onChangeText={props.handleChange('firstName')}
+                    onBlur={props.handleBlur('firstName')}
+                    value={props.values.firstName}
+                    touched={props.touched.firstName}
+                    errors={props.errors.firstName}/>
+                   
+                    <AppTextInput placeholder={'Surname'} 
+                    onChangeText={props.handleChange('surname')}
+                    onBlur={props.handleBlur('surname')}
+                    value={props.values.surname}
+                    touched={props.touched.surname}
+                    errors={props.errors.surname}/>
 
-                    <AppTextInput placeholder={'Age'}
-                    onChangeText={props.handleChange('AGE')}
-                    onBlur={props.handleBlur('AGE')}
-                    value={props.values.AGE}
-                    touched={props.touched.AGE}
-                    errors={props.errors.AGE}
-                    keyboardType='numeric'/>
+                    <AppTextInput placeholder={'Address'} 
+                    onChangeText={props.handleChange('address')}
+                    onBlur={props.handleBlur('address')}
+                    value={props.values.address}
+                    touched={props.touched.address}
+                    errors={props.errors.address}/>
+                    
+                    <AppTextInput placeholder={'Occupation'} 
+                    onChangeText={props.handleChange('occupation')}
+                    onBlur={props.handleBlur('occupation')}
+                    value={props.values.occupation}
+                    touched={props.touched.occupation}
+                    errors={props.errors.occupation}/>
+                    
+                    <AppTextInput placeholder={'Telephone'} 
+                    onChangeText={props.handleChange('telephone')}
+                    onBlur={props.handleBlur('telephone')}
+                    value={props.values.telephone}
+                    touched={props.touched.telephone}
+                    errors={props.errors.telephone}
+                    keyboardType='numeric'
+                    />
 
+                    <AppTextInput placeholder={'Ethnicity'} 
+                    onChangeText={props.handleChange('ethnicity')}
+                    onBlur={props.handleBlur('ethnicity')}
+                    value={props.values.ethnicity}
+                    touched={props.touched.ethnicity}
+                    errors={props.errors.ethnicity}/>
+
+                    <AppText>Religion</AppText>
+                    <AppPicker items={pickersData.religion}  onSelectedItem={onSelectedReligion} selectedItem={selectedReligion} />
+
+                    <AppText>Highest education attainment</AppText>
+                    <AppPicker items={pickersData.education}  onSelectedItem={onSelectedEducation} selectedItem={selectedEducation} />
+                    
+
+                    <AppText marginLeft = '5%' fontSize={width*0.05} fontFamily='PoppinsSemiBold'>Sex</AppText>
                     <RadioGroup 
                         radioButtons={radioButtons} 
                         onPress={setSex}
                         selectedId={sex}
                         layout='row'
                     />
+
+                <View style={{ width: '100%' }}>
+                    <AppText textAlign='left'>Select your date</AppText>
+                </View>
+                <View style={{ backgroundColor: colors.textInputBG, width: '100%', paddingLeft: 25, marginVertical: '3%', padding: '3%', borderRadius: width * 0.03 }}>
+                    <Pressable onPress={getDate} style={{ flexDirection: 'row', justifyContent: 'space-between', alignItems: 'center' }}>
+                        <AppText>{date.toString().substring(0, 15)}</AppText>
+                        <MaterialIcons name="date-range" size={24} color={colors.dark} />
+                    </Pressable>
+                    {show && (
+                        <DateTimePicker
+                            testID="dateTimePicker"
+                            value={date}
+                            mode={mode}
+                            is24Hour={true}
+                            display="default"
+                            onChange={onChange}
+                            maximumDate={new Date()}
+                        />
+                    )}
+                </View>
+
                 </View>
 
                 <AppButton text={'Submit'} width={width*0.9} marginTop={'15%'}
                 onPress={props.handleSubmit} active={active}/>
             </>)}</Formik>
-    <View style={{width:'100%',height:height*0.18,}}/>
+    {/* <View style={{width:'100%',height:height*0.18,}}/> */}
 
 </ScrollView>
 </KeyboardAvoidingView>

@@ -1,8 +1,12 @@
 import apiClient from "./client";
 
-const doctors =() => apiClient.get('doctor');
-const doctor =(data) => apiClient.post('doctor',data);
+const endpoint='doctor';
+
+const doctors =() => apiClient.get(endpoint);
+const doctor =(data) => apiClient.post(endpoint,data);
+const AddDoctor =(data) => apiClient.post(endpoint+'/add',data);
 export default {
     doctors,
-    doctor
+    doctor,
+    AddDoctor
 }

@@ -29,8 +29,8 @@ function MyDrawer() {
           headerShown:false
       }}>
         <Drawer.Screen name={routes.HOME_TAB} options={{title:'Dashboard'}} component={HomeNavigator} />
-        <Drawer.Screen name={routes.HISTORY_TAB} options={{title:'Patients'}} component={HistoryNavigator} />
-        {user.admin&&<Drawer.Screen name={routes.NEW_WORKERS_TAB} options={{title:'Doctors'}} component={NewWorkersNavigator} />}
+        {!user.admin&&<Drawer.Screen name={routes.HISTORY_TAB} options={{title:'Patients'}} component={HistoryNavigator} />}
+        {user.admin&&<Drawer.Screen name={routes.DOCTORS_TAB} options={{title:'Doctors'}} component={NewWorkersNavigator} />}
         <Drawer.Screen name={routes.PROFILE_TAB} options={{title:'Profile'}} component={ProfileNavigator} />
       </Drawer.Navigator>
     );
