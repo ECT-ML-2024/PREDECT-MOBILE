@@ -202,7 +202,7 @@ return (
             </View>
 
             <View>
-            <AppText>Pre Temperature</AppText>
+            <AppText>Pre Temperature(°C)</AppText>
                 <AppTextInput
                     onChangeText={props.handleChange('PRE_TEMPERATURE')}
                     onBlur={props.handleBlur('PRE_TEMPERATURE')}
@@ -215,7 +215,7 @@ return (
             </View>
 
             {firstTimer!=1&&<View style={{width:'100%'}}>
-            <AppText>Post Temperature</AppText>
+            <AppText>Post Temperature(°C)</AppText>
                 <AppTextInput
                     onChangeText={props.handleChange('POST_TEMPERATURE')}
                     onBlur={props.handleBlur('POST_TEMPERATURE')}
@@ -228,7 +228,7 @@ return (
             </View>}
 
             <View style={{width:'100%'}}>
-            <AppText>Pre Stimulation Pulse</AppText>
+            <AppText>Pre Stimulation Pulse(bpm)</AppText>
                 <AppTextInput
                     onChangeText={props.handleChange('PRE_STIMULATION_PULSE')}
                     onBlur={props.handleBlur('PRE_STIMULATION_PULSE')}
@@ -241,7 +241,7 @@ return (
             </View>
 
             {firstTimer!=1&&<View style={{width:'100%'}}>
-            <AppText>Post Stimulation Pulse</AppText>
+            <AppText>Post Stimulation Pulse(bpm)</AppText>
                 <AppTextInput
                     onChangeText={props.handleChange('POST_STIMULATION_PULSE')}
                     onBlur={props.handleBlur('POST_STIMULATION_PULSE')}
@@ -254,7 +254,7 @@ return (
             </View>}
 
             <View style={{width:'100%'}}>
-            <AppText>Pre Respiratory Rate</AppText>
+            <AppText>Pre Respiratory Rate(cpm)</AppText>
                 <AppTextInput
                     onChangeText={props.handleChange('PRE_RESPIRATORY_RATE')}
                     onBlur={props.handleBlur('PRE_RESPIRATORY_RATE')}
@@ -267,7 +267,7 @@ return (
             </View>
 
             {firstTimer!=1&&<View style={{width:'100%'}}>
-                <AppText>Post Respiratory Rate</AppText>
+                <AppText>Post Respiratory Rate(cpm)</AppText>
                 <AppTextInput
                     onChangeText={props.handleChange('POST_RESPIRATORY_RATE')}
                     onBlur={props.handleBlur('POST_RESPIRATORY_RATE')}
@@ -278,6 +278,99 @@ return (
                     editable={show}
                 />
             </View>}
+
+            {firstTimer!=1&&<View style={{width:'100%'}}>
+            <AppText>Post Stimulation Aggression</AppText>
+            <AppTextInput
+                onChangeText={props.handleChange('POST_STIMULATION_AGGRESSION')}
+                onBlur={props.handleBlur('POST_STIMULATION_AGGRESSION')}
+                value={props.values.POST_STIMULATION_AGGRESSION}
+                touched={props.touched.POST_STIMULATION_AGGRESSION}
+                errors={props.errors.POST_STIMULATION_AGGRESSION}
+                keyboardType='numeric'
+                editable={show}
+            />
+            </View>}
+
+            <View style={{width:'100%'}}>
+            <AppText>Pre SpO2(%)</AppText>
+                <AppTextInput
+                    onChangeText={props.handleChange('Pre_SpO2')}
+                    onBlur={props.handleBlur('Pre_SpO2')}
+                    value={props.values.Pre_SpO2}
+                    touched={props.touched.Pre_SpO2}
+                    errors={props.errors.Pre_SpO2}
+                    keyboardType='numeric'
+                    editable={show}
+                    />
+            </View>
+
+        {firstTimer!=1&&<View style={{width:'100%'}}>
+            <AppText>Post SpO2(%)</AppText>
+                <AppTextInput
+                    onChangeText={props.handleChange('Post_SpO2')}
+                    onBlur={props.handleBlur('Post_SpO2')}
+                    value={props.values.Post_SpO2}
+                    touched={props.touched.Post_SpO2}
+                    errors={props.errors.Post_SpO2}
+                    keyboardType='numeric'
+                    editable={show}
+                    />
+            </View>}
+
+            <AppText fontFamily='PoppinsSemiBold'>Blood Pressure</AppText>
+            {/* <View style={styles.box}> */}
+            <View style={{width:'100%'}}>
+            <AppText>Pre Systolic pressure</AppText>
+            <AppTextInput
+                onChangeText={props.handleChange('PRE_Sys_BP')}
+                onBlur={props.handleBlur('PRE_Sys_BP')}
+                value={props.values.PRE_Sys_BP}
+                touched={props.touched.PRE_Sys_BP}
+                errors={props.errors.PRE_Sys_BP}
+                keyboardType='numeric'
+                editable={show}
+            />
+            </View>
+            <View style={{width:'100%'}}>
+            <AppText>Pre Diastolic pressure</AppText>
+            <AppTextInput
+                onChangeText={props.handleChange('PRE_Dia_BP')}
+                onBlur={props.handleBlur('PRE_Dia_BP')}
+                value={props.values.PRE_Dia_BP}
+                touched={props.touched.PRE_Dia_BP}
+                errors={props.errors.PRE_Dia_BP}
+                keyboardType='numeric'
+                editable={show}
+            />
+            {/* </View> */}
+            </View>
+            {firstTimer!=1&&<>
+            <View style={{width:'100%'}}>
+            <AppText>Post Systolic pressure</AppText>
+            <AppTextInput
+                onChangeText={props.handleChange('POST_Sys_BP')}
+                onBlur={props.handleBlur('POST_Sys_BP')}
+                value={props.values.POST_Sys_BP}
+                touched={props.touched.POST_Sys_BP}
+                errors={props.errors.POST_Sys_BP}
+                keyboardType='numeric'
+                editable={show}
+            />
+            </View>
+            <View style={{width:'100%'}}>
+            <AppText>Post Diastolic pressure</AppText>
+            <AppTextInput
+                onChangeText={props.handleChange('POST_Dia_BP')}
+                onBlur={props.handleBlur('POST_Dia_BP')}
+                value={props.values.POST_Dia_BP}
+                touched={props.touched.POST_Dia_BP}
+                errors={props.errors.POST_Dia_BP}
+                keyboardType='numeric'
+                editable={show}
+            />
+            </View>
+            </>}
 
             <View style={{width:'100%'}}>
                 <AppText>Clock</AppText>
@@ -342,44 +435,7 @@ return (
                 />
             </View>}
 
-            {firstTimer!=1&&<View style={{width:'100%'}}>
-            <AppText>Post Stimulation Aggression</AppText>
-            <AppTextInput
-                onChangeText={props.handleChange('POST_STIMULATION_AGGRESSION')}
-                onBlur={props.handleBlur('POST_STIMULATION_AGGRESSION')}
-                value={props.values.POST_STIMULATION_AGGRESSION}
-                touched={props.touched.POST_STIMULATION_AGGRESSION}
-                errors={props.errors.POST_STIMULATION_AGGRESSION}
-                keyboardType='numeric'
-                editable={show}
-            />
-            </View>}
-
-            <View style={{width:'100%'}}>
-            <AppText>Pre SpO2</AppText>
-                <AppTextInput
-                    onChangeText={props.handleChange('Pre_SpO2')}
-                    onBlur={props.handleBlur('Pre_SpO2')}
-                    value={props.values.Pre_SpO2}
-                    touched={props.touched.Pre_SpO2}
-                    errors={props.errors.Pre_SpO2}
-                    keyboardType='numeric'
-                    editable={show}
-                    />
-            </View>
-
-        {firstTimer!=1&&<View style={{width:'100%'}}>
-            <AppText>Post SpO2</AppText>
-                <AppTextInput
-                    onChangeText={props.handleChange('Post_SpO2')}
-                    onBlur={props.handleBlur('Post_SpO2')}
-                    value={props.values.Post_SpO2}
-                    touched={props.touched.Post_SpO2}
-                    errors={props.errors.Post_SpO2}
-                    keyboardType='numeric'
-                    editable={show}
-                    />
-            </View>}
+            
             {firstTimer!=1&&<View style={{width:'100%'}}>
             <AppText>Number of Session</AppText>
                 <AppTextInput
@@ -406,59 +462,7 @@ return (
         {/* </View> */}
 
 
-        <AppText fontFamily='PoppinsSemiBold'>Blood Pressure</AppText>
-            {/* <View style={styles.box}> */}
-            <View style={{width:'100%'}}>
-            <AppText>Pre Systolic pressure</AppText>
-            <AppTextInput
-                onChangeText={props.handleChange('PRE_Sys_BP')}
-                onBlur={props.handleBlur('PRE_Sys_BP')}
-                value={props.values.PRE_Sys_BP}
-                touched={props.touched.PRE_Sys_BP}
-                errors={props.errors.PRE_Sys_BP}
-                keyboardType='numeric'
-                editable={show}
-            />
-            </View>
-            <View style={{width:'100%'}}>
-            <AppText>Pre Diastolic pressure</AppText>
-            <AppTextInput
-                onChangeText={props.handleChange('PRE_Dia_BP')}
-                onBlur={props.handleBlur('PRE_Dia_BP')}
-                value={props.values.PRE_Dia_BP}
-                touched={props.touched.PRE_Dia_BP}
-                errors={props.errors.PRE_Dia_BP}
-                keyboardType='numeric'
-                editable={show}
-            />
-            {/* </View> */}
-            </View>
-            {firstTimer!=1&&<>
-            <View style={{width:'100%'}}>
-            <AppText>Post Systolic pressure</AppText>
-            <AppTextInput
-                onChangeText={props.handleChange('POST_Sys_BP')}
-                onBlur={props.handleBlur('POST_Sys_BP')}
-                value={props.values.POST_Sys_BP}
-                touched={props.touched.POST_Sys_BP}
-                errors={props.errors.POST_Sys_BP}
-                keyboardType='numeric'
-                editable={show}
-            />
-            </View>
-            <View style={{width:'100%'}}>
-            <AppText>Post Diastolic pressure</AppText>
-            <AppTextInput
-                onChangeText={props.handleChange('POST_Dia_BP')}
-                onBlur={props.handleBlur('POST_Dia_BP')}
-                value={props.values.POST_Dia_BP}
-                touched={props.touched.POST_Dia_BP}
-                errors={props.errors.POST_Dia_BP}
-                keyboardType='numeric'
-                editable={show}
-            />
-            </View>
-            </>}
+        
         </View>
 
         <View style={{flexDirection:'row',justifyContent:'flex-end'}}>

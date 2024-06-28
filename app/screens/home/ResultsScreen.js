@@ -78,7 +78,7 @@ return (
             {/* ))} */}
         </View>
 
-        <AppText fontFamily='PoppinsSemiBold' color={colors.secondary} fontSize={width*0.05}>Input actual values</AppText>
+        <AppText fontFamily='PoppinsSemiBold' color={colors.secondary} fontSize={width*0.05}>Measured values</AppText>
 
         <Formik
           initialValues={{

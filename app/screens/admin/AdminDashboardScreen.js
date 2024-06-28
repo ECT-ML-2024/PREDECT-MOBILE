@@ -7,14 +7,15 @@ import DashboardCard from '../../components/DashboardCard';
 import routes from '../../navigations/routes';
 
 function AdminDashboardScreen({navigation}) {
-    const {width,height}=useAuth();
+    const {width,height,user}=useAuth();
+    console.log(user);
 return (
 <View style={styles.container}>
 
     <View style={{width:width,flexDirection:'row',justifyContent:'space-between',alignItems:'center',backgroundColor:colors.primary,paddingHorizontal:'5%',
         height:height*0.1
     }}>
-        <AppText fontFamily='PoppinsSemiBold' fontSize={width*0.05} width='80%' numberOfLines={1}>Hello, Christian</AppText>
+        <AppText fontFamily='PoppinsSemiBold' fontSize={width*0.05} width='80%' numberOfLines={1}>Hello, {user.name}</AppText>
         <Image style={{width:width*0.15,height:width*0.15,borderRadius:width*0.15}} source={require('../../assets/images/doctors.jpg')}/>
     </View>
 

@@ -168,11 +168,11 @@ return (
   >
     <View style={{backgroundColor:colors.primary,width:width*0.9,alignItems:'center',padding:'3%',borderRadius:10}}>
         <Image style={{width:width*0.2,height:width*0.2}} source={patient.gender =='Male'?require('../../assets/images/avatar.png'):require('../../assets/images/female-avatar.png')}/>
-        <AppText numberOfLines={1} fontFamily='PoppinsSemiBold' width={'90%'} fontSize={width*0.05}>{patient.firstName} {patient.surname}234562345345</AppText>
+        <AppText textAlign='center' numberOfLines={1} fontFamily='PoppinsSemiBold' width={'90%'} fontSize={width*0.05}>{patient.firstName} {patient.surname}</AppText>
         <View style={{flexDirection:'row',marginTop:'2%'}}>
             <View style={{flex:1,alignItems:'center'}}>
                 <AppText color={colors.mediumDark}>Status</AppText>
-                <AppText fontFamily='PoppinsSemiBold'>New</AppText>
+                <AppText fontFamily='PoppinsSemiBold'>Old</AppText>
             </View>
             <View style={{flex:1,alignItems:'center',borderLeftWidth:1,borderRightWidth:1}}>
                 <AppText color={colors.mediumDark}>Sex</AppText>

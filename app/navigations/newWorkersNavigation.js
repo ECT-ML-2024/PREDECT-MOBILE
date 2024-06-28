@@ -17,7 +17,7 @@ return(
         color:'blue'
       },
       headerTitleAlign:'center'}}>
-      <Stack.Screen name={routes.DOCTORS} component={controler.DoctorsStackScreen} options={{headerShown:false}}/>
+      <Stack.Screen name={routes.DOCTORS} component={controler.DoctorsStackScreen} options={{headerShown:true,headerTitle:'List of Doctors'}}/>
        
     </Stack.Navigator>
   )
