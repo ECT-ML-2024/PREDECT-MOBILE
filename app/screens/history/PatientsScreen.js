@@ -38,6 +38,10 @@ function PatientsScreen({navigation}) {
             setActive(false);
             return
         }
+
+        console.log('====================================');
+        console.log(response.data);
+        console.log('====================================');
         setActive(false);
         setPatients(response.data);
         setFilteredDoctors(response.data);

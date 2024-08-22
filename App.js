@@ -2,7 +2,6 @@ import 'react-native-gesture-handler';
 import { useState,useEffect,useCallback } from 'react';
 import { Dimensions } from 'react-native';
 import { useFonts } from 'expo-font';
-import {jwtDecode} from 'jwt-decode';
 import * as SplashScreen from 'expo-splash-screen';
 import {useNetInfo} from '@react-native-community/netinfo';
 import {NavigationContainer} from '@react-navigation/native';
@@ -11,11 +10,9 @@ import {NavigationContainer} from '@react-navigation/native';
 import AuthContext from './app/auth/context';
 import authStorage from './app/auth/storage';
 import OfflineNotice from './app/components/OfflineNotice';
-import NewPasswordScreen from './app/screens/auth/NewPasswordScreen';
 import MyDrawer from './app/navigations/appNavigation';
 import AuthNavigator from './app/navigations/authNavigator';
 import AppStatusBar from './app/components/AppStatusBar';
-import MenuButton from './app/components/MenuButton ';
 
 export default function App() {
   const window = Dimensions.get('window');

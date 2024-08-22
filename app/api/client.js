@@ -21,6 +21,9 @@ apiClient.get =async (url,params,axiosConfig)=>{
         var bytes  = CryptoJS.AES.decrypt(response.data,key);
         const decryptedString = bytes.toString(CryptoJS.enc.Utf8);
         const decryptedData = JSON.parse(decryptedString);
+        console.log('============decryptedData===========');
+        console.log(decryptedData);
+        console.log('====================================');
         response.data=decryptedData;
     } catch (error) {
         console.error('Error parsing decrypted data:', error);
