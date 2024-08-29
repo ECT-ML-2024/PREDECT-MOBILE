@@ -27,6 +27,10 @@ function PatientScreen({navigation,route}) {
   const [show,setShow] = useState(false);
   const [active,setActive] = useState(false);
 
+
+  console.log('=============patient===============');
+  console.log(patient);
+  console.log('==============patient=================');
   const scrollViewRef = useRef();
   const previousScrollY = useRef(0);
 
@@ -254,15 +258,28 @@ return (
       </View>
   </View>
 
+  <View style={{display:'flex',flexDirection:'row',justifyContent:'space-between',alignItems:'center',width:'100%',paddingHorizontal:'2%'}}>
   <TouchableOpacity
   onPress={()=>navigation.navigate(routes.HISTORY_TAB,{
       screen:routes.GRAPH,
       params:{sessions:sessions}
   })}
-  style={{width:width,paddingLeft:'5%',flexDirection:'row',alignItems:'center'}}>
-    <AppText fontFamily='PoppinsSemiBold' fontSize={width*0.05} color={colors.secondary}>More Graphs </AppText>
+  style={{width:'48%',flexDirection:'row',alignItems:'center',backgroundColor:colors.primary,borderRadius:10,padding:'2%'}}>
+    <AppText fontFamily='PoppinsSemiBold' fontSize={width*0.05} color={colors.secondary}>Graphs </AppText>
     <Octicons name="graph" size={width*0.05} color={colors.secondary} />
   </TouchableOpacity>
+  <TouchableOpacity
+  onPress={()=>navigation.navigate(routes.HISTORY_TAB,{
+      screen:routes.REPORTS,
+      params:{sessions:sessions,firstName:patient.firstName,surname:patient.surname}
+  })}
+  style={{width:'48%',flexDirection:'row',alignItems:'center',backgroundColor:colors.primary,borderRadius:10,padding:'2%'}}>
+    <AppText fontFamily='PoppinsSemiBold' fontSize={width*0.05} color={colors.secondary}>Reports </AppText>
+    <MaterialCommunityIcons name="file-document-outline" size={width*0.05} color={colors.secondary} />
+    {/* <Octicons name="graph" size={width*0.05} color={colors.secondary} /> */}
+  </TouchableOpacity>
+  </View>
+
 
     <View style={{backgroundColor:colors.primary,width:'100%',padding:'3%',marginVertical:'5%',borderRadius:10}}>
       <AppText>Choose session</AppText>
@@ -278,7 +295,7 @@ return (
     {/* Results */}
      <Results sessions={sessions} state={state}/>
      
-     <TouchableOpacity style={{paddingVertical:'3%',paddingHorizontal:'5%',backgroundColor:'red',borderRadius:10,width:width/2,justifyContent:'center',alignItems:'center'}}
+     <TouchableOpacity style={{paddingVertical:'3%',paddingHorizontal:'2%',backgroundColor:'red',borderRadius:10,width:width/2,justifyContent:'center',alignItems:'center'}}
      onPress={handleDelete}>
         {active&&<ActivityIndicator size={width*0.07} color={colors.primary}/>}
         {!active&&<AppText color={colors.primary}>Delete Patient</AppText>}

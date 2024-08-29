@@ -21,6 +21,7 @@ import ThirdScreen from "../screens/home/ThirdScreen"
 import DashboardScreen from "../screens/home/DashboardScreen"
 import AdminDashboardScreen from "../screens/admin/AdminDashboardScreen"
 import AddDoctorScreen from "../screens/admin/AddDoctorScreen"
+import ReportsScreen from "../screens/history/ReportsScreen"
 
 // Authentication
 const GetStartedStackScreen = ({ navigation })=> <GetStartedScreen navigation={navigation}/>
@@ -50,6 +51,7 @@ const PatientsStackScreen = ({ navigation,route })=> <PatientsScreen navigation=
 const PatientStackScreen = ({ navigation,route })=> <PatientScreen navigation={navigation} route={route}/>
 const GraphStackScreen = ({ navigation,route })=> <GraphScreen navigation={navigation} route={route}/>
 const AddPatientStackScreen = ({ navigation,route })=> <AddPatientScreen navigation={navigation} route={route}/>
+const ReportsStackScreen = ({ navigation,route })=> <ReportsScreen navigation={navigation} route={route}/>
 
 // New Doctors
 const DoctorsStackScreen = ({ navigation,route })=> <DoctorsScreen navigation={navigation} route={route}/>
@@ -79,5 +81,6 @@ export default{
   SecondStackScreen,
   ThirdStackScreen,
   AdminDashboardStackScreen,
-  AddDoctorStackScreen
+  AddDoctorStackScreen,
+  ReportsStackScreen
   }

@@ -25,6 +25,7 @@ return(
       <Stack.Screen name={routes.PATIENT} component={controler.PatientStackScreen} options={{headerShown:true,headerTitle:'Patient Report'}}/>
       <Stack.Screen name={routes.GRAPH} component={controler.GraphStackScreen} options={{headerShown:true,headerTitle:'Historical Graphs'}}/>
       <Stack.Screen name={routes.ADD_PATIENT} component={controler.AddPatientStackScreen} options={{headerShown:false}}/>
+      <Stack.Screen name={routes.REPORTS} component={controler.ReportsStackScreen} options={{headerShown:true,headerTitle:'Reports'}}/>
        
     </Stack.Navigator>
     </>

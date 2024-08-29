@@ -24,6 +24,7 @@ export default Object.freeze({
   PATIENT:'Patient',
   GRAPH:'Graph',
   ADD_PATIENT:'AddPatient',
+  REPORTS:'Reports',
 
   DOCTORS_TAB:'NewWorkersTab',
   DOCTORS:'NewDoctors',
