@@ -8,7 +8,7 @@ import routes from '../../navigations/routes';
 
 function AdminDashboardScreen({navigation}) {
     const {width,height,user}=useAuth();
-    console.log(user);
+    
 return (
 <View style={styles.container}>
 

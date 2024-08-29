@@ -28,9 +28,6 @@ function PatientScreen({navigation,route}) {
   const [active,setActive] = useState(false);
 
 
-  console.log('=============patient===============');
-  console.log(patient);
-  console.log('==============patient=================');
   const scrollViewRef = useRef();
   const previousScrollY = useRef(0);
 

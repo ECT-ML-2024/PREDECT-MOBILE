@@ -23,13 +23,24 @@ function PatientsScreen({navigation}) {
     const getpatientsApi=useApi(patient.patients);
     const [patients,setPatients]=useState([]);
     const [active,setActive]=useState(false);
-    const [filteredDoctors, setFilteredDoctors] = useState([]);
+    const [filteredPatients, setFilteredPatients] = useState([]);
     const [searchQuery, setSearchQuery] = useState('');
 
     useActiveScreenFunc().FocusedAndBlur(()=>{
         setActive(true);
         loadPatients();
     },()=>{})
+
+    function sortByFirstName(patients) {
+        return patients.sort((a, b) => {
+            let nameA = a.firstName.toLowerCase();
+            let nameB = b.firstName.toLowerCase();
+            
+            if (nameA < nameB) return -1;
+            if (nameA > nameB) return 1;
+            return 0;
+        });
+    }
 
     async function loadPatients(){
         const response =await getpatientsApi.request();
@@ -39,12 +50,10 @@ function PatientsScreen({navigation}) {
             return
         }
 
-        console.log('====================================');
-        console.log(response.data);
-        console.log('====================================');
         setActive(false);
-        setPatients(response.data);
-        setFilteredDoctors(response.data);
+        var sortedList =sortByFirstName(response.data);
+        setPatients(sortedList);
+        setFilteredPatients(response.data);
     }
 
     const handleSearch = (text) => {
@@ -52,7 +61,7 @@ function PatientsScreen({navigation}) {
         const filtered = patients.filter(doctor =>
             doctor.firstName.toLowerCase().includes(text.toLowerCase())
         );
-        setFilteredDoctors(filtered);
+        setFilteredPatients(filtered);
     }
 return (
     <KeyboardAvoidingView
@@ -69,7 +78,7 @@ return (
             </View>
             </View>
     <ScrollView contentContainerStyle={styles.container}>
-        {filteredDoctors.map((item,index)=>{
+        {filteredPatients.map((item,index)=>{
             return(
             <Card item={item} key={index} onPress={()=>navigation.navigate(routes.HISTORY_TAB,{
                 screen:routes.PATIENT,

@@ -55,8 +55,6 @@ function HomeScreen({navigation}) {
 
 
 
-
-
     const {
         selectedHearingAdequate,onSelectedHearingAdequate,
         GENDER,setGENDER,AGE,setAGE,
@@ -108,8 +106,6 @@ function HomeScreen({navigation}) {
             delete finalData.Post_SpO2;
             delete finalData.NO_OF_SESSIONS;
         }
-        // console.log(Object.keys(finalData),finalData);
-        // console.log(finalData);
         navigation.navigate(routes.HOME_TAB,{
             screen:routes.SECOND,
             params:{results:finalData}
@@ -156,7 +152,7 @@ return (
             Pre_SpO2: "",
             Post_SpO2: "",
         }}
-        //   validationSchema={ReviewSchema}
+          validationSchema={ReviewSchema}
           onSubmit={handleSubmit}
           >
            {(props)=>( <>
@@ -466,7 +462,6 @@ return (
         </View>
 
         <View style={{flexDirection:'row',justifyContent:'flex-end'}}>
-            {/* <AppButton width='30%' backgroundColor={colors.textInputBG} textColor={colors.secondary} text={'Reset'}/> */}
             <AppButtonOP width='60%' text={'Next'} onPress={props.handleSubmit}/>
         </View>
         </>)}
