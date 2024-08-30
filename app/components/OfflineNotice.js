@@ -26,7 +26,11 @@ const styles = StyleSheet.create({
     justifyContent: "center",
     position: "absolute",
     top: Constants.statusBarHeight,
-    width: "100%",
+    width: "90%",
+    alignSelf:"center",
+    borderRadius:20,
+    marginTop:'5%',
+    opacity:0.9,
     zIndex: 1,
   },
 });

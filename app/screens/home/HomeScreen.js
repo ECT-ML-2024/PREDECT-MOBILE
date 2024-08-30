@@ -6,23 +6,23 @@ import RadioGroup from 'react-native-radio-buttons-group';
 
 const ReviewSchema = yup.object({
     PRE_TEMPERATURE: yup.string().label('This').required(),
-    POST_TEMPERATURE: yup.string().label('This').required(),
+    POST_TEMPERATURE: yup.string().label('This'),
     PRE_STIMULATION_PULSE: yup.string().label('This').required(),
-    POST_STIMULATION_PULSE: yup.string().label('This').required(),
+    POST_STIMULATION_PULSE: yup.string().label('This'),
     PRE_RESPIRATORY_RATE: yup.string().label('This').required(),
-    POST_RESPIRATORY_RATE: yup.string().label('This').required(),
-    ARE_YOU_FEELING_BETTER: yup.number().min(0).max(5).label('This').required(),
-    POST_STIMULATION_AGGRESSION: yup.number().min(0).max(5).label('This').required(),
+    POST_RESPIRATORY_RATE: yup.string().label('This'),
+    ARE_YOU_FEELING_BETTER: yup.number().min(0).max(5).label('This'),
+    POST_STIMULATION_AGGRESSION: yup.number().min(0).max(5).label('This'),
     CLOCK: yup.number().min(0).max(3).label('This').required(),
     LANGUAGE: yup.number().min(0).max(2).label('This').required(),
     ORIENTATION: yup.number().min(0).max(6).label('This').required(),
-    NO_OF_SESSIONS: yup.number().min(0).label('This').required(),
+    NO_OF_SESSIONS: yup.number().min(0).label('This'),
     PRE_Sys_BP: yup.number().min(0).label('This').required(),
     PRE_Dia_BP: yup.number().min(0).label('This').required(),
-    POST_Sys_BP: yup.number().min(0).label('This').required(),
-    POST_Dia_BP: yup.number().min(0).label('This').required(),
+    POST_Sys_BP: yup.number().min(0).label('This'),
+    POST_Dia_BP: yup.number().min(0).label('This'),
     Pre_SpO2: yup.number().min(0).label('This').required(),
-    Post_SpO2: yup.number().min(0).label('This').required(),
+    Post_SpO2: yup.number().min(0).label('This'),
   });
 
 import AppText from '../../components/Text';
@@ -105,7 +105,7 @@ function HomeScreen({navigation}) {
             delete finalData.POST_TEMPERATURE;
             delete finalData.Post_SpO2;
             delete finalData.NO_OF_SESSIONS;
-        }
+        } 
         navigation.navigate(routes.HOME_TAB,{
             screen:routes.SECOND,
             params:{results:finalData}

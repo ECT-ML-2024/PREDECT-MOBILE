@@ -15,8 +15,8 @@ import auth from '../../api/auth';
 
 
 const ReviewSchema = yup.object({
-    code: yup.string().min(6).max(6).required(),
-    password: yup.string().min(6).required()
+    code: yup.string().min(6).max(6).required().label('Code'),
+    password: yup.string().min(6).required().label('Password')
   })
 
 function LogInScreen({navigation}) {
